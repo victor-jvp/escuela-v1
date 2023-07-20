@@ -1,13 +1,12 @@
 import "./datatable.scss"
 import { DataGrid } from '@mui/x-data-grid/DataGrid';
 import { esES } from '@mui/x-data-grid/locales/esES';
-import { userCols, userRows } from "../../users-data";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-const DataTable = ({ title, createUrl }) => {
+const DataTable = ({ title, createUrl, tableCols, tableRows }) => {
 
-  const [rows, setRows] = useState(userRows)
+  const [rows, setRows] = useState([])
 
   const handleDelete = (id) => {
     setRows(rows.filter((item) => item.id !== id))
@@ -41,7 +40,7 @@ const DataTable = ({ title, createUrl }) => {
         className="datagrid"
         localeText={esES.components.MuiDataGrid.defaultProps.localeText}
         rows={rows}
-        columns={userCols.concat(actionColumn)}
+        columns={tableCols.concat(actionColumn)}
         initialState={{
           pagination: {
             paginationModel: { page: 0, pageSize: 10 },
