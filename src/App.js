@@ -17,6 +17,7 @@ import { teacherInputs } from "./formTeacherSource";
 import "./style/dark.scss"
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
+import EditStudent from "./pages/studens/EditStudent";
 
 function App() {
 
@@ -30,16 +31,22 @@ function App() {
             <Route index element={<Home />} />
             <Route path="direccion">
               <Route index element={<Personal />} />
-              <Route path="create" element={<CreatePersonal />} />
+              <Route path="nuevoDirector" element={<CreatePersonal inputs={teacherInputs} title="Agregar Nuevo Personal Administrativo" />} />
             </Route>
             <Route path="representante">
               <Route index element={<Students />} />
-              <Route path=":idrepresentante/estudiante/:idestudiante/nuevoEstudiante" element={<CreateStudent />} />
-              <Route path=":idrepresentante/estudiante/:idestudiante/editarEstudiante" element={<CreateStudent />} />
+              <Route
+                path=":idrepresentante/estudiante/nuevoEstudiante"
+                element={<CreateStudent inputs={teacherInputs} title="Agregar Nuevo Estudiante" />} />
+              <Route
+                path=":idrepresentante/estudiante/:idestudiante/editarEstudiante"
+                element={<EditStudent inputs={teacherInputs} title="Agregar Nuevo Estudiante" />} />
             </Route>
             <Route path="docente">
               <Route index element={<Teachers />} />
-              <Route path="registrarDocente" element={<CreateTeacher inputs={teacherInputs} title="Agregar Nuevo Docente" />} />
+              <Route
+                path="registrarDocente"
+                element={<CreateTeacher inputs={teacherInputs} title="Agregar Nuevo Docente" />} />
             </Route>
             <Route path="direccion">
               <Route index element={<Users />} />

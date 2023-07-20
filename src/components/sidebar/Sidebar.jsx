@@ -29,7 +29,7 @@ const Sidebar = () => {
               <span>Home</span>
             </li>
           </Link>
-          <Link to="/personal" style={{ textDecoration: "none" }}>
+          <Link to="/direccion" style={{ textDecoration: "none" }}>
             <li>
               <FolderSharedIcon className="icon" />
               <span>Personal Administrativo</span>

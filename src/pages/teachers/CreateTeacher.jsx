@@ -3,11 +3,8 @@ import noImage from '../../assets/no-img.png'
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
 import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined';
-import { useState } from 'react';
 
 const CreateTeacher = ({ inputs, title }) => {
-
-  const [file, setFile] = useState("")
 
   return (
     <div className='new'>
@@ -27,7 +24,7 @@ const CreateTeacher = ({ inputs, title }) => {
                 <label htmlFor="file">
                   Image: <DriveFolderUploadOutlinedIcon className="icon" />
                 </label>
-                <input type="file" id="file" onChange={e => setFile(e.target.files[0])} style={{ display: "none" }} />
+                <input type="file" id="file" style={{ display: "none" }} />
               </div>
               {
                 inputs.map(input => (

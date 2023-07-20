@@ -9,7 +9,9 @@ const Users = () => {
       <Sidebar />
       <div className="listContainer">
         <Navbar />
-        <DataTable />
+        <DataTable
+          title="Usuarios"
+          createUrl="/docente/registrarAdministrador" />
       </div>
     </div>
   )

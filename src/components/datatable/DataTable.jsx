@@ -1,24 +1,28 @@
 import "./datatable.scss"
-import { DataGrid, esES } from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid/DataGrid';
+import { esES } from '@mui/x-data-grid/locales/esES';
 import { userCols, userRows } from "../../users-data";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
-const DataTable = () => {
+const DataTable = ({ title, createUrl }) => {
+
+  const [rows, setRows] = useState(userRows)
+
+  const handleDelete = (id) => {
+    setRows(rows.filter((item) => item.id !== id))
+  }
 
   const actionColumn = [
     {
       field: 'action',
       headerName: 'Opciones',
       width: 135,
-      renderCell: () => {
+      renderCell: (params) => {
         return (
           <div className="cellActions">
-            <Link to="/" style={{ textDecoration: 'none' }}>
-              <div className="viewButton">View</div>
-            </Link>
-            <Link to="/" style={{ textDecoration: 'none' }}>
-              <div className="deleteButton">Delete</div>
-            </Link>
+            <div className="viewButton">Editar</div>
+            <div className="deleteButton" onClick={() => handleDelete(params.row.id)}>Borrar</div>
           </div>
         )
       }
@@ -28,15 +32,15 @@ const DataTable = () => {
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Add New User
-        <Link to="/docente/registrarDocente" class="link">
-          Add New
+        {title}
+        <Link to={createUrl} class="link">
+          Agregar
         </Link>
       </div>
       <DataGrid
         className="datagrid"
         localeText={esES.components.MuiDataGrid.defaultProps.localeText}
-        rows={userRows}
+        rows={rows}
         columns={userCols.concat(actionColumn)}
         initialState={{
           pagination: {
