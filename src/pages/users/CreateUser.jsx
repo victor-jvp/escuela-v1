@@ -1,8 +1,7 @@
-import React from 'react'
-
+import './create-user.scss'
 const CreateUser = () => {
     return (
-        <div>Create</div>
+        <div>CreateUser</div>
     )
 }
 

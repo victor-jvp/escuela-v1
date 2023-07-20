@@ -14,6 +14,10 @@ const Home = () => {
           <Widget type="teacher" />
           <Widget type="student" />
         </div>
+        <div className="listContainer">
+          <div className="listTitle">Alguna lista o tabla puede ir aqui</div>
+
+        </div>
       </div>
     </div>
   )

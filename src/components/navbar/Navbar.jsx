@@ -1,4 +1,5 @@
 import "./navbar.scss"
+import profilePic from '../../assets/profile-img.png'
 import SearchIcon from '@mui/icons-material/Search';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
@@ -26,7 +27,7 @@ const Navbar = () => {
           </div>
           <div className="item">
             <img
-              src="https://cdn-icons-png.flaticon.com/512/149/149071.png?w=826&t=st=1689811289~exp=1689811889~hmac=73b8427d5ef042f725af11956cf3635ea27c287c276da81afefafaca8d89a706"
+              src={profilePic}
               alt="User Avatar"
               className="avatar"
             />

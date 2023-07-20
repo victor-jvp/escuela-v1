@@ -1,5 +1,4 @@
 import "./widget.scss"
-import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
 import PeopleIcon from '@mui/icons-material/People';
 import SchoolIcon from '@mui/icons-material/School';
 import FolderSharedIcon from '@mui/icons-material/FolderShared';
