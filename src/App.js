@@ -14,10 +14,16 @@ import CreatePersonal from './pages/personal/CreatePersonal'
 import CreateTeacher from './pages/teachers/CreateTeacher'
 import CreateStudent from './pages/studens/CreateStudent'
 import { teacherInputs } from "./formTeacherSource";
+import "./style/dark.scss"
+import { useContext } from "react";
+import { DarkModeContext } from "./context/darkModeContext";
 
 function App() {
+
+  const { darkMode } = useContext(DarkModeContext)
+
   return (
-    <div className="App">
+    <div className={darkMode ? 'app dark' : 'app'}>
       <BrowserRouter>
         <Routes>
           <Route path="/">
@@ -28,11 +34,12 @@ function App() {
             </Route>
             <Route path="representante">
               <Route index element={<Students />} />
-              <Route path="create" element={<CreateStudent />} />
+              <Route path=":idrepresentante/estudiante/:idestudiante/nuevoEstudiante" element={<CreateStudent />} />
+              <Route path=":idrepresentante/estudiante/:idestudiante/editarEstudiante" element={<CreateStudent />} />
             </Route>
-            <Route path="docentes">
+            <Route path="docente">
               <Route index element={<Teachers />} />
-              <Route path="create" element={<CreateTeacher inputs={teacherInputs} title="Agregar Nuevo Docente" />} />
+              <Route path="registrarDocente" element={<CreateTeacher inputs={teacherInputs} title="Agregar Nuevo Docente" />} />
             </Route>
             <Route path="direccion">
               <Route index element={<Users />} />

@@ -5,8 +5,13 @@ import SchoolIcon from '@mui/icons-material/School';
 import FolderSharedIcon from '@mui/icons-material/FolderShared';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import { Link } from 'react-router-dom';
+import { useContext } from "react";
+import { DarkModeContext } from "../../context/darkModeContext";
 
 const Sidebar = () => {
+
+  const { dispatch } = useContext(DarkModeContext)
+
   return (
     <div className="sidebar">
       <div className="top">
@@ -30,7 +35,7 @@ const Sidebar = () => {
               <span>Personal Administrativo</span>
             </li>
           </Link>
-          <Link to="/docentes" style={{ textDecoration: "none" }}>
+          <Link to="/docente" style={{ textDecoration: "none" }}>
             <li>
               <AssignmentIndIcon className="icon" />
               <span>Profesores</span>
@@ -52,8 +57,8 @@ const Sidebar = () => {
         </ul>
       </div>
       <div className="bottom">
-        <div className="colorOption"></div>
-        <div className="colorOption"></div>
+        <div className="colorOption" onClick={() => dispatch({ type: "LIGHT" })}></div>
+        <div className="colorOption" onClick={() => dispatch({ type: "DARK" })}></div>
       </div>
     </div>
   )
