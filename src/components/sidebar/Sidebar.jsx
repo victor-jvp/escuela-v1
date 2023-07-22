@@ -22,33 +22,47 @@ const Sidebar = () => {
       <hr />
       <div className="center">
         <ul>
+
           <p className="title">PRINCIPAL</p>
+
+          <hr />
+
           <Link to="/" style={{ textDecoration: "none" }}>
             <li>
               <DashboardIcon className="icon" />
               <span>Home</span>
             </li>
           </Link>
+          <Link to="/representants" style={{ textDecoration: "none" }}>
+            <li>
+              <PeopleIcon className="icon" />
+              <span>Representantes</span>
+            </li>
+          </Link>
+          <Link to="/students" style={{ textDecoration: "none" }}>
+            <li>
+              <SchoolIcon className="icon" />
+              <span>Estudiantes</span>
+            </li>
+          </Link>
+
+          <p className="title">CONFIGURACION</p>
+
+          <hr />
+
           <Link to="/direccion" style={{ textDecoration: "none" }}>
             <li>
               <FolderSharedIcon className="icon" />
               <span>Personal Administrativo</span>
             </li>
           </Link>
-          <Link to="/docente" style={{ textDecoration: "none" }}>
+          <Link to="/teachers" style={{ textDecoration: "none" }}>
             <li>
               <AssignmentIndIcon className="icon" />
               <span>Profesores</span>
             </li>
           </Link>
-          <Link to="/representante" style={{ textDecoration: "none" }}>
-            <li>
-              <SchoolIcon className="icon" />
-              <span>Estudiantes</span>
-            </li>
-          </Link>
-          <p className="title">CONFIGURACION</p>
-          <Link to="/direccion" style={{ textDecoration: "none" }}>
+          <Link to="/users" style={{ textDecoration: "none" }}>
             <li>
               <PeopleIcon className="icon" />
               <span>Usuarios</span>

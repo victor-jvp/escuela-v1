@@ -3,13 +3,11 @@ import Sidebar from '../../components/sidebar/Sidebar'
 import Navbar from '../../components/navbar/Navbar'
 import DataTable from '../../components/datatable/DataTable'
 import { useEffect, useState } from 'react'
-import axios from 'axios'
+import axios from '../../api/axios'
 
 const Students = () => {
 
-  const [tableRows, setTableRows] = useState(null)
-
-  const idRepresentante = 0;
+  const [tableRows, setTableRows] = useState([])
   const tableCols = [
     // { field: 'id', headerName: 'ID', width: 70 },
     { field: 'cedula_escolar', headerName: 'Cedula', width: 120 },
@@ -41,8 +39,10 @@ const Students = () => {
   ];
 
   useEffect(() => {
-    axios.get("representante/estudiantes").then((resp) => {
+    axios.get("/direccion/estudiantes").then((resp) => {
       console.log(resp.data)
+    }).catch(error => {
+      console.log(error)
     })
   })
 
@@ -55,7 +55,8 @@ const Students = () => {
           title="Estudiantes"
           tableCols={tableCols}
           tableRows={tableRows}
-          createUrl={`/representante/${idRepresentante}/estudiante/nuevoEstudiante`}
+          setTableRows={setTableRows}
+          createUrl="/students/create"
         />
       </div>
     </div>

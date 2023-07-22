@@ -6,12 +6,6 @@ import { useState } from "react";
 
 const DataTable = ({ title, createUrl, tableCols, tableRows }) => {
 
-  const [rows, setRows] = useState([])
-
-  const handleDelete = (id) => {
-    setRows(rows.filter((item) => item.id !== id))
-  }
-
   const actionColumn = [
     {
       field: 'action',
@@ -21,7 +15,7 @@ const DataTable = ({ title, createUrl, tableCols, tableRows }) => {
         return (
           <div className="cellActions">
             <div className="viewButton">Editar</div>
-            <div className="deleteButton" onClick={() => handleDelete(params.row.id)}>Borrar</div>
+            <div className="deleteButton">Borrar</div>
           </div>
         )
       }
@@ -32,14 +26,14 @@ const DataTable = ({ title, createUrl, tableCols, tableRows }) => {
     <div className="datatable">
       <div className="datatableTitle">
         {title}
-        <Link to={createUrl} class="link">
+        <Link to={createUrl} className="link">
           Agregar
         </Link>
       </div>
       <DataGrid
         className="datagrid"
         localeText={esES.components.MuiDataGrid.defaultProps.localeText}
-        rows={rows}
+        rows={tableRows}
         columns={tableCols.concat(actionColumn)}
         initialState={{
           pagination: {
@@ -48,6 +42,7 @@ const DataTable = ({ title, createUrl, tableCols, tableRows }) => {
         }}
         pageSizeOptions={[10, 50, 100]}
         checkboxSelection
+        getRowId={(row) => row._id}
       />
     </div>
   )

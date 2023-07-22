@@ -5,6 +5,23 @@
   .newContainer {
     flex: 6;
 
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .link {
+        text-decoration: none;
+        color: darkgrey;
+        font-size: 16px;
+        font-weight: 400;
+        border: 1px solid darkgrey;
+        padding: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    }
+
     .top,
     .bottom {
       padding: 20px;

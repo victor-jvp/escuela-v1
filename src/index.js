@@ -9,5 +9,6 @@ root.render(
     <DarkModeContextProvider>
       <App />
     </DarkModeContextProvider>
+
   </React.StrictMode>
 );
