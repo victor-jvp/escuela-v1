@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { createUserRequest, getUsersRequest } from '../api/users'
+import { createUserRequest, getUsersRequest, activeUserRequest, inactiveUserRequest } from '../api/users'
 
 const UserContext = createContext();
 
@@ -16,6 +16,21 @@ export function UserProvider({ children }) {
 
     const [users, setUsers] = useState([]);
 
+    const activateUser = async (id) => {
+        try {
+            const res = await activeUserRequest(id)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const deactivateUser = async (id) => {
+        try {
+            const res = await inactiveUserRequest(id)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const getUsers = async () => {
         try {
             const res = await getUsersRequest()
@@ -26,8 +41,11 @@ export function UserProvider({ children }) {
     }
 
     const createUser = async (user) => {
-        const res = await createUserRequest(user)
-        console.log(res)
+        try {
+            await createUserRequest(user)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
@@ -36,6 +54,8 @@ export function UserProvider({ children }) {
                 users,
                 createUser,
                 getUsers,
+                activateUser,
+                deactivateUser
             }}>
             {children}
         </UserContext.Provider>

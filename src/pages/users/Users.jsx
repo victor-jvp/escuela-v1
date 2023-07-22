@@ -7,7 +7,8 @@ import { useUsers } from "../../context/UsersContext";
 
 const Users = () => {
 
-  // const [tableRows, setTableRows] = useState([])
+  const { getUsers, users, activateUser, deactivateUser } = useUsers()
+
   const tableCols = [
     // { field: 'id', headerName: 'ID', width: 70 },
     { field: 'name', headerName: 'Nombre y Apellido', width: 200 },
@@ -17,8 +18,33 @@ const Users = () => {
       valueGetter: (params) => `${params.row.habilitado ? 'Activo' : 'Inactivo'}`
     }
   ];
+  const actionColumn = [
+    {
+      field: 'action',
+      headerName: 'Opciones',
+      width: 135,
+      renderCell: (params) => {
+        return (
+          <div className="cellActions">
+            {
+              !params.row.habilitado
+                ? (<div className="viewButton" onClick={() => activate(params.row._id)}>Habilitar</div>)
+                : (<div className="deleteButton" onClick={() => deactivate(params.row._id)}>Deshabilitar</div>)
+            }
+          </div>
+        )
+      }
+    }
+  ]
 
-  const { getUsers, users } = useUsers()
+  const activate = (id) => {
+    activateUser(id)
+    getUsers()
+  }
+  const deactivate = (id) => {
+    deactivateUser(id)
+    getUsers()
+  }
 
   useEffect(() => {
     getUsers()
@@ -33,6 +59,7 @@ const Users = () => {
           title="Usuarios"
           tableCols={tableCols}
           tableRows={users}
+          actionColumn={actionColumn}
           createUrl="/users/create" />
       </div>
     </div>

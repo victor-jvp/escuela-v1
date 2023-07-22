@@ -51,10 +51,26 @@
       color: gray;
       border: none;
 
-      .viewButton,
+      // .viewButton,
+      // .deleteButton {
+      //   color: gray;
+      //   border: none;
+      // }
+
+      .viewButton {
+        padding: 2px 5px;
+        border-radius: 5px;
+        color: lightblue;
+        border: 1px solid rgba(173, 216, 230, 0.233);
+        cursor: pointer;
+      }
+
       .deleteButton {
-        color: gray;
-        border: none;
+        padding: 2px 5px;
+        border-radius: 5px;
+        color: lightcoral;
+        border: 1px solid rgba(255, 0, 0, 0.219);
+        cursor: pointer;
       }
     }
   }

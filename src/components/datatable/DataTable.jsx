@@ -4,23 +4,7 @@ import { esES } from '@mui/x-data-grid/locales/esES';
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-const DataTable = ({ title, createUrl, tableCols, tableRows }) => {
-
-  const actionColumn = [
-    {
-      field: 'action',
-      headerName: 'Opciones',
-      width: 135,
-      renderCell: (params) => {
-        return (
-          <div className="cellActions">
-            <div className="viewButton">Editar</div>
-            <div className="deleteButton">Borrar</div>
-          </div>
-        )
-      }
-    }
-  ]
+const DataTable = ({ title, createUrl, tableCols, tableRows, actionColumn }) => {
 
   return (
     <div className="datatable">
@@ -42,6 +26,7 @@ const DataTable = ({ title, createUrl, tableCols, tableRows }) => {
         }}
         pageSizeOptions={[10, 50, 100]}
         checkboxSelection
+        disableRowSelectionOnClick
         getRowId={(row) => row._id}
       />
     </div>
