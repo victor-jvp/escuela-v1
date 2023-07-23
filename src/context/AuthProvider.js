@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { registerRequest, loginRequest } from '../api/auth';
+import { registerRequest, loginRequest, logoutRequest } from '../api/auth';
 
 const AuthContext = createContext()
 
@@ -52,6 +52,13 @@ export const AuthProvider = ({ children }) => {
       }
       setErrors(errorMessages)
     }
+  }
+
+  const logout = () => {
+    const res = logoutRequest(user)
+    sessionStorage.removeItem("session")
+    setIsAuthenticated(false)
+    setUser(null)
   }
 
   useEffect(() => {

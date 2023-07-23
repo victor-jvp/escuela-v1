@@ -19,6 +19,7 @@ export function UserProvider({ children }) {
     const activateUser = async (id) => {
         try {
             const res = await activeUserRequest(id)
+            if (res.status === 200) getUsers()
         } catch (error) {
             console.log(error)
         }
@@ -26,6 +27,7 @@ export function UserProvider({ children }) {
     const deactivateUser = async (id) => {
         try {
             const res = await inactiveUserRequest(id)
+            if (res.status === 200) getUsers()
         } catch (error) {
             console.log(error)
         }

@@ -1,10 +1,21 @@
 import "./create-teacher.scss";
-import noImage from '../../assets/no-img.png'
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
-import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined';
+import { useForm } from 'react-hook-form';
+import { useTeachers } from "../../context/TeachersContext";
+import { Link, useNavigate } from "react-router-dom";
 
 const CreateTeacher = ({ inputs, title }) => {
+
+  const { register, handleSubmit } = useForm();
+  const { createTeacher } = useTeachers();
+  const navigate = useNavigate()
+
+  const onSubmit = handleSubmit((data) => {
+    data.habilitado = true;
+    createTeacher(data)
+    navigate("/teachers")
+  })
 
   return (
     <div className='new'>
@@ -12,28 +23,31 @@ const CreateTeacher = ({ inputs, title }) => {
       <div className="newContainer">
         <Navbar />
         <div className="top">
-          <h1>{title}</h1>
+          <h1>Crear Nuevo Profesor</h1>
+          <Link to='/teachers' className="link">
+            Volver
+          </Link>
         </div>
         <div className="bottom">
-          <div className="left">
-            <img src={noImage} alt="" />
-          </div>
           <div className="right">
-            <form>
+            <form onSubmit={onSubmit}>
               <div className="formInput">
-                <label htmlFor="file">
-                  Image: <DriveFolderUploadOutlinedIcon className="icon" />
-                </label>
-                <input type="file" id="file" style={{ display: "none" }} />
+                <label htmlFor="name">Nombre</label>
+                <input type="text" {...register("name")} placeholder='...' autoFocus required />
               </div>
-              {
-                inputs.map(input => (
-                  <div className="formInput" key={input.id}>
-                    <label htmlFor="">{input.label}</label>
-                    <input type={input.type} placeholder="..." />
-                  </div>
-                ))
-              }
+              <div className="formInput">
+                <label htmlFor="email">Email</label>
+                <input type="email" {...register("email")} placeholder="..." required />
+              </div>
+              <div className="formInput">
+                <label htmlFor="section">Sección</label>
+                <input type="text" {...register("section")} placeholder="..." />
+              </div>
+
+              <div className="formInput">
+                <label htmlFor="password">Contraseña</label>
+                <input type="password" {...register("password")} placeholder='...' required />
+              </div>
               <button>Guardar</button>
             </form>
           </div>
