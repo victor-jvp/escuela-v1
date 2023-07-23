@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { createTeacherRequest, getTeachersRequest, activeTeacherRequest, inactiveTeacherRequest } from '../api/teachers'
+import { useAuth } from './AuthProvider'
 
 const TeacherContext = createContext();
 
@@ -15,10 +16,11 @@ export const useTeachers = () => {
 export function TeacherProvider({ children }) {
 
     const [teachers, setTeachers] = useState([]);
+    const { user } = useAuth()
 
     const activateTeacher = async (id) => {
         try {
-            const res = await activeTeacherRequest(id)
+            const res = await activeTeacherRequest(user.token, id)
             if (res.status === 200) {
                 getTeachers()
             }
@@ -28,7 +30,7 @@ export function TeacherProvider({ children }) {
     }
     const deactivateTeacher = async (id) => {
         try {
-            const res = await inactiveTeacherRequest(id)
+            const res = await inactiveTeacherRequest(user.token, id)
             if (res.status === 200) {
                 getTeachers()
             }
@@ -39,7 +41,7 @@ export function TeacherProvider({ children }) {
 
     const getTeachers = async () => {
         try {
-            const res = await getTeachersRequest()
+            const res = await getTeachersRequest(user.token)
             setTeachers(res.data)
         } catch (error) {
             console.log(error)
@@ -48,7 +50,7 @@ export function TeacherProvider({ children }) {
 
     const createTeacher = async (teacher) => {
         try {
-            await createTeacherRequest(teacher)
+            await createTeacherRequest(user.token, teacher)
         } catch (error) {
             console.log(error)
         }

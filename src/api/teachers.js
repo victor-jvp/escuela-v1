@@ -1,29 +1,49 @@
 import axios from './axios'
 
-const session = JSON.parse(sessionStorage?.getItem('session'))
-
-const config = {
+export const getTeachersRequest = (token) => axios.get(`docentes`, {
     headers: {
-        'Authorization': `Bearer ${session?.token}`
+        'Authorization': `Bearer ${token}`
     }
-}
+});
 
-export const getTeachersRequest = () => axios.get(`docentes`, config);
+export const createTeacherRequest = (token, teacher) => axios.post(
+    `docente/registrarDocente`, teacher, {
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+});
 
-export const createTeacherRequest = (teacher) => axios.post(
-    `docente/registrarDocente`, teacher, config);
+export const activeTeacherRequest = (token, id) => axios.patch(
+    `docente/${id}/habilitarDocente`, {}, {
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+});
 
-export const activeTeacherRequest = (id) => axios.patch(
-    `docente/${id}/habilitarDocente`, {}, config);
+export const inactiveTeacherRequest = (token, id) => axios.patch(
+    `docente/${id}/deshabilitarDocente`, {}, {
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+});
 
-export const inactiveTeacherRequest = (id) => axios.patch(
-    `docente/${id}/deshabilitarDocente`, {}, config);
+export const deleteTeacherRequest = (token, id) => axios.delete(
+    `docente/${id}/eliminarDocente`, {
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+});
 
-export const deleteTeacherRequest = (id) => axios.delete(
-    `docente/${id}/eliminarDocente`, config);
+export const assignSectionRequest = (token, id, data) => axios.patch(
+    `docente/${id}/asignarSeccion`, data, {
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+});
 
-export const assignSectionRequest = (id, data) => axios.patch(
-    `docente/${id}/asignarSeccion`, data, config);
-
-export const removeSectionRequest = (id) => axios.patch(
-    `docente/${id}/retirarSeccion`, {}, config);
+export const removeSectionRequest = (token, id) => axios.patch(
+    `docente/${id}/retirarSeccion`, {}, {
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+});

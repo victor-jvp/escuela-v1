@@ -54,11 +54,14 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  const logout = () => {
-    const res = logoutRequest(user)
-    sessionStorage.removeItem("session")
-    setIsAuthenticated(false)
-    setUser(null)
+  const logout = async () => {
+    const res = await logoutRequest(user)
+    if (res.status === 200) {
+      sessionStorage.removeItem("session")
+      console.log("removing")
+      setIsAuthenticated(false)
+      setUser(null)
+    }
   }
 
   useEffect(() => {
@@ -73,23 +76,23 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
 
     if (!sessionStorage.getItem('session')) {
+      setUser(null);
       setIsAuthenticated(false);
       setLoading(false)
-      setUser(null);
     } else {
-      // console.log(sessionStorage.getItem("session"));
+      setUser(JSON.parse(sessionStorage.getItem("session")))
       setIsAuthenticated(true)
-      setUser(sessionStorage.getItem("session"))
       setLoading(false)
     }
 
-  }, [])
+  }, [isAuthenticated])
 
   return (
     <AuthContext.Provider
       value={{
         signup,
         signin,
+        logout,
         user,
         loading,
         isAuthenticated,

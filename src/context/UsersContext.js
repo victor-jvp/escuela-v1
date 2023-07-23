@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { createUserRequest, getUsersRequest, activeUserRequest, inactiveUserRequest } from '../api/users'
+import { useAuth } from "./AuthProvider";
 
 const UserContext = createContext();
 
@@ -15,10 +16,11 @@ export const useUsers = () => {
 export function UserProvider({ children }) {
 
     const [users, setUsers] = useState([]);
+    const { user } = useAuth()
 
     const activateUser = async (id) => {
         try {
-            const res = await activeUserRequest(id)
+            const res = await activeUserRequest(user.token, id)
             if (res.status === 200) getUsers()
         } catch (error) {
             console.log(error)
@@ -26,7 +28,7 @@ export function UserProvider({ children }) {
     }
     const deactivateUser = async (id) => {
         try {
-            const res = await inactiveUserRequest(id)
+            const res = await inactiveUserRequest(user.token, id)
             if (res.status === 200) getUsers()
         } catch (error) {
             console.log(error)
@@ -35,7 +37,7 @@ export function UserProvider({ children }) {
 
     const getUsers = async () => {
         try {
-            const res = await getUsersRequest()
+            const res = await getUsersRequest(user.token)
             setUsers(res.data)
         } catch (error) {
             console.log(error)
@@ -44,7 +46,7 @@ export function UserProvider({ children }) {
 
     const createUser = async (user) => {
         try {
-            await createUserRequest(user)
+            await createUserRequest(user.token, user)
         } catch (error) {
             console.log(error)
         }

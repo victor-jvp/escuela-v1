@@ -1,15 +1,16 @@
 import "./navbar.scss"
 import SearchIcon from '@mui/icons-material/Search';
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import { useContext } from "react";
 import { DarkModeContext } from "../../context/darkModeContext";
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { Tooltip } from "@mui/material";
+import { useAuth } from '../../context/AuthProvider'
 
 const Navbar = () => {
 
   const { dispatch } = useContext(DarkModeContext)
+  const { logout } = useAuth()
 
   return (
     <div className='navbar'>
@@ -32,7 +33,7 @@ const Navbar = () => {
             {/* <NotificationsOutlinedIcon className="icon" /> */}
             {/* <div className="counter">1</div> */}
           </div>
-          <div className="item">
+          <div className="item" onClick={() => logout()}>
             <Tooltip title="Cerrar Sesión">
               <LogoutOutlinedIcon className="icon" />
             </Tooltip>

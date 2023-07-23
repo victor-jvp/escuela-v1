@@ -1,23 +1,31 @@
 import axios from './axios'
 
-const session = JSON.parse(sessionStorage?.getItem('session'))
-
-const config = {
+export const getUsersRequest = (token) => axios.get(`administracion`, {
     headers: {
-        'Authorization': `Bearer ${session?.token}`
+        'Authorization': `Bearer ${token}`
     }
-}
+});
 
-export const getUsersRequest = () => axios.get(`administracion`, config);
+export const createUserRequest = (token, user) => axios.post(
+    `direccion/administracion/registrarAdministrador`, user, {
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+});
 
-export const createUserRequest = (user) => axios.post(
-    `direccion/administracion/registrarAdministrador`, user, config);
+export const activeUserRequest = (token, id) => axios.patch(
+    `direccion/${id}/habilitarAdministrador`, { "id_administrador": id }, {
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+});
 
-export const activeUserRequest = (id) => axios.patch(
-    `direccion/${id}/habilitarAdministrador`, { "id_administrador": id }, config);
-
-export const inactiveUserRequest = (id) => axios.patch(
-    `direccion/${id}/deshabilitarAdministrador`, { "id_administrador": id }, config);
+export const inactiveUserRequest = (token, id) => axios.patch(
+    `direccion/${id}/deshabilitarAdministrador`, { "id_administrador": id }, {
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+});
 
 // export const deleteUserRequest = (id) => axios.delete(
 //     `direccion/administracion/${id}/eliminarAdministrador`, config);
