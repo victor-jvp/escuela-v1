@@ -50,7 +50,7 @@ const Sidebar = () => {
 
           <hr />
 
-          <Link to="/direccion" style={{ textDecoration: "none" }}>
+          <Link to="/personal" style={{ textDecoration: "none" }}>
             <li>
               <FolderSharedIcon className="icon" />
               <span>Personal Administrativo</span>

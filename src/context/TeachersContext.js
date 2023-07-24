@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { createTeacherRequest, getTeachersRequest, activeTeacherRequest, inactiveTeacherRequest } from '../api/teachers'
+import { createTeacherRequest, getTeachersRequest, activeTeacherRequest, inactiveTeacherRequest, deleteTeacherRequest } from '../api/teachers'
 import { useAuth } from './AuthProvider'
 
 const TeacherContext = createContext();
@@ -56,6 +56,15 @@ export function TeacherProvider({ children }) {
         }
     }
 
+    const deleteTeacher = async (id) => {
+        try {
+            const res = await deleteTeacherRequest(user.token, id)
+            if (res.status === 200) getTeachers()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <TeacherContext.Provider
             value={{
@@ -63,7 +72,8 @@ export function TeacherProvider({ children }) {
                 createTeacher,
                 getTeachers,
                 activateTeacher,
-                deactivateTeacher
+                deactivateTeacher,
+                deleteTeacher
             }}>
             {children}
         </TeacherContext.Provider>

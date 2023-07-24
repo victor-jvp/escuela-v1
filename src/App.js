@@ -25,6 +25,7 @@ import Representant from "./pages/representant/Representant";
 import CreateRepresentant from './pages/representant/CreateRepresentant'
 import { UserProvider } from './context/UsersContext'
 import { TeacherProvider } from "./context/TeachersContext";
+import { StudentProvider } from "./context/StudentsContext";
 
 function App() {
 
@@ -35,43 +36,45 @@ function App() {
       <AuthProvider>
         <UserProvider>
           <TeacherProvider>
-            <BrowserRouter>
-              <Routes>
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/" element={<ProtectedRoute />}>
-                  <Route index element={<Home />} />
-                  <Route path="direccion">
-                    <Route index element={<Personal />} />
-                    <Route path="create" element={<CreatePersonal />} />
+            <StudentProvider>
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/" element={<ProtectedRoute />}>
+                    <Route index element={<Home />} />
+                    <Route path="personal">
+                      <Route index element={<Personal />} />
+                      <Route path="create" element={<CreatePersonal />} />
+                    </Route>
+                    <Route path="representants">
+                      <Route index element={<Representant />} />
+                      <Route path="create" element={<CreateRepresentant />} />
+                    </Route>
+                    <Route path="students">
+                      <Route index element={<Students />} />
+                      <Route
+                        path="create"
+                        element={<CreateStudent />} />
+                      <Route
+                        path="edit/:id"
+                        element={<EditStudent />} />
+                    </Route>
+                    <Route path="teachers">
+                      <Route index element={<Teachers />} />
+                      <Route
+                        path="create"
+                        element={<CreateTeacher />} />
+                    </Route>
+                    <Route path="users">
+                      <Route index element={<Users />} />
+                      <Route path="create" element={<CreateUser />} />
+                      <Route path="edit/:iduser" element={<EditUser />} />
+                    </Route>
                   </Route>
-                  <Route path="representants">
-                    <Route index element={<Representant />} />
-                    <Route path="create" element={<CreateRepresentant />} />
-                  </Route>
-                  <Route path="students">
-                    <Route index element={<Students />} />
-                    <Route
-                      path="create"
-                      element={<CreateStudent />} />
-                    <Route
-                      path="edit/:id"
-                      element={<EditStudent />} />
-                  </Route>
-                  <Route path="teachers">
-                    <Route index element={<Teachers />} />
-                    <Route
-                      path="create"
-                      element={<CreateTeacher />} />
-                  </Route>
-                  <Route path="users">
-                    <Route index element={<Users />} />
-                    <Route path="create" element={<CreateUser />} />
-                    <Route path="edit/:iduser" element={<EditUser />} />
-                  </Route>
-                </Route>
-              </Routes>
-            </BrowserRouter>
+                </Routes>
+              </BrowserRouter>
+            </StudentProvider>
           </TeacherProvider>
         </UserProvider>
       </AuthProvider>

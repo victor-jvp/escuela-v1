@@ -1,14 +1,30 @@
 import axios from './axios'
 
-const session = JSON.parse(sessionStorage.getItem('session'))
-
-const config = {
+export const getStudentsRequest = (token) => axios.get(
+    `direccion/estudiantes`, {
     headers: {
-        'Authorization': `Bearer ${session.token}`
+        'Authorization': `Bearer ${token}`
     }
-}
+});
 
-export const getStudentsRequest = () => axios.get(`representante/${session.representante.id}/estudiantes`, config);
-// export const getStudentRequest = (id) => axios.get(`representante/${id}/estudiantes`);
-// export const getStudents = (id) => axios.get(`representante/${id}/estudiantes`);
-// export const getStudents = (id) => axios.get(`representante/${id}/estudiantes`);
+export const getRepresentantsRequest = (token, id) => axios.get(
+    `representante/${id}`, {
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+});
+
+export const createRepresentantRequest = (token, data) => axios.post(
+    `representante/nuevoRepresentante`, data, {
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+});
+
+// export const deleteRepresentantRequest = (token, id) => axios.post(
+//     `representante/nuevoRepresentante`, id, {
+//     headers: {
+//         'Authorization': `Bearer ${token}`
+//     }
+// });
+

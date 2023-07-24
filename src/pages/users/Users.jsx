@@ -4,10 +4,16 @@ import Navbar from '../../components/navbar/Navbar'
 import DataTable from "../../components/datatable/DataTable";
 import { useState, useEffect } from 'react';
 import { useUsers } from "../../context/UsersContext";
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import ToggleOffOutlinedIcon from '@mui/icons-material/ToggleOffOutlined';
+import ToggleOnOutlinedIcon from '@mui/icons-material/ToggleOnOutlined';
+import { Tooltip } from "@mui/material";
+import Swal from 'sweetalert2';
 
 const Users = () => {
 
-  const { getUsers, users, activateUser, deactivateUser } = useUsers()
+  const { getUsers, users, activateUser, deactivateUser, deleteUser } = useUsers()
+  const [swalProps, setSwalProps] = useState({})
 
   const tableCols = [
     // { field: 'id', headerName: 'ID', width: 70 },
@@ -22,20 +28,54 @@ const Users = () => {
     {
       field: 'action',
       headerName: 'Opciones',
-      width: 135,
+      width: 200,
       renderCell: (params) => {
         return (
           <div className="cellActions">
             {
               !params.row.habilitado
-                ? (<div className="viewButton" onClick={() => activate(params.row._id)}>Habilitar</div>)
-                : (<div className="deleteButton" onClick={() => deactivate(params.row._id)}>Deshabilitar</div>)
+                ? (<div className="viewButton" onClick={() => activate(params.row._id)}>
+                  <Tooltip title="Habilitar">
+                    <ToggleOnOutlinedIcon />
+                  </Tooltip>
+                </div>)
+                : (<div className="deleteButton" onClick={() => deactivate(params.row._id)}>
+                  <Tooltip title="Deshabilitar">
+                    <ToggleOffOutlinedIcon />
+                  </Tooltip>
+                </div>)
             }
+            <div className="deleteButton" onClick={() => deleteRow(params.row._id)}>
+              <Tooltip title="Eliminar">
+                <DeleteOutlineOutlinedIcon />
+              </Tooltip>
+            </div>
           </div>
         )
       }
     }
   ]
+
+  const deleteRow = (id) => {
+    Swal.fire({
+      title: 'Eliminar registro',
+      text: "Confirme eliminar el registro seleccionado",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirmar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteUser(id)
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+      }
+    })
+  }
 
   const activate = (id) => {
     activateUser(id)

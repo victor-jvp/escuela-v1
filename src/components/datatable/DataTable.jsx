@@ -10,9 +10,7 @@ const DataTable = ({ title, createUrl, tableCols, tableRows, actionColumn }) => 
     <div className="datatable">
       <div className="datatableTitle">
         {title}
-        <Link to={createUrl} className="link">
-          Agregar
-        </Link>
+        {createUrl && (<Link to={createUrl} className="link"> Agregar </Link>)}
       </div>
       <DataGrid
         className="datagrid"

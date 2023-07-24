@@ -1,12 +1,14 @@
 import axios from './axios'
 
-const TOKEN = JSON.parse(sessionStorage.getItem('session'))?.token
-const config = {
+export const getPersonalRequest = (token) => axios.get(`administracion`, {
     headers: {
-        'Authorization': `Bearer ${TOKEN}`
+        'Authorization': `Bearer ${token}`
     }
-}
+});
 
-export const getPersonalRequest = () => axios.get(`administracion`, config);
-
-export const createPersonalRequest = (data) => axios.post(`direccion/administracion/registrarAdministrador`, data, config);
+export const createPersonalRequest = (token, data) => axios.post(
+    `direccion/administracion/registrarAdministrador`, data, {
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+});

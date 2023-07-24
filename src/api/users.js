@@ -27,5 +27,9 @@ export const inactiveUserRequest = (token, id) => axios.patch(
     }
 });
 
-// export const deleteUserRequest = (id) => axios.delete(
-//     `direccion/administracion/${id}/eliminarAdministrador`, config);
+export const deleteUserRequest = (token, id) => axios.delete(
+    `direccion/administracion/${id}/eliminarAdministrador`, {
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+});

@@ -2,12 +2,12 @@ import './students.scss'
 import Sidebar from '../../components/sidebar/Sidebar'
 import Navbar from '../../components/navbar/Navbar'
 import DataTable from '../../components/datatable/DataTable'
-import { useEffect, useState } from 'react'
-import axios from '../../api/axios'
+import { useEffect, useState } from 'react';
+import { useStudents } from '../../context/StudentsContext'
 
 const Students = () => {
 
-  const [tableRows, setTableRows] = useState([])
+  const { getStudents, students } = useStudents()
   const tableCols = [
     // { field: 'id', headerName: 'ID', width: 70 },
     { field: 'cedula_escolar', headerName: 'Cedula', width: 120 },
@@ -38,13 +38,11 @@ const Students = () => {
     { field: 'año_escolar', headerName: 'Año Escolar', width: 150 }
   ];
 
+  const actionColumn = []
+
   useEffect(() => {
-    axios.get("/direccion/estudiantes").then((resp) => {
-      console.log(resp.data)
-    }).catch(error => {
-      console.log(error)
-    })
-  })
+    getStudents()
+  }, [])
 
   return (
     <div className='list'>
@@ -54,9 +52,8 @@ const Students = () => {
         <DataTable
           title="Estudiantes"
           tableCols={tableCols}
-          tableRows={tableRows}
-          setTableRows={setTableRows}
-          createUrl="/students/create"
+          tableRows={students}
+          actionColumn={actionColumn}
         />
       </div>
     </div>

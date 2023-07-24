@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { createUserRequest, getUsersRequest, activeUserRequest, inactiveUserRequest } from '../api/users'
+import { createUserRequest, getUsersRequest, activeUserRequest, inactiveUserRequest, deleteUserRequest } from '../api/users'
 import { useAuth } from "./AuthProvider";
 
 const UserContext = createContext();
@@ -44,9 +44,18 @@ export function UserProvider({ children }) {
         }
     }
 
-    const createUser = async (user) => {
+    const createUser = async (data) => {
         try {
-            await createUserRequest(user.token, user)
+            await createUserRequest(user.token, data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const deleteUser = async (id) => {
+        try {
+            const res = await deleteUserRequest(user.token, id)
+            if (res.status === 200) getUsers()
         } catch (error) {
             console.log(error)
         }
@@ -59,7 +68,8 @@ export function UserProvider({ children }) {
                 createUser,
                 getUsers,
                 activateUser,
-                deactivateUser
+                deactivateUser,
+                deleteUser
             }}>
             {children}
         </UserContext.Provider>
