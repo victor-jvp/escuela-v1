@@ -2,7 +2,6 @@ import "./datatable.scss"
 import { DataGrid } from '@mui/x-data-grid/DataGrid';
 import { esES } from '@mui/x-data-grid/locales/esES';
 import { Link } from "react-router-dom";
-import { useState } from "react";
 
 const DataTable = ({ title, createUrl, tableCols, tableRows, actionColumn }) => {
 

@@ -32,7 +32,7 @@ const Login = () => {
   }, [isAuthenticated])
 
   const usersTypeList = [
-    { value: 'docente', label: 'Profesor' },
+    { value: 'docente', label: 'Docente' },
     { value: 'direccion', label: 'Director' },
     { value: 'administracion', label: 'Administrador' }
   ]

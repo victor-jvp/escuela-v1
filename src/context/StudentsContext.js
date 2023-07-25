@@ -1,11 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import {
-    createStudentRequest,
     getStudentsRequest,
-    activeStudentRequest,
-    inactiveStudentRequest,
-    getRepresentantsRequest,
-    createRepresentantRequest
 } from '../api/students'
 import { useAuth } from './AuthProvider'
 
@@ -23,7 +18,6 @@ export const useStudents = () => {
 export function StudentProvider({ children }) {
 
     const [students, setStudents] = useState([]);
-    const [representants, setRepresentants] = useState([]);
     const { user } = useAuth()
 
     // const activateStudent = async (id) => {
@@ -56,23 +50,6 @@ export function StudentProvider({ children }) {
         }
     }
 
-    const getRepresentants = async () => {
-        try {
-            const res = await getRepresentantsRequest(user.token, user.id)
-            setRepresentants(res.data)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    const createRepresentant = async (data) => {
-        try {
-            await createRepresentantRequest(user.token, data)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
     // const deleteRepresentant = async (data) => {
     //     try {
     //         await deleteRepresentantRequest(user.token, data)
@@ -86,9 +63,6 @@ export function StudentProvider({ children }) {
             value={{
                 students,
                 getStudents,
-                representants,
-                getRepresentants,
-                createRepresentant,
                 // createStudent,
                 // activateStudent,
                 // deactivateStudent

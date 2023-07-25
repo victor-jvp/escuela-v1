@@ -2,12 +2,11 @@ import React, { useEffect } from 'react'
 import DataTable from '../../components/datatable/DataTable';
 import Navbar from '../../components/navbar/Navbar';
 import Sidebar from '../../components/sidebar/Sidebar';
-import { useStudents } from '../../context/StudentsContext';
-
+import { useRepresentants } from '../../context/RepresentantsContext';
 
 const Representant = () => {
 
-  const { getRepresentants, representants } = useStudents()
+  const { getRepresentants, representants } = useRepresentants()
   const tableCols = [
     // { field: 'id', headerName: 'ID', width: 70 },
     { field: 'cedula_escolar', headerName: 'Cedula', width: 120 },
