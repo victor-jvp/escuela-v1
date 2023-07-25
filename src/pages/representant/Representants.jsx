@@ -8,6 +8,7 @@ import AddReactionOutlinedIcon from '@mui/icons-material/AddReactionOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Tooltip } from "@mui/material";
 import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
 
 const Representant = () => {
 
@@ -26,11 +27,11 @@ const Representant = () => {
       renderCell: (params) => {
         return (
           <div className="cellActions">
-            <div className="viewButton" onClick={() => addStudent(params.row._id)}>
+            <Link to={`/representants/${params.row._id}/add-student`} className="viewButton">
               <Tooltip title="Agregar Estudiante">
                 <AddReactionOutlinedIcon />
               </Tooltip>
-            </div>
+            </Link>
             {/* <Link to={`edit/${params.row._id}`} className="viewButton">
               <Tooltip title="Modificar">
                 <EditOutlinedIcon />

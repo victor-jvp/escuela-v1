@@ -2,14 +2,25 @@ import "./create-student.scss"
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
 import { useForm } from 'react-hook-form'
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useStudents } from '../../context/StudentsContext';
+import Swal from 'sweetalert2';
 
 const CreateStudent = () => {
 
   const { register, handleSubmit } = useForm()
+  const { createStudent } = useStudents()
+  const navigate = useNavigate()
+  const params = useParams()
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data)
+  const onSubmit = handleSubmit(async (data) => {
+    const id = params.id
+    const res = await createStudent(params.id, data)
+    if (res === true) {
+      navigate('/representants')
+    } else {
+      Swal.fire("Error!", res, 'error')
+    }
   })
 
   return (
@@ -19,7 +30,7 @@ const CreateStudent = () => {
         <Navbar />
         <div className="top">
           <h1>Agregar Estudiante Nuevo</h1>
-          <Link to="/students" className="link">
+          <Link to="/representants" className="link">
             Regresar
           </Link>
         </div>

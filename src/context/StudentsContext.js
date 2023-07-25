@@ -1,8 +1,10 @@
 import { createContext, useContext, useState } from "react";
 import {
+  assignSectionRequest,
   createStudentRequest,
   getStudentsByRepresentantRequest,
   getStudentsRequest,
+  removeSectionRequest,
 } from '../api/students'
 import { useAuth } from './AuthProvider'
 import { HttpStatusCode } from "axios";
@@ -26,7 +28,13 @@ export function StudentProvider({ children }) {
   const getStudents = async () => {
     try {
       const res = await getStudentsRequest(user.token)
-      setStudents(res.data)
+      setStudents(res.data.map((e, i) => (
+        {
+          ...e,
+          "_id": i
+        }
+      )))
+      // setStudents(res.data)
     } catch (error) {
       console.log(error)
     }
@@ -41,10 +49,10 @@ export function StudentProvider({ children }) {
     }
   }
 
-  const createStudent = async (student) => {
+  const createStudent = async (id, student) => {
     try {
-      const res = await createStudentRequest(user.token, user.id, student);
-      if (res.status === HttpStatusCode.Created) {
+      const res = await createStudentRequest(user.token, id, student);
+      if (res.status === HttpStatusCode.Ok) {
         return true;
       } else {
         return res.data.message
@@ -54,13 +62,27 @@ export function StudentProvider({ children }) {
     }
   }
 
-  // const deleteRepresentant = async (data) => {
-  //     try {
-  //         await deleteRepresentantRequest(user.token, data)
-  //     } catch (error) {
-  //         console.log(error)
-  //     }
-  // }
+  //Asignar sección
+  const assignSection = async (id, data) => {
+    try {
+      const res = await assignSectionRequest(user.token, id, {
+        section: data
+      })
+      if (res.status === 200) getStudents()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  //Retirar sección
+  const removeSection = async (id) => {
+    try {
+      const res = await removeSectionRequest(user.token, id)
+      if (res.status === 200) getStudents()
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <StudentContext.Provider
@@ -69,6 +91,8 @@ export function StudentProvider({ children }) {
         getStudents,
         getStudentsByRepresentant,
         createStudent,
+        assignSection,
+        removeSection
       }}>
       {children}
     </StudentContext.Provider>
