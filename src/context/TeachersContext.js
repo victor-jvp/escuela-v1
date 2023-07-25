@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { createTeacherRequest, getTeachersRequest, activeTeacherRequest, inactiveTeacherRequest, deleteTeacherRequest } from '../api/teachers'
+import { createTeacherRequest, getTeachersRequest, activeTeacherRequest, inactiveTeacherRequest, deleteTeacherRequest, removeSectionRequest, assignSectionRequest } from '../api/teachers'
 import { useAuth } from './AuthProvider'
 
 const TeacherContext = createContext();
@@ -18,6 +18,7 @@ export function TeacherProvider({ children }) {
     const [teachers, setTeachers] = useState([]);
     const { user } = useAuth()
 
+    // Habilitar
     const activateTeacher = async (id) => {
         try {
             const res = await activeTeacherRequest(user.token, id)
@@ -28,6 +29,8 @@ export function TeacherProvider({ children }) {
             console.log(error)
         }
     }
+
+    //Deshabilitar
     const deactivateTeacher = async (id) => {
         try {
             const res = await inactiveTeacherRequest(user.token, id)
@@ -39,6 +42,7 @@ export function TeacherProvider({ children }) {
         }
     }
 
+    // Obtener lista
     const getTeachers = async () => {
         try {
             const res = await getTeachersRequest(user.token)
@@ -48,17 +52,50 @@ export function TeacherProvider({ children }) {
         }
     }
 
+    // Crear
     const createTeacher = async (teacher) => {
         try {
-            await createTeacherRequest(user.token, teacher)
+            const res = await createTeacherRequest(user.token, teacher)
+            if (res.status === 201) {
+                return true
+            } else {
+                return res.data.message
+            }
+        } catch (error) {
+            // console.log(error)
+            if (error.response.data.code === 11000) {
+                return "El email ya se encuentra registrado";
+            }
+            return error.response.data.message
+        }
+    }
+
+    // Eliminar
+    const deleteTeacher = async (id) => {
+        try {
+            const res = await deleteTeacherRequest(user.token, id)
+            if (res.status === 200) getTeachers()
         } catch (error) {
             console.log(error)
         }
     }
 
-    const deleteTeacher = async (id) => {
+    //Asignar sección
+    const assignSection = async (id, data) => {
         try {
-            const res = await deleteTeacherRequest(user.token, id)
+            const res = await assignSectionRequest(user.token, id, {
+                section: data
+            })
+            if (res.status === 200) getTeachers()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    //Retirar sección
+    const removeSection = async (id) => {
+        try {
+            const res = await removeSectionRequest(user.token, id)
             if (res.status === 200) getTeachers()
         } catch (error) {
             console.log(error)
@@ -73,7 +110,9 @@ export function TeacherProvider({ children }) {
                 getTeachers,
                 activateTeacher,
                 deactivateTeacher,
-                deleteTeacher
+                deleteTeacher,
+                assignSection,
+                removeSection
             }}>
             {children}
         </TeacherContext.Provider>

@@ -7,12 +7,14 @@ import { useEffect } from 'react';
 import ToggleOffOutlinedIcon from '@mui/icons-material/ToggleOffOutlined';
 import ToggleOnOutlinedIcon from '@mui/icons-material/ToggleOnOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import HourglassDisabledOutlinedIcon from '@mui/icons-material/HourglassDisabledOutlined';
+import HourglassEmptyOutlinedIcon from '@mui/icons-material/HourglassEmptyOutlined';
 import { Tooltip } from "@mui/material";
 import Swal from 'sweetalert2';
 
 const Teachers = () => {
 
-  const { getTeachers, teachers, activateTeacher, deactivateTeacher, deleteTeacher } = useTeachers()
+  const { getTeachers, teachers, activateTeacher, deactivateTeacher, deleteTeacher, assignSection, removeSection } = useTeachers()
 
   const tableCols = [
     // { field: 'id', headerName: 'ID', width: 70 },
@@ -28,23 +30,34 @@ const Teachers = () => {
     {
       field: 'action',
       headerName: 'Opciones',
-      width: 135,
+      width: 200,
       renderCell: (params) => {
         return (
           <div className="cellActions">
             {
               !params.row.habilitado
-                ? (<div className="viewButton" onClick={() => activate(params.row._id)}>
+                ? (<div className="viewButton" onClick={() => activateTeacher(params.row._id)}>
                   <Tooltip title="Habilitar">
                     <ToggleOnOutlinedIcon />
                   </Tooltip>
                 </div>)
-                : (<div className="deleteButton" onClick={() => deactivate(params.row._id)}>
+                : (<div className="deleteButton" onClick={() => deactivateTeacher(params.row._id)}>
                   <Tooltip title="Deshabilitar">
                     <ToggleOffOutlinedIcon />
                   </Tooltip>
                 </div>)
             }
+            <div className="viewButton" onClick={() => _assignSection(params.row._id, params.row.section)}>
+              <Tooltip title="Cambiar Sección">
+                <HourglassEmptyOutlinedIcon />
+              </Tooltip>
+            </div>
+            {params.row.section && (<div className="viewButton" onClick={() => _removeSection(params.row._id)}>
+              <Tooltip title="Remover Sección">
+                <HourglassDisabledOutlinedIcon />
+              </Tooltip>
+            </div>)}
+
             <div className="deleteButton" onClick={() => deleteRow(params.row._id)}>
               <Tooltip title="Eliminar">
                 <DeleteOutlineOutlinedIcon />
@@ -68,21 +81,50 @@ const Teachers = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         deleteTeacher(id)
-        Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
-        )
       }
     })
   }
 
-  const activate = (id) => {
-    activateTeacher(id)
+  const _assignSection = (id, current) => {
+    Swal.fire({
+      title: 'Ingrese la sección',
+      input: 'text',
+      inputValue: current,
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Actualizar',
+      showLoaderOnConfirm: true,
+      preConfirm: async (data) => {
+        return await assignSection(id, data)
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+      if (result === true) {
+        // Swal.fire({
+        //   title: `${result.value.login}'s avatar`,
+        //   imageUrl: result.value.avatar_url
+        // })
+        Swal.close()
+      }
+    })
   }
 
-  const deactivate = (id) => {
-    deactivateTeacher(id)
+  const _removeSection = (id) => {
+    Swal.fire({
+      title: 'Confirmar acción',
+      text: "Confirme remover la sección del registro seleccionado",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirmar',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        removeSection(id)
+      }
+    })
   }
 
   useEffect(() => {

@@ -37,9 +37,13 @@ export const AuthProvider = ({ children }) => {
   const signin = async (user) => {
     try {
       const res = await loginRequest(user)
-      setIsAuthenticated(true)
-      setUser(res.data)
-      sessionStorage.setItem("session", JSON.stringify(res.data))
+      if (res.status === 200) {
+        setIsAuthenticated(true)
+        setUser(res.data)
+        sessionStorage.setItem("session", JSON.stringify(res.data))
+      } else {
+        console.log(res.data.message)
+      }
     } catch (error) {
       // console.log(error.response)
       let errorMessages = []

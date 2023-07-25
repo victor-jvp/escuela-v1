@@ -4,6 +4,7 @@ import Navbar from '../../components/navbar/Navbar';
 import { useForm } from 'react-hook-form';
 import { useTeachers } from "../../context/TeachersContext";
 import { Link, useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 const CreateTeacher = ({ inputs, title }) => {
 
@@ -11,10 +12,15 @@ const CreateTeacher = ({ inputs, title }) => {
   const { createTeacher } = useTeachers();
   const navigate = useNavigate()
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit(async (data) => {
     data.habilitado = true;
-    createTeacher(data)
-    navigate("/teachers")
+    const res = await createTeacher(data)
+    if (res === true) {
+      navigate("/teachers")
+    } else {
+      console.log(res);
+      Swal.fire("Error en el proceso", res, "error");
+    }
   })
 
   return (
