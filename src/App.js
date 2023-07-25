@@ -12,21 +12,21 @@ import Personal from './pages/personal/Personal'
 import Teachers from './pages/teachers/Teachers'
 import CreatePersonal from './pages/personal/CreatePersonal'
 import CreateTeacher from './pages/teachers/CreateTeacher'
-import CreateStudent from './pages/students/CreateStudent'
+import StudentForm from './pages/students/StudentForm'
 import "./style/dark.scss"
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
-import EditStudent from "./pages/students/EditStudent";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import { AuthProvider } from "./context/AuthProvider";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import Representant from "./pages/representant/Representants";
-import CreateRepresentant from './pages/representant/CreateRepresentant'
+import RepresentantsForm from './pages/representant/RepresentantsForm'
 import { UserProvider } from './context/UsersContext'
 import { TeacherProvider } from "./context/TeachersContext";
 import { StudentProvider } from "./context/StudentsContext";
 import { RepresentantProvider } from "./context/RepresentantsContext";
+import ShowRepresentant from "./pages/representant/ShowRepresentant";
 
 function App() {
 
@@ -51,16 +51,19 @@ function App() {
                       </Route>
                       <Route path="representants">
                         <Route index element={<Representant />} />
-                        <Route path="create" element={<CreateRepresentant />} />
+                        <Route path="create" element={<RepresentantsForm title="Nuevo Representante" />} />
+                        <Route path="edit/:id" element={<RepresentantsForm title="Modificar Representante" />} />
+                        <Route path=":id" element={<ShowRepresentant />} />
+                        <Route path=":id/create" element={<StudentForm />} />
                       </Route>
                       <Route path="students">
                         <Route index element={<Students />} />
                         <Route
                           path="create"
-                          element={<CreateStudent />} />
+                          element={<StudentForm />} />
                         <Route
                           path="edit/:id"
-                          element={<EditStudent />} />
+                          element={<StudentForm />} />
                       </Route>
                       <Route path="teachers">
                         <Route index element={<Teachers />} />

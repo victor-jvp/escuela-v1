@@ -17,6 +17,8 @@ export const AuthProvider = ({ children }) => {
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(true)
 
+  const userType = user && Object.keys(user)[0] // Obtener el tipo de usuario
+
   const signup = async (user) => {
     try {
       const res = await registerRequest(user)
@@ -101,7 +103,7 @@ export const AuthProvider = ({ children }) => {
         loading,
         isAuthenticated,
         errors,
-
+        userType
       }}>
       {children}
     </AuthContext.Provider>

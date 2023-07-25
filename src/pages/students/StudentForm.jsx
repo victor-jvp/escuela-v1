@@ -66,7 +66,9 @@ const CreateStudent = () => {
                 <label htmlFor="año_escolar">Año Escolar</label>
                 <input type="text" required {...register('año_escolar')} placeholder="..." />
               </div>
-              <button>Guardar</button>
+              <div className="formInput">
+                <button>Guardar</button>
+              </div>
             </form>
           </div>
         </div>

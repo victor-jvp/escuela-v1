@@ -7,10 +7,12 @@ import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import { Link } from 'react-router-dom';
 import { useContext } from "react";
 import { DarkModeContext } from "../../context/darkModeContext";
+import { useAuth } from "../../context/AuthProvider";
 
 const Sidebar = () => {
 
   const { dispatch } = useContext(DarkModeContext)
+  const { user, userType } = useAuth()
 
   return (
     <div className="sidebar">
@@ -33,41 +35,66 @@ const Sidebar = () => {
               <span>Home</span>
             </li>
           </Link>
-          <Link to="/representants" style={{ textDecoration: "none" }}>
-            <li>
-              <PeopleIcon className="icon" />
-              <span>Representantes</span>
-            </li>
-          </Link>
-          <Link to="/students" style={{ textDecoration: "none" }}>
-            <li>
-              <SchoolIcon className="icon" />
-              <span>Estudiantes</span>
-            </li>
-          </Link>
 
-          <p className="title">CONFIGURACION</p>
+          {
+            (userType === "representante") && (
+              <>
+                <Link to={`/representants/${user[`${userType}`]._id}`} style={{ textDecoration: "none" }}>
+                  <li>
+                    <PeopleIcon className="icon" />
+                    <span>Representante</span>
+                  </li>
+                </Link>
+              </>
+            )
+          }
 
-          <hr />
+          {
+            (userType === "director" || userType === "administrador") && (
+              <>
+                <Link to="/representants" style={{ textDecoration: "none" }}>
+                  <li>
+                    <PeopleIcon className="icon" />
+                    <span>Representantes</span>
+                  </li>
+                </Link>
+                <Link to="/students" style={{ textDecoration: "none" }}>
+                  <li>
+                    <SchoolIcon className="icon" />
+                    <span>Estudiantes</span>
+                  </li>
+                </Link>
+              </>
+            )
+          }
 
-          <Link to="/personal" style={{ textDecoration: "none" }}>
-            <li>
-              <FolderSharedIcon className="icon" />
-              <span>Personal Administrativo</span>
-            </li>
-          </Link>
-          <Link to="/teachers" style={{ textDecoration: "none" }}>
-            <li>
-              <AssignmentIndIcon className="icon" />
-              <span>Profesores</span>
-            </li>
-          </Link>
-          <Link to="/users" style={{ textDecoration: "none" }}>
-            <li>
-              <PeopleIcon className="icon" />
-              <span>Usuarios</span>
-            </li>
-          </Link>
+          {
+            (userType === "director" || userType === "administrador") && (
+              <>
+                <p className="title">CONFIGURACION</p>
+
+                <hr />
+                <Link to="/personal" style={{ textDecoration: "none" }}>
+                  <li>
+                    <FolderSharedIcon className="icon" />
+                    <span>Personal Administrativo</span>
+                  </li>
+                </Link>
+                <Link to="/teachers" style={{ textDecoration: "none" }}>
+                  <li>
+                    <AssignmentIndIcon className="icon" />
+                    <span>Docentes</span>
+                  </li>
+                </Link>
+                <Link to="/users" style={{ textDecoration: "none" }}>
+                  <li>
+                    <PeopleIcon className="icon" />
+                    <span>Usuarios</span>
+                  </li>
+                </Link>
+              </>
+            )
+          }
         </ul>
       </div>
       <div className="bottom">

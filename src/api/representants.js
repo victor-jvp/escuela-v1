@@ -1,30 +1,25 @@
 import axios from './axios'
 
-export const getStudentsRequest = (token) => axios.get(
-    `direccion/estudiantes`, {
+const config = (token) => (
+  {
     headers: {
-        'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${token}`
     }
-});
+  }
+)
 
-export const getRepresentantsRequest = (token, id) => axios.get(
-    `representante/${id}`, {
-    headers: {
-        'Authorization': `Bearer ${token}`
-    }
-});
+export const getStudentsRequest = (token) => axios.get(
+  `direccion/estudiantes`, config(token));
+
+export const getRepresentantsRequest = (token) => axios.get(
+  `representantes`, config(token));
+
+export const getRepresentantRequest = (token, id) => axios.get(
+  `representante/${id}`, config(token));
 
 export const createRepresentantRequest = (token, data) => axios.post(
-    `representante/nuevoRepresentante`, data, {
-    headers: {
-        'Authorization': `Bearer ${token}`
-    }
-});
+  `representante/nuevoRepresentante`, data, config(token));
 
-// export const deleteRepresentantRequest = (token, id) => axios.post(
-//     `representante/nuevoRepresentante`, id, {
-//     headers: {   
-//         'Authorization': `Bearer ${token}`
-//     }
-// });
+export const deleteRepresentantRequest = (token, id) => axios.delete(
+  `representante/${id}/eliminarRepresentante`, config(token));
 

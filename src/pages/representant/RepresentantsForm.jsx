@@ -1,17 +1,35 @@
-import { useStudents } from '../../context/StudentsContext';
 import Sidebar from '../../components/sidebar/Sidebar'
 import Navbar from '../../components/navbar/Navbar'
-import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import Swal from 'sweetalert2';
+import { useRepresentants } from '../../context/RepresentantsContext';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useAuth } from '../../context/AuthProvider';
 
-const CreateRepresentant = () => {
+const CreateRepresentant = ({ title }) => {
   const { register, handleSubmit } = useForm();
-  const { createRepresentant } = useStudents();
+  const { createRepresentant, getRepresentant } = useRepresentants();
   const navigate = useNavigate()
+  const params = useParams()
 
-  const onSubmit = handleSubmit((data) => {
-    createRepresentant(data)
-    navigate("/representants")
+  useEffect(() => {
+    if (params.id) {
+      _getRepresentant(params.id)
+    }
+  }, [])
+
+  const _getRepresentant = (id) => {
+    getRepresentant(params.id)
+  }
+
+  const onSubmit = handleSubmit(async (data) => {
+    const res = await createRepresentant(data)
+    if (res === true) {
+      navigate("/representants")
+    } else {
+      Swal.fire("Error en el proceso", res, "error");
+    }
   })
 
   return (
@@ -20,7 +38,7 @@ const CreateRepresentant = () => {
       <div className="newContainer">
         <Navbar />
         <div className="top">
-          <h1>Crear Nuevo Representante</h1>
+          <h1>{title}</h1>
           <Link to='/representants' className="link">
             Volver
           </Link>
@@ -40,7 +58,9 @@ const CreateRepresentant = () => {
                 <label htmlFor="password">Contraseña</label>
                 <input type="password" {...register("password")} placeholder='...' required />
               </div>
-              <button>Guardar</button>
+              <div className="formInput">
+                <button>Guardar</button>
+              </div>
             </form>
           </div>
         </div>

@@ -1,17 +1,19 @@
-import React, { useEffect } from 'react'
-import DataTable from '../../components/datatable/DataTable';
-import Navbar from '../../components/navbar/Navbar';
+import { useEffect } from 'react'
+import { Tooltip } from '@mui/material';
+import Swal from 'sweetalert2';
 import Sidebar from '../../components/sidebar/Sidebar';
-import { useRepresentants } from '../../context/RepresentantsContext';
+import Navbar from '../../components/navbar/Navbar'
+import DataTable from '../../components/datatable/DataTable';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import AddReactionOutlinedIcon from '@mui/icons-material/AddReactionOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { Tooltip } from "@mui/material";
-import Swal from 'sweetalert2';
+import { useStudents } from '../../context/StudentsContext'
+import { useParams } from 'react-router-dom'
 
-const Representant = () => {
+const ShowRepresentant = () => {
+  const { students, getStudentsByRepresentant } = useStudents()
+  const params = useParams()
 
-  const { getRepresentants, representants, deleteRepresentant } = useRepresentants()
   const tableCols = [
     // { field: 'id', headerName: 'ID', width: 70 },
     { field: 'name', headerName: 'Nombre y Apellido', width: 200 },
@@ -62,7 +64,7 @@ const Representant = () => {
       confirmButtonText: 'Confirmar',
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteRepresentant(id)
+        // deleteRepresentant(id)
         Swal.fire(
           'Deleted!',
           'Your file has been deleted.',
@@ -73,7 +75,8 @@ const Representant = () => {
   }
 
   useEffect(() => {
-    getRepresentants()
+    getStudentsByRepresentant(params.id)
+    console.log(students)
   }, [])
 
   return (
@@ -82,10 +85,10 @@ const Representant = () => {
       <div className="listContainer">
         <Navbar />
         <DataTable
-          title="Representantes"
+          title="Estudiantes de Representante"
           tableCols={tableCols}
-          tableRows={representants}
-          createUrl={`/representants/create`}
+          tableRows={students}
+          createUrl={`/representants/${params.id}/create`}
           actionColumn={actionColumn}
         />
       </div>
@@ -93,4 +96,4 @@ const Representant = () => {
   )
 }
 
-export default Representant
+export default ShowRepresentant

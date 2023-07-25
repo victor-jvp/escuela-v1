@@ -2,7 +2,7 @@ import "./users.scss"
 import Sidebar from '../../components/sidebar/Sidebar'
 import Navbar from '../../components/navbar/Navbar'
 import DataTable from "../../components/datatable/DataTable";
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useUsers } from "../../context/UsersContext";
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import ToggleOffOutlinedIcon from '@mui/icons-material/ToggleOffOutlined';
@@ -13,7 +13,6 @@ import Swal from 'sweetalert2';
 const Users = () => {
 
   const { getUsers, users, activateUser, deactivateUser, deleteUser } = useUsers()
-  const [swalProps, setSwalProps] = useState({})
 
   const tableCols = [
     // { field: 'id', headerName: 'ID', width: 70 },

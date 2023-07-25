@@ -12,6 +12,8 @@ export const logoutRequest = (user) => {
         url = "administracion/cerrarSesion"
     } else if (type === "profesor") {
         url = "docente/cerrarSesion"
+    } else if (type === "representante") {
+        url = "representante/cerrarSesion"
     }
 
     return axios.post(url, user, {
