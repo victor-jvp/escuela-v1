@@ -4,16 +4,21 @@ import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
 import { useUsers } from '../../context/UsersContext';
 import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const CreateUser = () => {
   const { register, handleSubmit } = useForm();
   const { createUser } = useUsers();
   const navigate = useNavigate()
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit(async (data) => {
     data.habilitado = true;
-    createUser(data)
-    navigate("/users")
+    const res = await createUser(data)
+    if (res === true) {
+      navigate("/users")
+    } else {
+      Swal.fire("Error en el proceso", res, "error");
+    }
   })
 
   return (

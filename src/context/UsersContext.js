@@ -46,9 +46,18 @@ export function UserProvider({ children }) {
 
     const createUser = async (data) => {
         try {
-            await createUserRequest(user.token, data)
+            const res = await createUserRequest(user.token, data)
+            if (res.status === 201) {
+                return true
+            } else {
+                return res.data.message
+            }
         } catch (error) {
             console.log(error)
+            if (error.response.data.code === 11000) {
+                return "El email ya se encuentra registrado";
+            }
+            return error.response.data.message
         }
     }
 
