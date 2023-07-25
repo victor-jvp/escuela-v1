@@ -49,7 +49,7 @@ export function StudentProvider({ children }) {
 
     const getStudents = async () => {
         try {
-            const res = await getStudentsRequest(user.token, user.id)
+            const res = await getStudentsRequest(user.token)
             setStudents(res.data)
         } catch (error) {
             console.log(error)
