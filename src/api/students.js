@@ -23,7 +23,7 @@ export const createRepresentantRequest = (token, data) => axios.post(
 
 // export const deleteRepresentantRequest = (token, id) => axios.post(
 //     `representante/nuevoRepresentante`, id, {
-//     headers: {
+//     headers: {   
 //         'Authorization': `Bearer ${token}`
 //     }
 // });

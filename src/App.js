@@ -19,7 +19,7 @@ import { DarkModeContext } from "./context/darkModeContext";
 import EditStudent from "./pages/students/EditStudent";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
-import { AuthProvider } from "./context/AuthProvider";
+import { AuthProvider, useAuth } from "./context/AuthProvider";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import Representant from "./pages/representant/Representant";
 import CreateRepresentant from './pages/representant/CreateRepresentant'
@@ -47,10 +47,10 @@ function App() {
                       <Route index element={<Personal />} />
                       <Route path="create" element={<CreatePersonal />} />
                     </Route>
-                    <Route path="representants">
+                    {/* <Route path="representants">
                       <Route index element={<Representant />} />
                       <Route path="create" element={<CreateRepresentant />} />
-                    </Route>
+                    </Route> */}
                     <Route path="students">
                       <Route index element={<Students />} />
                       <Route
