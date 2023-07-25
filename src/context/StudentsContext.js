@@ -28,13 +28,13 @@ export function StudentProvider({ children }) {
   const getStudents = async () => {
     try {
       const res = await getStudentsRequest(user.token)
-      setStudents(res.data.map((e, i) => (
-        {
-          ...e,
-          "_id": i
-        }
-      )))
-      // setStudents(res.data)
+      // setStudents(res.data.map((e, i) => (
+      //   {
+      //     ...e,
+      //     "_id": i
+      //   }
+      // )))
+      setStudents(res.data)
     } catch (error) {
       console.log(error)
     }
@@ -63,10 +63,10 @@ export function StudentProvider({ children }) {
   }
 
   //Asignar sección
-  const assignSection = async (id, data) => {
+  const assignSection = async (id_rep, id_est, data) => {
     try {
-      const res = await assignSectionRequest(user.token, id, {
-        section: data
+      const res = await assignSectionRequest(user.token, id_rep, id_est, {
+        seccion: data
       })
       if (res.status === 200) getStudents()
     } catch (error) {

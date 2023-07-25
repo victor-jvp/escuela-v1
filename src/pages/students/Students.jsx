@@ -5,16 +5,16 @@ import DataTable from '../../components/datatable/DataTable'
 import { useEffect } from 'react';
 import { useStudents } from '../../context/StudentsContext'
 import { Tooltip } from '@mui/material';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import HourglassDisabledOutlinedIcon from '@mui/icons-material/HourglassDisabledOutlined';
 import HourglassEmptyOutlinedIcon from '@mui/icons-material/HourglassEmptyOutlined';
+import BookOutlinedIcon from '@mui/icons-material/BookOutlined';
 import Swal from 'sweetalert2'
 
 const Students = () => {
 
   const { getStudents, students, assignSection, removeSection } = useStudents()
   const tableCols = [
-    { field: 'id', headerName: 'ID', width: 70 },
+    // { field: 'id', headerName: 'ID', width: 70 },
     { field: 'cedula_escolar', headerName: 'Cedula', width: 120 },
     {
       field: 'nombres',
@@ -51,23 +51,28 @@ const Students = () => {
       renderCell: (params) => {
         return (
           <div className="cellActions">
-            <div className="viewButton" onClick={() => _assignSection(params.row._id, params.row.section)}>
+            <div className="viewButton" onClick={() => _assignSection(params.row.id_representante,params.row._id, params.row.seccion)}>
               <Tooltip title="Cambiar Sección">
                 <HourglassEmptyOutlinedIcon />
               </Tooltip>
             </div>
-            {params.row.section && (<div className="viewButton" onClick={() => _removeSection(params.row._id)}>
+            {params.row.seccion && (<div className="deleteButton" onClick={() => _removeSection(params.row._id)}>
               <Tooltip title="Remover Sección">
                 <HourglassDisabledOutlinedIcon />
               </Tooltip>
             </div>)}
+            <div className="viewButton" onClick={() => _assignSection(params.row._id, params.row.section)}>
+              <Tooltip title="Registro Estudiantil">
+                <BookOutlinedIcon />
+              </Tooltip>
+            </div>
           </div>
         )
       }
     }
   ]
 
-  const _assignSection = (id, current) => {
+  const _assignSection = (id_rep, id_est, current) => {
     Swal.fire({
       title: 'Ingrese la sección',
       input: 'text',
@@ -79,7 +84,7 @@ const Students = () => {
       confirmButtonText: 'Actualizar',
       showLoaderOnConfirm: true,
       preConfirm: async (data) => {
-        return await assignSection(id, data)
+        return await assignSection(id_rep, id_est, data)
       },
       allowOutsideClick: () => !Swal.isLoading()
     }).then((result) => {
