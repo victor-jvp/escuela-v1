@@ -11,16 +11,19 @@ import AssignmentIndOutlinedIcon from '@mui/icons-material/AssignmentIndOutlined
 import Swal from 'sweetalert2';
 import { useEffect } from "react";
 import DataTable from "../../components/datatable/DataTable";
+import Widget from "../../components/widget/Widget";
+import { useTeachers } from "../../context/TeachersContext";
 
 const Evaluate = () => {
   const { getStudentsByTeacher, students } = useStudents()
+  const { informeDescriptivo, rasgosPersonales, proyectoEscolar } = useTeachers()
   const tableCols = [
     // { field: 'id', headerName: 'ID', width: 70 },
     { field: 'cedula_escolar', headerName: 'Cédula Escolar', width: 130 },
     { field: 'nombres', headerName: 'Nombres', width: 150 },
     { field: 'apellidos', headerName: 'Apellidos', width: 150 },
     { field: 'seccion', headerName: 'Sección', width: 100 },
-    { field: 'docente', headerName: 'Docente', width: 200 },
+    { field: 'grado', headerName: 'Grado', width: 100 },
     { field: 'año_escolar', headerName: 'Año Escolar', width: 100 }
   ];
 
@@ -33,7 +36,7 @@ const Evaluate = () => {
         return (
           <div className="cellActions">
             <div className="viewButton">
-              <Tooltip title="Cargar Informe Descriptivo">
+              <Tooltip title="Boletín de Calificaciones">
                 <ArticleOutlinedIcon />
               </Tooltip>
             </div>
@@ -52,10 +55,6 @@ const Evaluate = () => {
       }
     }
   ]
-
-  const studentRegister = () => {
-
-  }
 
   const _assignSection = (id_rep, id_est, current) => {
     Swal.fire({
@@ -99,6 +98,90 @@ const Evaluate = () => {
     })
   }
 
+  const cargarInforme = async () => {
+    const data = await Swal.fire({
+      title: 'Rasgos Personales',
+      html:
+        '<input id="swal-input" class="swal2-input" placeholder="Ingrese el lapso...">' +
+        '<textarea id="swal-textarea" class="swal2-textarea" placeholder="Descripcion..." cols="27">',
+      showCancelButton: true,
+      confirmButtonText: 'Procesar',
+      showLoaderOnConfirm: true,
+      allowOutsideClick: false,
+      preConfirm: () => {
+        return {
+          "lapso": document.getElementById('swal-input').value,
+          "descripcion": document.getElementById('swal-textarea').value
+        }
+      }
+    });
+
+    if (data.isConfirmed && data.value) {
+      const res = await informeDescriptivo(data.value)
+      if (res === true) {
+        Swal.fire("Completado", "Proceso realizado con éxito.", "success")
+      } else {
+        Swal.fire("Error", "Ha ocurrido un error en el proceso", "error")
+      }
+    }
+  }
+
+  const cargarRasgos = async () => {
+    const data = await Swal.fire({
+      title: 'Rasgos Personales',
+      html:
+        '<input id="swal-input" class="swal2-input" placeholder="Ingrese el lapso...">' +
+        '<textarea id="swal-textarea" class="swal2-textarea" placeholder="Descripcion..." cols="27">',
+      showCancelButton: true,
+      confirmButtonText: 'Procesar',
+      showLoaderOnConfirm: true,
+      allowOutsideClick: false,
+      preConfirm: () => {
+        return {
+          "lapso": document.getElementById('swal-input').value,
+          "rasgos": document.getElementById('swal-textarea').value
+        }
+      }
+    });
+
+    if (data.isConfirmed && data.value) {
+      const res = await rasgosPersonales(data.value)
+      if (res === true) {
+        Swal.fire("Completado", "Proceso realizado con éxito.", "success")
+      } else {
+        Swal.fire("Error", "Ha ocurrido un error en el proceso", "error")
+      }
+    }
+  }
+
+  const cargarProyecto = async () => {
+    const data = await Swal.fire({
+      title: 'Proyecto Escolar',
+      html:
+        '<input id="swal-input" class="swal2-input" placeholder="Ingrese el nombre...">' +
+        '<textarea id="swal-textarea" class="swal2-textarea" placeholder="Descripcion..." cols="27">',
+      showCancelButton: true,
+      confirmButtonText: 'Procesar',
+      showLoaderOnConfirm: true,
+      allowOutsideClick: false,
+      preConfirm: () => {
+        return {
+          "nombre": document.getElementById('swal-input').value,
+          "rasgos": document.getElementById('swal-textarea').value
+        }
+      }
+    });
+
+    if (data.isConfirmed && data.value) {
+      const res = await proyectoEscolar(data.value)
+      if (res === true) {
+        Swal.fire("Completado", "Proceso realizado con éxito.", "success")
+      } else {
+        Swal.fire("Error", "Ha ocurrido un error en el proceso", "error")
+      }
+    }
+  }
+
   useEffect(() => {
     getStudentsByTeacher()
   }, [])
@@ -108,6 +191,56 @@ const Evaluate = () => {
       <Sidebar />
       <div className="listContainer">
         <Navbar />
+        <div className="listContainer">
+          <div className="widgets">
+
+            <div className="widget">
+              <div className="left">
+                <span className="title">INFORME DESCRIPTIVO</span>
+                <span className="counter"></span>
+                <span className="link" onClick={cargarInforme}>Cargar Informe</span>
+              </div>
+              <div className="right">
+                {/* <div className="percentage positive">
+          <KeyboardArrowUpOutlinedIcon />
+          20%
+        </div> */}
+                <ArticleOutlinedIcon />
+              </div>
+            </div>
+
+            <div className="widget">
+              <div className="left">
+                <span className="title">RASGOS PERSONALES</span>
+                <span className="counter"></span>
+                <span className="link" onClick={cargarRasgos}>Cargar Rasgos</span>
+              </div>
+              <div className="right">
+                {/* <div className="percentage positive">
+          <KeyboardArrowUpOutlinedIcon />
+          20%
+        </div> */}
+                <ArticleOutlinedIcon />
+              </div>
+            </div>
+
+            <div className="widget">
+              <div className="left">
+                <span className="title">PROYECTO ESCOLAR</span>
+                <span className="counter"></span>
+                <span className="link" onClick={cargarProyecto}>Cargar Proyecto</span>
+              </div>
+              <div className="right">
+                {/* <div className="percentage positive">
+          <KeyboardArrowUpOutlinedIcon />
+          20%
+        </div> */}
+                <ArticleOutlinedIcon />
+              </div>
+            </div>
+
+          </div>
+        </div>
         <DataTable
           title="Estudiantes Asignados"
           tableCols={tableCols}
