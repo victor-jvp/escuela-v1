@@ -4,6 +4,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import SchoolIcon from '@mui/icons-material/School';
 import FolderSharedIcon from '@mui/icons-material/FolderShared';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import SpeedOutlinedIcon from '@mui/icons-material/SpeedOutlined';
 import { Link } from 'react-router-dom';
 import { useContext } from "react";
 import { DarkModeContext } from "../../context/darkModeContext";
@@ -50,6 +51,19 @@ const Sidebar = () => {
           }
 
           {
+            (userType === "profesor") && (
+              <>
+                <Link to={`/students/evaluate`} style={{ textDecoration: "none" }}>
+                  <li>
+                    <SpeedOutlinedIcon className="icon" />
+                    <span>Evaluar Desempeño</span>
+                  </li>
+                </Link>
+              </>
+            )
+          }
+
+          {
             (userType === "director" || userType === "administrador") && (
               <>
                 <Link to="/representants" style={{ textDecoration: "none" }}>
@@ -64,13 +78,6 @@ const Sidebar = () => {
                     <span>Estudiantes</span>
                   </li>
                 </Link>
-              </>
-            )
-          }
-
-          {
-            (userType === "director" || userType === "administrador") && (
-              <>
                 <p className="title">CONFIGURACION</p>
 
                 <hr />

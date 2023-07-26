@@ -15,32 +15,12 @@ const Students = () => {
   const { getStudents, students, assignSection, removeSection } = useStudents()
   const tableCols = [
     // { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'cedula_escolar', headerName: 'Cedula', width: 120 },
-    {
-      field: 'nombres',
-      headerName: 'Nombres',
-      width: 200,
-      renderCell: (params) => {
-        return (
-          <span>{params.row.nombre || ''}</span>
-        )
-      }
-    },
-    {
-      field: 'apellidos',
-      headerName: 'Apellidos',
-      width: 200,
-      renderCell: (params) => {
-        return (
-          <>
-            <span>{params.row.apellido1 || ''} {params.row.apellido2 || ''}</span>
-          </>
-        )
-      }
-    },
-    { field: 'seccion', headerName: 'Sección', width: 150 },
-    { field: 'docente', headerName: 'Docente', width: 150 },
-    { field: 'año_escolar', headerName: 'Año Escolar', width: 150 }
+    { field: 'cedula_escolar', headerName: 'Cédula Escolar', width: 130 },
+    { field: 'nombres', headerName: 'Nombres', width: 150 },
+    { field: 'apellidos', headerName: 'Apellidos', width: 150 },
+    { field: 'seccion', headerName: 'Sección', width: 100 },
+    { field: 'docente', headerName: 'Docente', width: 200 },
+    { field: 'año_escolar', headerName: 'Año Escolar', width: 100 }
   ];
 
   const actionColumn = [
@@ -51,7 +31,7 @@ const Students = () => {
       renderCell: (params) => {
         return (
           <div className="cellActions">
-            <div className="viewButton" onClick={() => _assignSection(params.row.id_representante, params.row._id, (params.row.seccion === "ninguno" && ""))}>
+            <div className="viewButton" onClick={() => _assignSection(params.row.id_representante, params.row._id, (params.row.seccion === "ninguno") ? "" : params.row.seccion)}>
               <Tooltip title="Cambiar Sección">
                 <HourglassEmptyOutlinedIcon />
               </Tooltip>
@@ -73,7 +53,7 @@ const Students = () => {
   ]
 
   const studentRegister = () => {
-    
+
   }
 
   const _assignSection = (id_rep, id_est, current) => {

@@ -27,6 +27,7 @@ import { TeacherProvider } from "./context/TeachersContext";
 import { StudentProvider } from "./context/StudentsContext";
 import { RepresentantProvider } from "./context/RepresentantsContext";
 import ShowRepresentant from "./pages/representant/ShowRepresentant";
+import Evaluate from "./pages/students/Evaluate";
 
 function App() {
 
@@ -58,6 +59,7 @@ function App() {
                       </Route>
                       <Route path="students">
                         <Route index element={<Students />} />
+                        <Route path="evaluate" element={<Evaluate />} />
                         <Route
                           path="create"
                           element={<StudentForm />} />
