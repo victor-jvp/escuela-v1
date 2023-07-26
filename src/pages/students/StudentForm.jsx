@@ -5,21 +5,52 @@ import { useForm } from 'react-hook-form'
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useStudents } from '../../context/StudentsContext';
 import Swal from 'sweetalert2';
+import { useEffect } from "react";
 
 const CreateStudent = () => {
 
-  const { register, handleSubmit } = useForm()
-  const { createStudent } = useStudents()
+  const { register, handleSubmit, setValue } = useForm()
+  const { createStudent, editStudent, getStudent } = useStudents()
   const navigate = useNavigate()
   const params = useParams()
 
+  useEffect(() => {
+    if (params.id_rep && params.id_est) {
+      _getStudent(params.id_est)
+    }
+  }, [])
+
+  const _getStudent = async (id) => {
+    const student = await getStudent(id)
+    setValue("nombres", student.nombres);
+    setValue("apellidos", student.apellidos);
+    setValue("fecha_de_nacimiento", student.fecha_de_nacimiento);
+    setValue("edad", student.edad);
+    setValue("grado", student.grado);
+    setValue("seccion", student.seccion);
+    setValue("direccion", student.direccion);
+    setValue("docente", student.docente);
+    setValue("cedula_escolar", student.cedula_escolar);
+    setValue("año_escolar", student.año_escolar);
+  }
+
   const onSubmit = handleSubmit(async (data) => {
-    const id = params.id
-    const res = await createStudent(params.id, data)
-    if (res === true) {
-      navigate('/representants')
+    const id_est = params.id_est
+    const id_rep = params.id_rep
+    if (id_est && id_rep) {
+      const res = await editStudent(id_rep, id_est, data)
+      if (res === true) {
+        navigate('/students')
+      } else {
+        Swal.fire("Error!", res, 'error')
+      }
     } else {
-      Swal.fire("Error!", res, 'error')
+      const res = await createStudent(id_rep, data)
+      if (res === true) {
+        navigate('/representants')
+      } else {
+        Swal.fire("Error!", res, 'error')
+      }
     }
   })
 
@@ -29,8 +60,8 @@ const CreateStudent = () => {
       <div className="newContainer">
         <Navbar />
         <div className="top">
-          <h1>Agregar Estudiante Nuevo</h1>
-          <Link to="/representants" className="link">
+          <h1>{(params.id_est) ? 'Modificar Estudiante' : 'Agregar Estudiante Nuevo'}</h1>
+          <Link to={(params.id_est) ? '/students' : '/representants'} className="link">
             Regresar
           </Link>
         </div>

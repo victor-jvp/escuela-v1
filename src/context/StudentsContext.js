@@ -2,7 +2,9 @@ import { createContext, useContext, useState } from "react";
 import {
   assignSectionRequest,
   createStudentRequest,
+  editStudentRequest,
   getStudentsByRepresentantRequest,
+  getStudentsByTeacherRequest,
   getStudentsRequest,
   removeSectionRequest,
 } from '../api/students'
@@ -28,13 +30,16 @@ export function StudentProvider({ children }) {
   const getStudents = async () => {
     try {
       const res = await getStudentsRequest(user.token)
-      // setStudents(res.data.map((e, i) => (
-      //   {
-      //     ...e,
-      //     "_id": i
-      //   }
-      // )))
       setStudents(res.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const getStudent = async (id) => {
+    try {
+      const res = await getStudentsRequest(user.token)
+      return res.data.filter(e => e._id === id)[0]
     } catch (error) {
       console.log(error)
     }
@@ -52,6 +57,19 @@ export function StudentProvider({ children }) {
   const createStudent = async (id, student) => {
     try {
       const res = await createStudentRequest(user.token, id, student);
+      if (res.status === HttpStatusCode.Ok) {
+        return true;
+      } else {
+        return res.data.message
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const editStudent = async (id_rep, id_est, student) => {
+    try {
+      const res = await editStudentRequest(user.token, id_rep, id_est, student);
       if (res.status === HttpStatusCode.Ok) {
         return true;
       } else {
@@ -84,13 +102,26 @@ export function StudentProvider({ children }) {
     }
   }
 
+  // Obtener estudiantes por profesor
+  const getStudentsByTeacher = async () => {
+    try {
+      const res = await getStudentsByTeacherRequest(user.token)
+      setStudents(res.data !== "" ? res.data : [])
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <StudentContext.Provider
       value={{
         students,
+        getStudent,
         getStudents,
         getStudentsByRepresentant,
+        getStudentsByTeacher,
         createStudent,
+        editStudent,
         assignSection,
         removeSection
       }}>

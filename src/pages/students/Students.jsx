@@ -8,7 +8,9 @@ import { Tooltip } from '@mui/material';
 import HourglassDisabledOutlinedIcon from '@mui/icons-material/HourglassDisabledOutlined';
 import HourglassEmptyOutlinedIcon from '@mui/icons-material/HourglassEmptyOutlined';
 import BookOutlinedIcon from '@mui/icons-material/BookOutlined';
-import Swal from 'sweetalert2'
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
 
 const Students = () => {
 
@@ -41,6 +43,11 @@ const Students = () => {
                 <HourglassDisabledOutlinedIcon />
               </Tooltip>
             </div>)}
+            <Link to={`/students/${params.row._id}/representants/${params.row.id_representante}`} className="viewButton">
+              <Tooltip title="Modificar">
+                <EditOutlinedIcon />
+              </Tooltip>
+            </Link>
             <div className="viewButton" onClick={() => studentRegister(params.row._id, params.row.section)}>
               <Tooltip title="Registro Estudiantil">
                 <BookOutlinedIcon />

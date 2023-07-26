@@ -22,6 +22,8 @@ export const removeSectionRequest = (token, id_rep, id_est, data) => axios.patch
 
 // Docente
 
+//Cargar estudiantes del profesor
+export const getStudentsByTeacherRequest = (token) => axios.get(`profesor/estudiantes`, config(token));
 // Cargar informe descriptivo: patch /estudiante/:estudiante/cargarInforme 
 export const setInformStudentRequest = (token, id, data) => axios.path(`estudiante/${id}/cargarInforme`, data, config(token))
 // Establecer rasgos personales: patch /estudiante/:estudiante/cargarRasgosPersonales

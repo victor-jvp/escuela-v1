@@ -64,7 +64,7 @@ function App() {
                           path="create"
                           element={<StudentForm />} />
                         <Route
-                          path="edit/:id"
+                          path=":id_est/representants/:id_rep"
                           element={<StudentForm />} />
                       </Route>
                       <Route path="teachers">
