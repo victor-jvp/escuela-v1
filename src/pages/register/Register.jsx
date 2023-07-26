@@ -18,13 +18,17 @@ const Register = () => {
 
 
   const onSubmit = handleSubmit(async (values) => {
-    signup(values);
+    const res = await signup(values);
+    if (res === true) {
+      navigate("/login");
+    }
   })
 
   return (
-    <div className=''>
+    <div className='register'>
       <form
         onSubmit={onSubmit}>
+        <h1>Registrar Director</h1>
         <input type="text" placeholder='Usuario' {...register("username", { required: true })} />
         {
           errors.username && (

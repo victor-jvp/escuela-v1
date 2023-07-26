@@ -1,5 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { registerRequest, loginRequest, logoutRequest } from '../api/auth';
+import { HttpStatusCode } from "axios";
 
 const AuthContext = createContext()
 
@@ -23,7 +24,12 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await registerRequest(user)
       // console.log(res.data);
-      setUser(res.data)
+      if (res.status === HttpStatusCode.Created) {
+        // setUser(res.data)
+        return true
+      } else {
+        return res.data.message
+      }
     } catch (error) {
       // console.log(error.response)
       let errorMessages = []
