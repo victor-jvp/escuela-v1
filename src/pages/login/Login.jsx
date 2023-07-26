@@ -2,7 +2,7 @@ import "./login.scss"
 import { useForm, Controller } from 'react-hook-form';
 import { useAuth } from '../../context/AuthProvider';
 import { useEffect } from "react";
-import { isRouteErrorResponse, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Select from 'react-select';
 
 const Login = () => {
