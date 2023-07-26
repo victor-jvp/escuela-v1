@@ -75,9 +75,9 @@ export function StudentProvider({ children }) {
   }
 
   //Retirar sección
-  const removeSection = async (id) => {
+  const removeSection = async (id_rep, id_est) => {
     try {
-      const res = await removeSectionRequest(user.token, id)
+      const res = await removeSectionRequest(user.token, id_rep, id_est)
       if (res.status === 200) getStudents()
     } catch (error) {
       console.log(error)

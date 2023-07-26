@@ -51,17 +51,17 @@ const Students = () => {
       renderCell: (params) => {
         return (
           <div className="cellActions">
-            <div className="viewButton" onClick={() => _assignSection(params.row.id_representante,params.row._id, params.row.seccion)}>
+            <div className="viewButton" onClick={() => _assignSection(params.row.id_representante, params.row._id, (params.row.seccion === "ninguno" && ""))}>
               <Tooltip title="Cambiar Sección">
                 <HourglassEmptyOutlinedIcon />
               </Tooltip>
             </div>
-            {params.row.seccion && (<div className="deleteButton" onClick={() => _removeSection(params.row._id)}>
+            {params.row.seccion !== "ninguno" && (<div className="deleteButton" onClick={() => _removeSection(params.row.id_representante, params.row._id)}>
               <Tooltip title="Remover Sección">
                 <HourglassDisabledOutlinedIcon />
               </Tooltip>
             </div>)}
-            <div className="viewButton" onClick={() => _assignSection(params.row._id, params.row.section)}>
+            <div className="viewButton" onClick={() => studentRegister(params.row._id, params.row.section)}>
               <Tooltip title="Registro Estudiantil">
                 <BookOutlinedIcon />
               </Tooltip>
@@ -71,6 +71,10 @@ const Students = () => {
       }
     }
   ]
+
+  const studentRegister = () => {
+    
+  }
 
   const _assignSection = (id_rep, id_est, current) => {
     Swal.fire({
@@ -98,7 +102,7 @@ const Students = () => {
     })
   }
 
-  const _removeSection = (id) => {
+  const _removeSection = (id_rep, id_est) => {
     Swal.fire({
       title: 'Confirmar acción',
       text: "Confirme remover la sección del registro seleccionado",
@@ -109,7 +113,7 @@ const Students = () => {
       confirmButtonText: 'Confirmar',
     }).then(async (result) => {
       if (result.isConfirmed) {
-        removeSection(id)
+        removeSection(id_rep, id_est)
       }
     })
   }
