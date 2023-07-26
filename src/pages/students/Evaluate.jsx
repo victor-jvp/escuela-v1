@@ -5,9 +5,9 @@ import SchoolIcon from '@mui/icons-material/School';
 import { Link } from "react-router-dom";
 import { useStudents } from "../../context/StudentsContext";
 import { Tooltip } from '@mui/material';
-import HourglassDisabledOutlinedIcon from '@mui/icons-material/HourglassDisabledOutlined';
-import HourglassEmptyOutlinedIcon from '@mui/icons-material/HourglassEmptyOutlined';
 import BookOutlinedIcon from '@mui/icons-material/BookOutlined';
+import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
+import AssignmentIndOutlinedIcon from '@mui/icons-material/AssignmentIndOutlined';
 import Swal from 'sweetalert2';
 import { useEffect } from "react";
 import DataTable from "../../components/datatable/DataTable";
@@ -32,18 +32,18 @@ const Evaluate = () => {
       renderCell: (params) => {
         return (
           <div className="cellActions">
-            <div className="viewButton" onClick={() => _assignSection(params.row.id_representante, params.row._id, (params.row.seccion === "ninguno") ? "" : params.row.seccion)}>
-              <Tooltip title="Cambiar Sección">
-                <HourglassEmptyOutlinedIcon />
+            <div className="viewButton">
+              <Tooltip title="Cargar Informe Descriptivo">
+                <ArticleOutlinedIcon />
               </Tooltip>
             </div>
-            {params.row.seccion !== "ninguno" && (<div className="deleteButton" onClick={() => _removeSection(params.row.id_representante, params.row._id)}>
-              <Tooltip title="Remover Sección">
-                <HourglassDisabledOutlinedIcon />
+            <div className="viewButton">
+              <Tooltip title="Establecer Rasgos Personales">
+                <AssignmentIndOutlinedIcon />
               </Tooltip>
-            </div>)}
-            <div className="viewButton" onClick={() => studentRegister(params.row._id, params.row.section)}>
-              <Tooltip title="Registro Estudiantil">
+            </div>
+            <div className="viewButton">
+              <Tooltip title="Registrar Literal Calificativo Final">
                 <BookOutlinedIcon />
               </Tooltip>
             </div>
