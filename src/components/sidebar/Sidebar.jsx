@@ -2,13 +2,13 @@ import "./sidebar.scss"
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import SchoolIcon from '@mui/icons-material/School';
-import FolderSharedIcon from '@mui/icons-material/FolderShared';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import SpeedOutlinedIcon from '@mui/icons-material/SpeedOutlined';
 import { Link } from 'react-router-dom';
 import { useContext } from "react";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useAuth } from "../../context/AuthProvider";
+import logo from "../../assets/logo_escuela.png";
 
 const Sidebar = () => {
 
@@ -19,7 +19,8 @@ const Sidebar = () => {
     <div className="sidebar">
       <div className="top">
         <Link to="/" style={{ textDecoration: "none" }}>
-          <span className="logo">logoescuela</span>
+          <img src={logo} alt="Logo Escuela" className="logo-img" />
+          {/* <span className="logo">logoescuela</span> */}
         </Link>
       </div>
       <hr />
