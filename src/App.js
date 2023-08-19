@@ -55,7 +55,7 @@ function App() {
                         <Route path="create" element={<RepresentantsForm title="Nuevo Representante" />} />
                         <Route path="edit/:id" element={<RepresentantsForm title="Modificar Representante" />} />
                         <Route path=":id" element={<ShowRepresentant />} />
-                        <Route path=":id/add-student" element={<StudentForm />} />
+                        <Route path=":id_rep/add-student" element={<StudentForm />} />
                       </Route>
                       <Route path="students">
                         <Route index element={<Students />} />
