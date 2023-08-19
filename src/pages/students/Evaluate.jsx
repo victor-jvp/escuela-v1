@@ -35,21 +35,21 @@ const Evaluate = () => {
       renderCell: (params) => {
         return (
           <div className="cellActions">
-            <div className="viewButton">
+            <Link to={`/students/${params.row._id}/boletin`} className="viewButton">
               <Tooltip title="Boletín de Calificaciones">
                 <ArticleOutlinedIcon />
               </Tooltip>
-            </div>
-            <div className="viewButton">
+            </Link>
+            <Link to={`/students/${params.row._id}/boletin`} className="viewButton">
               <Tooltip title="Establecer Rasgos Personales">
                 <AssignmentIndOutlinedIcon />
               </Tooltip>
-            </div>
-            <div className="viewButton">
+            </Link>
+            <Link to={`/students/${params.row._id}/boletin`} className="viewButton">
               <Tooltip title="Registrar Literal Calificativo Final">
                 <BookOutlinedIcon />
               </Tooltip>
-            </div>
+            </Link>
           </div>
         )
       }
@@ -100,7 +100,7 @@ const Evaluate = () => {
 
   const cargarInforme = async () => {
     const data = await Swal.fire({
-      title: 'Rasgos Personales',
+      title: 'Informe Descriptivo',
       html:
         '<input id="swal-input" class="swal2-input" placeholder="Ingrese el lapso...">' +
         '<textarea id="swal-textarea" class="swal2-textarea" placeholder="Descripcion..." cols="27">',
