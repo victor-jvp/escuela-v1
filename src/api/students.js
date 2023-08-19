@@ -20,7 +20,17 @@ export const assignSectionRequest = (token, id_rep, id_est, data) => axios.patch
 
 export const removeSectionRequest = (token, id_rep, id_est, data) => axios.patch(`representante/${id_rep}/estudiante/${id_est}/retirarSeccion`, {}, config(token));
 
+// Obtener boletin del estudiante
+export const getStudentNotesRequest = (token, id) => axios.get(`estudiante/${id}/boletin`, config(token));
+
+// Obtener Constancia de estudios del estudiante
+export const getStudentConstanceRequest = (token, id) => axios.get(`estudiante/${id}/constanciaDeEstudios`, config(token));
+
+// Obtener informe Descriptivo del estudiante
+export const getInformStudentRequest = (token, id) => axios.get(`estudiante/${id}/informeDescriptivo`, config(token));
+
 // Docente
+
 //Cargar estudiantes del profesor
 export const getStudentsByTeacherRequest = (token) => axios.get(`profesor/estudiantes`, config(token));
 
@@ -34,4 +44,4 @@ export const setPersonalRisksStudentRequest = (token, id, data) => axios.path(`e
 export const setFinalQualifierStudentRequest = (token, id, data) => axios.path(`estudiante/${id}/registrarCalificativoFinal`, data, config(token))
 
 // (Registrar nombre del proyecto escolar: patch /estudiante/:estudiante/registrarCalificativoFinal)
-export const setStudentRequest = (token, data) => axios.path(`proyectoEscolar/registrarProyecto`, data, config(token))
+// export const setStudentRequest = (token, data) => axios.path(`proyectoEscolar/registrarProyecto`, data, config(token))

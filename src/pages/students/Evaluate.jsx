@@ -40,15 +40,15 @@ const Evaluate = () => {
           <div className="cellActions">
             <div
               className="viewButton"
-              onClick={() => procesarEstudiante("informe", params.row._id)}
+              onClick={() => procesarEstudiante("informe", params.row)}
             >
-              <Tooltip title="Boletín de Calificaciones">
+              <Tooltip title="Establecer Informe Descriptivo">
                 <ArticleOutlinedIcon />
               </Tooltip>
             </div>
             <div
               className="viewButton"
-              onClick={() => procesarEstudiante("rasgos", params.row._id)}
+              onClick={() => procesarEstudiante("rasgos", params.row)}
             >
               <Tooltip title="Establecer Rasgos Personales">
                 <AssignmentIndOutlinedIcon />
@@ -56,7 +56,7 @@ const Evaluate = () => {
             </div>
             <div
               className="viewButton"
-              onClick={() => procesarEstudiante("calificativo", params.row._id)}
+              onClick={() => procesarEstudiante("calificativo", params.row)}
             >
               <Tooltip title="Registrar Literal Calificativo Final">
                 <BookOutlinedIcon />
@@ -69,8 +69,8 @@ const Evaluate = () => {
   ];
 
   // string tipoSolicitud: Tipo de solicitud a procesar
-  // int id: ID del estudiante
-  const procesarEstudiante = async (tipo, id) => {
+  // Object student: Data del estudiante
+  const procesarEstudiante = async (tipo, student) => {
     const control = {
       title: "",
       html: "",
@@ -79,20 +79,23 @@ const Evaluate = () => {
       case "informe":
         control.title = "Informe Descriptivo";
         control.html =
-          '<input id="swal-input" class="swal2-input" placeholder="Ingrese el lapso...">' +
-          '<textarea id="swal-textarea" class="swal2-textarea" placeholder="Descripcion..." cols="27">';
+          `<label>${student.nombres} ${student.apellidos}</label>
+          <input id="swal-input" class="swal2-input" placeholder="Ingrese el lapso...">
+          <textarea id="swal-textarea" class="swal2-textarea" placeholder="Descripcion..." cols="27">`;
         break;
       case "rasgos":
         control.title = "Rasgos Personales";
         control.html =
-          '<input id="swal-input" class="swal2-input" placeholder="Ingrese el lapso...">' +
-          '<textarea id="swal-textarea" class="swal2-textarea" placeholder="Descripcion..." cols="27">';
+          `<label>${student.nombres} ${student.apellidos}</label>
+          <input id="swal-input" class="swal2-input" placeholder="Ingrese el lapso...">
+          <textarea id="swal-textarea" class="swal2-textarea" placeholder="Descripcion..." cols="27">`;
         break;
       case "calificativo":
         control.title = "Calificativo Final";
         control.html =
-          '<input id="swal-input" class="swal2-input" placeholder="Ingrese el lapso...">' +
-          '<textarea id="swal-textarea" class="swal2-textarea" placeholder="Descripcion..." cols="27">';
+          `<label>${student.nombres} ${student.apellidos}</label>
+          <input id="swal-input" class="swal2-input" placeholder="Ingrese el lapso...">
+          <textarea id="swal-textarea" class="swal2-textarea" placeholder="Descripcion..." cols="27">`;
         break;
       default:
         control.title = "Error al procesar control";
@@ -124,16 +127,19 @@ const Evaluate = () => {
     if (data.isConfirmed && data.value) {
       let res = null;
       switch (tipo) {
-        case "inform":
-          res = await informeDescriptivo(id, data.value);
+        case "informe":
+          res = await informeDescriptivo(student.id, data.value);
           break;
         case "rasgos":
-          res = await rasgosPersonales(id, data.value);
+          res = await rasgosPersonales(student.id, data.value);
           break;
         case "calificativo":
-          res = await calificativoFinal(id, data.value);
+          res = await calificativoFinal(student.id, data.value);
           break;
         default:
+          control.title = "Error al procesar control";
+          control.error = "Contacte al administrador del sistema.";
+          control.type = "error";
           break;
       }
 

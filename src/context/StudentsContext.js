@@ -3,6 +3,7 @@ import {
   assignSectionRequest,
   createStudentRequest,
   editStudentRequest,
+  getStudentNotesRequest,
   getStudentsByRepresentantRequest,
   getStudentsByTeacherRequest,
   getStudentsRequest,
@@ -144,6 +145,16 @@ export function StudentProvider({ children }) {
     }
   };
 
+  // Obtener Boletin del estudiante
+  const getStudentNotes = async (id) => {
+    try {
+      const res = await getStudentNotesRequest(user.token, id);
+      setStudents(res.data !== "" ? res.data : []);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <StudentContext.Provider
       value={{
@@ -158,7 +169,8 @@ export function StudentProvider({ children }) {
         rasgosPersonales,
         assignSection,
         removeSection,
-        calificativoFinal
+        calificativoFinal,
+        getStudentNotes,
       }}
     >
       {children}
