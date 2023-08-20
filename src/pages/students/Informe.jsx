@@ -1,4 +1,4 @@
-import logo from "../../assets/logo_escuela.png";
+// import logo from "../../assets/logo_escuela.png";
 import {
   Document,
   Page,
@@ -8,7 +8,6 @@ import {
   Image,
 } from "@react-pdf/renderer";
 import { getStudentNotesRequest } from "../../api/students";
-import Swal from 'sweetalert2'
 
 const styles = StyleSheet.create({
   page: {
@@ -16,7 +15,7 @@ const styles = StyleSheet.create({
   },
   title: {
     display: "flex",
-    alignContent: "center",
+    alignContent: "left",
     textAlign: "center",
     padding: "25px 0px 0px 10px",
     fontSize: "16pt",
@@ -38,7 +37,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Boletin = () => {
+const Informe = () => {
 
   const getStudent = async () => {
     try {
@@ -46,57 +45,39 @@ const Boletin = () => {
       const token = JSON.parse(sessionStorage.getItem("session")).token;
       return await getStudentNotesRequest(token, id);
     } catch (error) {
-      Swal.fire(
-        'Error al cargar los datos.',
-        error.message,
-        'error'
-      )
       console.log(error)
     }
   };
 
   const student = getStudent()
+  console.log(student)
 
   return (
     <Document>
       <Page size="Letter" style={styles.page}>
         <View style={styles.title}>
-          <Text>República Bolivariana de Venezuela</Text>
-          <Text>Ministerio del Poder Popular para la Educicación</Text>
-          <Text>E.B. República del Uruguay</Text>
+          <Text>Proyecto: [nombre_proyecto]</Text>
+          <Text>Año escolar: [periodo]</Text>
+          <Text>Alumno: [nombre_apellidos]</Text>
           <Text
             style={{
               paddingTop: "15px",
               fontWeight: "bold",
               textDecoration: "underline",
+              textAlign: "left",
             }}
           >
-            BOLETIN INFORMATIVO
+            REGISTRO DESCRIPTIVO
           </Text>
-          <Image src={logo} style={styles.logo} />
         </View>
-
-        <View style={styles.body}>
-          <Text style={styles.bodyText}>Apellidos: </Text>
-          <Text style={styles.bodyText}>Nombres: </Text>
-          <Text style={styles.bodyText}>Fecha de Nacimiento: </Text>
-          <Text style={styles.bodyText}>Edad: </Text>
-          <Text style={styles.bodyText}>Grado y Sección: </Text>
-          <Text style={styles.bodyText}>Representante: </Text>
-          <Text style={styles.bodyText}>Dirección: </Text>
-          <Text style={styles.bodyText}>Cédula Escolar: </Text>
-          <Text style={styles.bodyText}>Año Escolar: </Text>
-        </View>
-      </Page>
-      <Page size="Letter" style={styles.page}>
         <View style={styles.body}>
           <Text style={styles.bodyText}>
-            El Alumno [alumno] Natural de [direccion] de [edad] años de edad, cursante de [grado] de educación básica
-            ha sido promovido al [grado+1] / reprobado en el [grado] grado con el literal de [literal (definir variable)]
+            [descripcion]
           </Text>
           <Text style={styles.bodyText}>
-            Docente de Grado: ___________,
+            Docente de Grado: ___________
             Director: ___________
+            Representante: ___________
           </Text>
         </View>
       </Page>
@@ -104,4 +85,4 @@ const Boletin = () => {
   );
 };
 
-export default Boletin;
+export default Informe;

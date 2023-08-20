@@ -8,7 +8,7 @@ import {
   Image,
 } from "@react-pdf/renderer";
 import { getStudentNotesRequest } from "../../api/students";
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 const styles = StyleSheet.create({
   page: {
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Boletin = () => {
+const Constancia = () => {
 
   const getStudent = async () => {
     try {
@@ -104,4 +104,4 @@ const Boletin = () => {
   );
 };
 
-export default Boletin;
+export default Constancia;

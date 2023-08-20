@@ -35,13 +35,13 @@ export const getInformStudentRequest = (token, id) => axios.get(`estudiante/${id
 export const getStudentsByTeacherRequest = (token) => axios.get(`profesor/estudiantes`, config(token));
 
 // Cargar informe descriptivo: patch /estudiante/:estudiante/cargarInforme 
-export const setInformStudentRequest = (token, id, data) => axios.path(`estudiante/${id}/cargarInforme`, data, config(token))
+export const setInformStudentRequest = (token, id, data) => axios.patch(`estudiante/${id}/cargarInforme`, data, config(token))
 
 // Establecer rasgos personales: patch /estudiante/:estudiante/cargarRasgosPersonales
-export const setPersonalRisksStudentRequest = (token, id, data) => axios.path(`estudiante/${id}/cargarRasgosPersonales`, data, config(token))
+export const setPersonalRisksStudentRequest = (token, id, data) => axios.patch(`estudiante/${id}/cargarRasgosPersonales`, data, config(token))
 
 // Registrar calificativo final: patch /estudiante/:estudiante/registrarCalificativoFinal
-export const setFinalQualifierStudentRequest = (token, id, data) => axios.path(`estudiante/${id}/registrarCalificativoFinal`, data, config(token))
+export const setFinalQualifierStudentRequest = (token, id, data) => axios.patch(`estudiante/${id}/registrarCalificativoFinal`, data, config(token))
 
 // (Registrar nombre del proyecto escolar: patch /estudiante/:estudiante/registrarCalificativoFinal)
-// export const setStudentRequest = (token, data) => axios.path(`proyectoEscolar/registrarProyecto`, data, config(token))
+// export const setStudentRequest = (token, data) => axios.patch(`proyectoEscolar/registrarProyecto`, data, config(token))

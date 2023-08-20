@@ -1,7 +1,8 @@
 import {
   BrowserRouter,
   Routes,
-  Route
+  Route,
+  useParams
 } from "react-router-dom";
 import Home from './pages/home/Home'
 import Users from './pages/users/Users'
@@ -14,7 +15,7 @@ import CreatePersonal from './pages/personal/CreatePersonal'
 import CreateTeacher from './pages/teachers/CreateTeacher'
 import StudentForm from './pages/students/StudentForm'
 import "./style/dark.scss"
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
@@ -30,6 +31,8 @@ import ShowRepresentant from "./pages/representant/ShowRepresentant";
 import Evaluate from "./pages/students/Evaluate";
 import Boletin from "./pages/students/Boletin";
 import { PDFViewer } from '@react-pdf/renderer';
+import Informe from "./pages/students/Informe";
+import Constancia from "./pages/students/Constancia";
 
 function App() {
 
@@ -62,9 +65,27 @@ function App() {
                       <Route path="students">
                         <Route index element={<Students />} />
                         <Route path="evaluate" element={<Evaluate />} />
-                        <Route path=":id/boletin" element={<PDFViewer style={{ width: '99%', height: '98vh' }}>
-                          <Boletin/>
-                        </PDFViewer>} />
+                        <Route
+                          path=":id/boletin"
+                          element={
+                            <PDFViewer style={{ width: '99%', height: '98vh' }}>
+                              <Boletin/>
+                            </PDFViewer>}
+                        />
+                        <Route
+                          path=":id/informe"
+                          element={
+                            <PDFViewer style={{ width: '99%', height: '98vh' }}>
+                              <Informe/>
+                            </PDFViewer>}
+                        />
+                        <Route
+                          path=":id/constancia"
+                          element={
+                            <PDFViewer style={{ width: '99%', height: '98vh' }}>
+                              <Constancia/>
+                            </PDFViewer>}
+                        />
                         <Route
                           path="create"
                           element={<StudentForm />} />

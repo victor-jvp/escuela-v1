@@ -12,13 +12,13 @@ import DataTable from "../../components/datatable/DataTable";
 import { useTeachers } from "../../context/TeachersContext";
 
 const Evaluate = () => {
-  const { getStudentsByTeacher, students } = useStudents();
   const {
+    getStudentsByTeacher,
+    students,
     informeDescriptivo,
     rasgosPersonales,
-    proyectoEscolar,
-    calificativoFinal,
-  } = useTeachers();
+    calificativoFinal } = useStudents();
+  const { proyectoEscolar } = useTeachers();
   const tableCols = [
     // { field: 'id', headerName: 'ID', width: 70 },
     { field: "cedula_escolar", headerName: "Cédula Escolar", width: 130 },
@@ -124,13 +124,13 @@ const Evaluate = () => {
       let res = null;
       switch (tipo) {
         case "informe":
-          res = await informeDescriptivo(student.id, data.value);
+          res = await informeDescriptivo(student._id, data.value);
           break;
         case "rasgos":
-          res = await rasgosPersonales(student.id, data.value);
+          res = await rasgosPersonales(student._id, data.value);
           break;
         case "calificativo":
-          res = await calificativoFinal(student.id, data.value);
+          res = await calificativoFinal(student._id, data.value);
           break;
         default:
           control.title = "Error al procesar control";
