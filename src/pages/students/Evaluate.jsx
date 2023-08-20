@@ -77,22 +77,19 @@ const Evaluate = () => {
     switch (tipo) {
       case "informe":
         control.title = "Informe Descriptivo";
-        control.html =
-          `<label class="bold">Estudiante: </label><span>${student.nombres} ${student.apellidos}</span>
+        control.html = `<label class="bold">Estudiante: </label><span>${student.nombres} ${student.apellidos}</span>
           <input id="swal-input" class="swal2-input" placeholder="Ingrese el lapso...">
           <textarea id="swal-textarea" class="swal2-textarea" placeholder="Descripcion..." cols="27">`;
         break;
       case "rasgos":
         control.title = "Rasgos Personales";
-        control.html =
-          `<label class="bold">Estudiante: </label><span>${student.nombres} ${student.apellidos}</span>
+        control.html = `<label class="bold">Estudiante: </label><span>${student.nombres} ${student.apellidos}</span>
           <input id="swal-input" class="swal2-input" placeholder="Ingrese el lapso...">
           <textarea id="swal-textarea" class="swal2-textarea" placeholder="Descripcion..." cols="27">`;
         break;
       case "calificativo":
         control.title = "Calificativo Final";
-        control.html =
-          `<label class="bold">Estudiante: </label><span>${student.nombres} ${student.apellidos}</span>
+        control.html = `<label class="bold">Estudiante: </label><span>${student.nombres} ${student.apellidos}</span>
           <input id="swal-input" class="swal2-input" placeholder="Ingrese el lapso...">
           <textarea id="swal-textarea" class="swal2-textarea" placeholder="Descripcion..." cols="27">`;
         break;
@@ -187,6 +184,26 @@ const Evaluate = () => {
       <Sidebar />
       <div className="listContainer">
         <Navbar />
+        <div className="listContainer">
+          <div className="widgets">
+            <div className="widget">
+              <div className="left">
+                <span className="title">PROYECTO ESCOLAR</span>
+                <span className="counter"></span>
+                <span className="link" onClick={cargarProyecto}>
+                  Cargar Proyecto
+                </span>
+              </div>
+              <div className="right">
+                {/* <div className="percentage positive">
+                    <KeyboardArrowUpOutlinedIcon />
+                    20%
+                  </div> */}
+                <ArticleOutlinedIcon />
+              </div>
+            </div>
+          </div>
+        </div>
         <DataTable
           title="Estudiantes Asignados"
           tableCols={tableCols}
