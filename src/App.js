@@ -28,6 +28,8 @@ import { StudentProvider } from "./context/StudentsContext";
 import { RepresentantProvider } from "./context/RepresentantsContext";
 import ShowRepresentant from "./pages/representant/ShowRepresentant";
 import Evaluate from "./pages/students/Evaluate";
+import Boletin from "./pages/students/Boletin";
+import { PDFViewer } from '@react-pdf/renderer';
 
 function App() {
 
@@ -60,6 +62,9 @@ function App() {
                       <Route path="students">
                         <Route index element={<Students />} />
                         <Route path="evaluate" element={<Evaluate />} />
+                        <Route path=":id/boletin" element={<PDFViewer style={{ width: '99%', height: '98vh' }}>
+                          <Boletin/>
+                        </PDFViewer>} />
                         <Route
                           path="create"
                           element={<StudentForm />} />

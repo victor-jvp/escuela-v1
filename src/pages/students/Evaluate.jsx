@@ -88,7 +88,7 @@ const Evaluate = () => {
           <textarea id="swal-textarea" class="swal2-textarea" placeholder="Descripcion..." cols="27">`;
         break;
       case "calificativo":
-        control.title = "Calificativo Final";
+        control.title = "Literal Calificativo Final";
         control.html = `<label class="bold">Estudiante: </label><span>${student.nombres} ${student.apellidos}</span>
           <input id="swal-input" class="swal2-input" placeholder="Ingrese el lapso...">
           <textarea id="swal-textarea" class="swal2-textarea" placeholder="Descripcion..." cols="27">`;
