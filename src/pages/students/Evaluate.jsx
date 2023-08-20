@@ -1,7 +1,6 @@
 import "./evaluate.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
-import SchoolIcon from "@mui/icons-material/School";
 import { useStudents } from "../../context/StudentsContext";
 import { Tooltip } from "@mui/material";
 import BookOutlinedIcon from "@mui/icons-material/BookOutlined";
@@ -79,21 +78,21 @@ const Evaluate = () => {
       case "informe":
         control.title = "Informe Descriptivo";
         control.html =
-          `<label>${student.nombres} ${student.apellidos}</label>
+          `<label class="bold">Estudiante: </label><span>${student.nombres} ${student.apellidos}</span>
           <input id="swal-input" class="swal2-input" placeholder="Ingrese el lapso...">
           <textarea id="swal-textarea" class="swal2-textarea" placeholder="Descripcion..." cols="27">`;
         break;
       case "rasgos":
         control.title = "Rasgos Personales";
         control.html =
-          `<label>${student.nombres} ${student.apellidos}</label>
+          `<label class="bold">Estudiante: </label><span>${student.nombres} ${student.apellidos}</span>
           <input id="swal-input" class="swal2-input" placeholder="Ingrese el lapso...">
           <textarea id="swal-textarea" class="swal2-textarea" placeholder="Descripcion..." cols="27">`;
         break;
       case "calificativo":
         control.title = "Calificativo Final";
         control.html =
-          `<label>${student.nombres} ${student.apellidos}</label>
+          `<label class="bold">Estudiante: </label><span>${student.nombres} ${student.apellidos}</span>
           <input id="swal-input" class="swal2-input" placeholder="Ingrese el lapso...">
           <textarea id="swal-textarea" class="swal2-textarea" placeholder="Descripcion..." cols="27">`;
         break;
