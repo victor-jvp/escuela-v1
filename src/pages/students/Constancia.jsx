@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Image,
 } from "@react-pdf/renderer";
-import { getStudentNotesRequest } from "../../api/students";
+import { getStudentProofRequest } from "../../api/students";
 import Swal from 'sweetalert2';
 
 const styles = StyleSheet.create({
@@ -44,7 +44,7 @@ const Constancia = () => {
     try {
       const id = window.location.pathname.split("/")[2];
       const token = JSON.parse(sessionStorage.getItem("session")).token;
-      return await getStudentNotesRequest(token, id);
+      return await getStudentProofRequest(token, id);
     } catch (error) {
       Swal.fire(
         'Error al cargar los datos.',

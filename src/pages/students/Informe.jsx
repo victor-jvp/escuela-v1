@@ -7,7 +7,8 @@ import {
   StyleSheet,
   Image,
 } from "@react-pdf/renderer";
-import { getStudentNotesRequest } from "../../api/students";
+import { getStudentDescriptiveReportRequest } from "../../api/students";
+import Swal from "sweetalert2";
 
 const styles = StyleSheet.create({
   page: {
@@ -43,14 +44,18 @@ const Informe = () => {
     try {
       const id = window.location.pathname.split("/")[2];
       const token = JSON.parse(sessionStorage.getItem("session")).token;
-      return await getStudentNotesRequest(token, id);
+      return await getStudentDescriptiveReportRequest(token, id);
     } catch (error) {
+      Swal.fire(
+        'Error al cargar los datos.',
+        error.message,
+        'error'
+      )
       console.log(error)
     }
   };
 
   const student = getStudent()
-  console.log(student)
 
   return (
     <Document>

@@ -24,10 +24,10 @@ export const removeSectionRequest = (token, id_rep, id_est, data) => axios.patch
 export const getStudentNotesRequest = (token, id) => axios.get(`estudiante/${id}/boletin`, config(token));
 
 // Obtener Constancia de estudios del estudiante
-export const getStudentConstanceRequest = (token, id) => axios.get(`estudiante/${id}/constanciaDeEstudios`, config(token));
+export const getStudentProofRequest = (token, id) => axios.get(`estudiante/${id}/constanciaDeEstudios`, config(token));
 
 // Obtener informe Descriptivo del estudiante
-export const getInformStudentRequest = (token, id) => axios.get(`estudiante/${id}/informeDescriptivo`, config(token));
+export const getStudentDescriptiveReportRequest = (token, id) => axios.get(`estudiante/${id}/informeDescriptivo`, config(token));
 
 // Docente
 

@@ -71,7 +71,7 @@ const Boletin = () => {
               textDecoration: "underline",
             }}
           >
-            BOLETIN INFORMATIVO
+            INFORMACIÓN AL REPRESENTANTE
           </Text>
           <Image src={logo} style={styles.logo} />
         </View>
