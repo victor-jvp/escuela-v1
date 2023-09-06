@@ -103,7 +103,7 @@ const Sidebar = () => {
               <Link to="/users" style={{ textDecoration: "none" }}>
                 <li>
                   <PeopleIcon className="icon" />
-                  <span>Usuarios</span>
+                  <span>Administradores</span>
                 </li>
               </Link>
             )

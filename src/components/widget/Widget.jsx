@@ -4,16 +4,16 @@ import SchoolIcon from '@mui/icons-material/School';
 import FolderSharedIcon from '@mui/icons-material/FolderShared';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 
-const Widget = ({ type }) => {
+const Widget = ({ type, amount }) => {
 
   let data;
 
   switch (type) {
     case "user":
       data = {
-        title: "USUARIOS",
-        amount: 1,
-        link: 'Ver usuarios',
+        title: "ADMINISTRADORES",
+        amount: amount,
+        link: 'Ver administradores',
         icon: (
           <PeopleIcon className="icon" style={{ backgroundColor: "rgba(255, 50, 255, 0.2)", color: "#6439ff" }} />
         )
@@ -22,7 +22,7 @@ const Widget = ({ type }) => {
     case "teacher":
       data = {
         title: "PROFESORES",
-        amount: 10,
+        amount: amount,
         link: 'Ver profesores',
         icon: (
           <AssignmentIndIcon className="icon" style={{ backgroundColor: "rgba(255, 50, 255, 0.2)", color: "#6439ff" }} />
@@ -32,7 +32,7 @@ const Widget = ({ type }) => {
     case "student":
       data = {
         title: "ESTUDIANTES",
-        amount: 30,
+        amount: amount,
         link: 'Ver estudiantes',
         icon: (
           <SchoolIcon className="icon" style={{ backgroundColor: "rgba(255, 50, 255, 0.2)", color: "#6439ff" }} />
@@ -42,7 +42,7 @@ const Widget = ({ type }) => {
     case "adm_personal":
       data = {
         title: "PERSONAL ADMINISTRATIVO",
-        amount: 40,
+        amount: amount,
         link: 'Ver personal administrativo',
         icon: (
           <FolderSharedIcon className="icon" style={{ backgroundColor: "rgba(255, 50, 255, 0.2)", color: "#6439ff" }} />

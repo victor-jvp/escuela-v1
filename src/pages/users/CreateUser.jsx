@@ -27,7 +27,7 @@ const CreateUser = () => {
       <div className="newContainer">
         <Navbar />
         <div className="top">
-          <h1>Crear Nuevo Usuario</h1>
+          <h1>Crear Nuevo Administrador</h1>
           <Link to='/users' className="link">
             Volver
           </Link>
@@ -47,7 +47,9 @@ const CreateUser = () => {
                 <label htmlFor="password">Contraseña</label>
                 <input type="password" {...register("password")} placeholder='...' required />
               </div>
-              <button>Guardar</button>
+              <div className="formInput">
+                <button>Guardar</button>
+              </div>
             </form>
           </div>
         </div>

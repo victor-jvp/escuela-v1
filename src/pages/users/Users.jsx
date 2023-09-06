@@ -95,7 +95,7 @@ const Users = () => {
       <div className="listContainer">
         <Navbar />
         <DataTable
-          title="Usuarios"
+          title="Administradores"
           tableCols={tableCols}
           tableRows={users}
           actionColumn={actionColumn}
