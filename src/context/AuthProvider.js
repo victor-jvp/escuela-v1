@@ -11,7 +11,6 @@ export const useAuth = () => {
   }
   return context
 }
-
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -19,6 +18,20 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true)
 
   const userType = user && Object.keys(user)[0] // Obtener el tipo de usuario
+
+  const handleError = (err) => {
+    let errorMessages = []
+    if (Array.isArray(err.data)) {
+      errorMessages = err.data
+    } else if (err.data.message) {
+      errorMessages = [err.data.message]
+    } else if (typeof err.data == "string") {   
+      errorMessages = [err];
+    } else {
+      errorMessages = ["Credenciales no válidas. Intente nuevamente."]
+    }
+    setErrors(errorMessages)
+  };  
 
   const signup = async (user) => {
     try {
@@ -31,21 +44,20 @@ export const AuthProvider = ({ children }) => {
         return res.data.message
       }
     } catch (error) {
-      // console.log(error.response)
-      let errorMessages = []
-      if (Array.isArray(error.response.data)) {
-        errorMessages = error.response.data
-      } else {
-        errorMessages = [error.response.data.message]
-      }
-      setErrors(errorMessages)
+      handleError(error);
     }
   }
 
   const signin = async (user) => {
     try {
       const res = await loginRequest(user)
+      console.log(res);
       if (res.status === 200) {
+        if (res.data.error) {
+          handleError(res);
+          return;
+        }
+        
         setIsAuthenticated(true)
         setUser(res.data)
         sessionStorage.setItem("session", JSON.stringify(res.data))
@@ -54,15 +66,7 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       // console.log(error.response)
-      let errorMessages = []
-      if (Array.isArray(error.response.data)) {
-        errorMessages = error.response.data
-      } else if (error.response.data.message) {
-        errorMessages = [error.response.data.message]
-      } else {
-        errorMessages = ["Credenciales no válidas. Intente nuevamente."]
-      }
-      setErrors(errorMessages)
+      handleError(error);
     }
   }
 
