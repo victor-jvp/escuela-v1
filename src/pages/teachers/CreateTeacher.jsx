@@ -54,7 +54,9 @@ const CreateTeacher = ({ inputs, title }) => {
                 <label htmlFor="password">Contraseña</label>
                 <input type="password" {...register("password")} placeholder='...' required />
               </div>
-              <button>Guardar</button>
+              <div className="formInput">
+                <button>Guardar</button>
+              </div>
             </form>
           </div>
         </div>
