@@ -30,8 +30,7 @@ const Home = () => {
           <Widget type='student' amount={students.length ?? 0} />
         </div>
         <div className="listContainer">
-          <div className="listTitle">Alguna lista o tabla puede ir aqui</div>
-
+          <div className="listTitle">Periodo Escolar</div>
         </div>
       </div>
     </div>
