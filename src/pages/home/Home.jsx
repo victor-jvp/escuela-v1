@@ -59,7 +59,8 @@ const Home = () => {
           <Widget type='student' amount={students.length ?? 0} />
         </div>
         <div className="listContainer">
-          <div className="listTitle">Periodo Escolar</div>
+          <div className="listTitle">Periodo Escolar Actual: </div>
+          <div className="listTitle">Lapso Actual: </div>
           <button type="button"
             onClick={ _addPeriod }
             className="addButton"

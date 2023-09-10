@@ -19,12 +19,12 @@ export function DirectorsProvider({ children })
     const { user } = useAuth()
     
     const addPeriod = async (data) => {
-        try {
-          await createPeriodRequest(user.token, data);
-        } catch (error) {
-          console.log(error);
-        }
-      };
+      try {
+        await createPeriodRequest(user.token, data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
     return (
         <DirectorContext.Provider value={{

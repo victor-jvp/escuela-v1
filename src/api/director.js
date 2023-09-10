@@ -10,32 +10,20 @@ const config = (token) => (
 
 // Agregar nuevo periodo
 export const createPeriodRequest = (token, data) => axios.post(
-    `direccion/nuevoPeriodo`,
-    config(token));
+    `direccion/nuevoPeriodo`, data, config(token));
 
-// export const createTeacherRequest = (token, teacher) => axios.post(
-//     `docente/registrarDocente`, teacher, config(token));
+// Agregar Lapso a periodo actual
+export const createLapseRequest = (token, data) => axios.post(
+    `direccion/periodoActual/nuevoLapso`, data, config(token));
 
-// export const activeTeacherRequest = (token, id) => axios.patch(
-//     `docente/${id}/habilitarDocente`, {}, config(token));
+// Agregar Grados a lapto actual
+export const addGradeRequest = (token, id_period, data) => axios.post(
+    `direccion/periodoActual/lapsos/${id_period}/crearGrados`, data, config(token));
 
-// export const inactiveTeacherRequest = (token, id) => axios.patch(
-//     `docente/${id}/deshabilitarDocente`, {}, config(token));
+// Agregar Secciones al grado del periodo actual
+export const addSectionsRequest = (token, id_period, id_grade, data) => axios.post(
+    `direccion/periodoActual/lapsos/${id_period}/grados/${id_grade}/crearSecciones`, data, config(token));
 
-// export const deleteTeacherRequest = (token, id) => axios.delete(
-//     `docente/${id}/eliminarDocente`, config(token));
-
-// export const assignSectionRequest = (token, id, data) => axios.patch(
-//     `docente/${id}/asignarSeccion`, data, config(token));
-
-// export const removeSectionRequest = (token, id) => axios.patch(
-//     `docente/${id}/retirarSeccion`, {}, config(token));
-
-// export const informeDescriptivoRequest = (token, data) => axios.post(
-//     'informeDescriptivo/cargarInforme', data, config(token));
-
-// export const rasgosPersonalesRequest = (token, data) => axios.post(
-//     'rasgosPersonales/establecerRasgos', data, config(token));
-
-// export const proyectoEscolarRequest = (token, data) => axios.post(
-//     'proyectoEscolar/registrarProyecto', data, config(token));
+// Agregar estudiantes a una seccion del period y lapso actual + id grado + id seccion
+export const addStudentsRequest = (token, id_grade, id_section, data) => axios.post(
+    `direccion/periodoActual/lapsoActual/grados/${id_grade}/secciones/${id_section}/registrarEstudiantes`, data, config(token));
