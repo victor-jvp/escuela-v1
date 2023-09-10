@@ -9,6 +9,7 @@ import ToggleOffOutlinedIcon from '@mui/icons-material/ToggleOffOutlined';
 import ToggleOnOutlinedIcon from '@mui/icons-material/ToggleOnOutlined';
 import { Tooltip } from "@mui/material";
 import Swal from 'sweetalert2';
+import { Link } from "react-router-dom";
 
 const Users = () => {
 
@@ -16,7 +17,12 @@ const Users = () => {
 
   const tableCols = [
     // { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'name', headerName: 'Nombre y Apellido', width: 200 },
+    {
+      field: 'name', headerName: 'Nombre y Apellido', width: 200,
+      renderCell: (params) => {
+        return (<Link to={`/users/${params.row._id}`}>{ params.row.name }</Link>)
+      }
+    },
     { field: 'email', headerName: 'Email', width: 200 },
     {
       field: 'habilitado', headerName: 'Estado', width: 150,
