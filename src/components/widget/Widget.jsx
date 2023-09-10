@@ -39,11 +39,11 @@ const Widget = ({ type, amount }) => {
         )
       }
       break;
-    case "adm_personal":
+    case "periodo":
       data = {
-        title: "PERSONAL ADMINISTRATIVO",
+        title: "PERIODO ESCOLAR",
         amount: amount,
-        link: 'Ver personal administrativo',
+        link: 'Cargar nuevo Lapso',
         icon: (
           <FolderSharedIcon className="icon" style={{ backgroundColor: "rgba(255, 50, 255, 0.2)", color: "#6439ff" }} />
         )

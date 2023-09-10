@@ -33,6 +33,7 @@ import Boletin from "./pages/students/Boletin";
 import { PDFViewer } from '@react-pdf/renderer';
 import Informe from "./pages/students/Informe";
 import Constancia from "./pages/students/Constancia";
+import { DirectorsProvider } from "./context/DirectorContext";
 
 function App() {
 
@@ -42,74 +43,76 @@ function App() {
     <div className={darkMode ? 'app dark' : 'app'}>
       <AuthProvider>
         <UserProvider>
-          <TeacherProvider>
-            <StudentProvider>
-              <RepresentantProvider>
-                <BrowserRouter>
-                  <Routes>
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/" element={<ProtectedRoute />}>
-                      <Route index element={<Home />} />
-                      <Route path="personal">
-                        <Route index element={<Personal />} />
-                        <Route path="create" element={<CreatePersonal />} />
+          <DirectorsProvider>
+            <TeacherProvider>
+              <StudentProvider>
+                <RepresentantProvider>
+                  <BrowserRouter>
+                    <Routes>
+                      <Route path="/login" element={<Login />} />
+                      <Route path="/register" element={<Register />} />
+                      <Route path="/" element={<ProtectedRoute />}>
+                        <Route index element={<Home />} />
+                        <Route path="personal">
+                          <Route index element={<Personal />} />
+                          <Route path="create" element={<CreatePersonal />} />
+                        </Route>
+                        <Route path="representants">
+                          <Route index element={<Representant />} />
+                          <Route path="create" element={<RepresentantsForm title="Nuevo Representante" />} />
+                          <Route path="edit/:id" element={<RepresentantsForm title="Modificar Representante" />} />
+                          <Route path=":id" element={<ShowRepresentant />} />
+                          <Route path=":id_rep/add-student" element={<StudentForm />} />
+                        </Route>
+                        <Route path="students">
+                          <Route index element={<Students />} />
+                          <Route path="evaluate" element={<Evaluate />} />
+                          <Route
+                            path=":id/boletin"
+                            element={
+                              <PDFViewer style={{ width: '99%', height: '98vh' }}>
+                                <Boletin />
+                              </PDFViewer>}
+                          />
+                          <Route
+                            path=":id/informe"
+                            element={
+                              <PDFViewer style={{ width: '99%', height: '98vh' }}>
+                                <Informe />
+                              </PDFViewer>}
+                          />
+                          <Route
+                            path=":id/constancia"
+                            element={
+                              <PDFViewer style={{ width: '99%', height: '98vh' }}>
+                                <Constancia />
+                              </PDFViewer>}
+                          />
+                          <Route
+                            path="create"
+                            element={<StudentForm />} />
+                          <Route
+                            path=":id_est/representants/:id_rep"
+                            element={<StudentForm />} />
+                        </Route>
+                        <Route path="teachers">
+                          <Route index element={<Teachers />} />
+                          <Route
+                            path="create"
+                            element={<CreateTeacher />} />
+                        </Route>
+                        <Route path="users">
+                          <Route index element={<Users />} />
+                          <Route path="create" element={<CreateUser />} />
+                          <Route path="edit/:iduser" element={<EditUser />} />
+                        </Route>
                       </Route>
-                      <Route path="representants">
-                        <Route index element={<Representant />} />
-                        <Route path="create" element={<RepresentantsForm title="Nuevo Representante" />} />
-                        <Route path="edit/:id" element={<RepresentantsForm title="Modificar Representante" />} />
-                        <Route path=":id" element={<ShowRepresentant />} />
-                        <Route path=":id_rep/add-student" element={<StudentForm />} />
-                      </Route>
-                      <Route path="students">
-                        <Route index element={<Students />} />
-                        <Route path="evaluate" element={<Evaluate />} />
-                        <Route
-                          path=":id/boletin"
-                          element={
-                            <PDFViewer style={{ width: '99%', height: '98vh' }}>
-                              <Boletin/>
-                            </PDFViewer>}
-                        />
-                        <Route
-                          path=":id/informe"
-                          element={
-                            <PDFViewer style={{ width: '99%', height: '98vh' }}>
-                              <Informe/>
-                            </PDFViewer>}
-                        />
-                        <Route
-                          path=":id/constancia"
-                          element={
-                            <PDFViewer style={{ width: '99%', height: '98vh' }}>
-                              <Constancia/>
-                            </PDFViewer>}
-                        />
-                        <Route
-                          path="create"
-                          element={<StudentForm />} />
-                        <Route
-                          path=":id_est/representants/:id_rep"
-                          element={<StudentForm />} />
-                      </Route>
-                      <Route path="teachers">
-                        <Route index element={<Teachers />} />
-                        <Route
-                          path="create"
-                          element={<CreateTeacher />} />
-                      </Route>
-                      <Route path="users">
-                        <Route index element={<Users />} />
-                        <Route path="create" element={<CreateUser />} />
-                        <Route path="edit/:iduser" element={<EditUser />} />
-                      </Route>
-                    </Route>
-                  </Routes>
-                </BrowserRouter>
-              </RepresentantProvider>
-            </StudentProvider>
-          </TeacherProvider>
+                    </Routes>
+                  </BrowserRouter>
+                </RepresentantProvider>
+              </StudentProvider>
+            </TeacherProvider>
+          </DirectorsProvider>
         </UserProvider>
       </AuthProvider>
     </div>
