@@ -34,6 +34,7 @@ import { PDFViewer } from '@react-pdf/renderer';
 import Informe from "./pages/students/Informe";
 import Constancia from "./pages/students/Constancia";
 import { DirectorsProvider } from "./context/DirectorContext";
+import ViewUser from "./pages/users/ViewUser";
 
 function App() {
 
@@ -105,6 +106,7 @@ function App() {
                           <Route index element={<Users />} />
                           <Route path="create" element={<CreateUser />} />
                           <Route path="edit/:iduser" element={<EditUser />} />
+                          <Route path=":iduser" element={<ViewUser />} />
                         </Route>
                       </Route>
                     </Routes>

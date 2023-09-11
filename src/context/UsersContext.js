@@ -16,6 +16,7 @@ export const useUsers = () => {
 export function UserProvider({ children }) {
 
   const [users, setUsers] = useState([]);
+  const [userInfo, setUserInfo] = useState([]);
   const { user } = useAuth()
 
   const activateUser = async (id) => {
@@ -39,6 +40,15 @@ export function UserProvider({ children }) {
     try {
       const res = await getUsersRequest(user.token)
       setUsers(res.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const getUserById = async (id) => {
+    try {
+      const res = await getUsersRequest(user.token, id);
+      setUserInfo(res.data[0])
     } catch (error) {
       console.log(error)
     }
@@ -73,12 +83,14 @@ export function UserProvider({ children }) {
   return (
     <UserContext.Provider
       value={{
+        userInfo,
         users,
         createUser,
         getUsers,
         activateUser,
         deactivateUser,
-        deleteUser
+        deleteUser,
+        getUserById
       }}>
       {children}
     </UserContext.Provider>

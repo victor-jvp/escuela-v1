@@ -16,6 +16,8 @@ const Home = () => {
   const { users, getUsers } = useUsers();
   const { addPeriod } = useDirectors();
 
+  let new_period = null;
+
   useEffect(() => {
     getTeachers();
     getStudents();
@@ -34,16 +36,14 @@ const Home = () => {
       confirmButtonText: 'Actualizar',
       showLoaderOnConfirm: true,
       preConfirm: async (data) => {
-        return await addPeriod(data)
+        new_period = await addPeriod(data);
       },
       allowOutsideClick: () => !Swal.isLoading()
     }).then((result) => {
       if (result === true) {
-        // Swal.fire({
-        //   title: `${result.value.login}'s avatar`,
-        //   imageUrl: result.value.avatar_url
-        // })
-        Swal.close()
+        Swal.fire('Realizado', 'Proceso realizado con exito.', 'success');
+      } else {
+        Swal.close();
       }
     })
   }
