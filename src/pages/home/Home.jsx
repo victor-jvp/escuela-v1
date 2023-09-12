@@ -13,7 +13,7 @@ const Home = () => {
   const { teachers, getTeachers } = useTeachers();
   const { students, getStudents } = useStudents();
   const { users, getUsers } = useUsers();
-  const { addPeriod, period } = useDirectors();
+  const { addPeriod, period, addLapse } = useDirectors();
 
   let new_period = null;
 
@@ -45,12 +45,32 @@ const Home = () => {
     });
 
     if (data) {
-      const res = await addPeriod(data);
+      await addPeriod(data);
     }
   };
 
   const _addLapse = async () => {
-    
+    const { value: data } = await Swal.fire({
+      title: "Ingrese los datos solicitados:",
+      html:
+        '<label>Lapso: </label><input type="text" id="lapso" class="swal2-input"><br>' +
+        '<label>Proyecto: </label><textarea id="proyecto_escolar" class="swal2-textarea"></textarea>',
+      focusConfirm: false,
+      showCancelButton: true,
+      confirmButtonText: "Procesar",
+      showLoaderOnConfirm: true,
+      preConfirm: async () => {
+        return {
+          lapso: document.getElementById("lapso").value,
+          proyectoEscolar: document.getElementById("proyecto_escolar").value,
+        };
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    });
+
+    if (data) {
+      await addLapse(data);
+    }
   }
 
   return (

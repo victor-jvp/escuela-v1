@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./AuthProvider";
-import { createPeriodRequest } from "../api/director";
+import { createLapseRequest, createPeriodRequest } from "../api/director";
 
 const DirectorContext = createContext();
 
@@ -30,10 +30,23 @@ export function DirectorsProvider({ children }) {
     }
   };
 
+  const addLapse = async (data) => {
+    try {
+      const res = await createLapseRequest(user.token, data);
+      if(res.status === 200)
+      {
+        setPeriod(res.data)
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <DirectorContext.Provider value={{
       directors,
       addPeriod,
+      addLapse,
       period
     }}>
       {children}
