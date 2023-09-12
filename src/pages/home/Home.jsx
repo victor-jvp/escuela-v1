@@ -49,6 +49,10 @@ const Home = () => {
     }
   };
 
+  const _addLapse = async () => {
+    
+  }
+
   return (
     <div className="home">
       <Sidebar />
@@ -60,19 +64,16 @@ const Home = () => {
           <Widget type="student" amount={students.length ?? 0} />
         </div>
         <div className="listContainer">
-          <div className="listTitle">
-            Periodo Escolar Actual: <b>{period.periodo}</b>
-          </div>
-          <div className="listTitle">
-            Fecha Inicio: <b>{period.fechaInicio}</b>
-          </div>
-          <div className="listTitle">
-            Fecha Culminación: <b>{period.fechaCulminacion}</b>
-          </div>
-          <button type="button" onClick={_addPeriod} className="addButton">
-            Periodo Escolar
-          </button>
+          <div className="listTitle">Controles</div>
+          <div className="widgets">
+          <Widget type="period" amount="" onclick={_addPeriod}/>
+          <Widget type="lapse" amount="" onclick={_addLapse}/>
+          <Widget type="grade" amount=""/>
+          <Widget type="section" amount=""/>
+          <Widget type="students" amount=""/>
         </div>
+        </div>
+        
       </div>
     </div>
   );
