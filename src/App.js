@@ -35,6 +35,7 @@ import Informe from "./pages/students/Informe";
 import Constancia from "./pages/students/Constancia";
 import { DirectorsProvider } from "./context/DirectorContext";
 import ViewUser from "./pages/users/ViewUser";
+import ViewTeacher from "./pages/teachers/ViewTeacher";
 
 function App() {
 
@@ -98,6 +99,7 @@ function App() {
                         </Route>
                         <Route path="teachers">
                           <Route index element={<Teachers />} />
+                          <Route path=":id_teacher" element={<ViewTeacher />} />
                           <Route
                             path="create"
                             element={<CreateTeacher />} />
@@ -105,8 +107,8 @@ function App() {
                         <Route path="users">
                           <Route index element={<Users />} />
                           <Route path="create" element={<CreateUser />} />
-                          <Route path="edit/:iduser" element={<EditUser />} />
-                          <Route path=":iduser" element={<ViewUser />} />
+                          <Route path="edit/:id_user" element={<EditUser />} />
+                          <Route path=":id_user" element={<ViewUser />} />
                         </Route>
                       </Route>
                     </Routes>

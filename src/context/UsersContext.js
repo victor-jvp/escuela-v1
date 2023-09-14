@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { createUserRequest, getUsersRequest, activeUserRequest, inactiveUserRequest, deleteUserRequest } from '../api/users'
+import { createUserRequest, getUsersRequest, activeUserRequest, inactiveUserRequest, deleteUserRequest, getUserRequest } from '../api/users'
 import { useAuth } from "./AuthProvider";
 
 const UserContext = createContext();
@@ -47,8 +47,8 @@ export function UserProvider({ children }) {
 
   const getUserById = async (id) => {
     try {
-      const res = await getUsersRequest(user.token, id);
-      setUserInfo(res.data[0])
+      const res = await getUserRequest(user.token, id);
+      setUserInfo(res.data)
     } catch (error) {
       console.log(error)
     }

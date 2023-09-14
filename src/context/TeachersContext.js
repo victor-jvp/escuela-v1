@@ -8,6 +8,7 @@ import {
   removeSectionRequest,
   assignSectionRequest,
   proyectoEscolarRequest,
+  getTeacherRequest,
 } from "../api/teachers";
 import { useAuth } from "./AuthProvider";
 import { HttpStatusCode } from "axios";
@@ -25,6 +26,7 @@ export const useTeachers = () => {
 
 export function TeacherProvider({ children }) {
   const [teachers, setTeachers] = useState([]);
+  const [teacherInfo, setTeacherInfo] = useState([]);
   const { user } = useAuth();
 
   // Habilitar
@@ -111,6 +113,16 @@ export function TeacherProvider({ children }) {
     }
   };
 
+  //Obtener info del profesor by id
+  const getTeacherById = async (id) => {
+    try {
+      const res = await getTeacherRequest(user.token, id);
+      setTeacherInfo(res.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const proyectoEscolar = async (data) => {
     try {
       const res = await proyectoEscolarRequest(user.token, data);
@@ -132,6 +144,8 @@ export function TeacherProvider({ children }) {
         assignSection,
         removeSection,
         proyectoEscolar,
+        teacherInfo,
+        getTeacherById,
       }}
     >
       {children}

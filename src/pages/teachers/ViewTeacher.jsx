@@ -1,16 +1,17 @@
-import './edit-user.scss'
-import Navbar from "../../components/navbar/Navbar"
-import Sidebar from "../../components/sidebar/Sidebar"
-import { useUsers } from '../../context/UsersContext'
-import { Link, useParams } from 'react-router-dom'
-import { useEffect } from 'react'
+import "./edit-teacher.scss"
+import Sidebar from '../../components/sidebar/Sidebar'
+import Navbar from '../../components/navbar/Navbar'
+import { useTeachers } from "../../context/TeachersContext"
+import { useEffect } from "react"
+import { Link, useParams } from "react-router-dom"
 
-const ViewUser = () => {
-  const { getUserById, userInfo } = useUsers();
+const ViewTeacher = () => {
+
+  const { getTeacherById, teacherInfo } = useTeachers();
   const params = useParams();
   useEffect(() => {
-    getUserById(params.id_user)
-  }, [])
+    getTeacherById(params.id_teacher);
+  }, []);
 
   return (
     <div className="single">
@@ -20,19 +21,19 @@ const ViewUser = () => {
         <div className="top">
           <div className="left">
             {/* <div className="editButton">Edit</div> */}
-            <h1 className="title">Información del Administrador</h1>
+            <h1 className="title">Información del Profesor</h1>
             <div className="item">
               <div className="details">
-                <h1 className="itemTitle">{ userInfo.name }</h1>
+                <h1 className="itemTitle">{ teacherInfo.name }</h1>
                 <div className="detailItem">
                   <span className="itemKey">Email:</span>
-                  <span className="itemValue">{ userInfo.email }</span>
+                  <span className="itemValue">{ teacherInfo.email }</span>
                 </div>
                 <div className="detailItem">
                   <span className="itemKey">Estado:</span>
                   <span className="itemValue">
                     {
-                      (userInfo.habilitado) ? "Habilitado" : "Inactivo"
+                      (teacherInfo.habilitado) ? "Habilitado" : "Inactivo"
                     }
                   </span>
                 </div>
@@ -49,4 +50,4 @@ const ViewUser = () => {
   )
 }
 
-export default ViewUser
+export default ViewTeacher

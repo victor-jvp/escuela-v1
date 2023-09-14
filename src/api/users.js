@@ -6,6 +6,12 @@ export const getUsersRequest = (token) => axios.get(`administracion`, {
     }
 });
 
+export const getUserRequest = (token, id) => axios.get(`administracion/${id}`, {
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+});
+
 export const createUserRequest = (token, user) => axios.post(
     `direccion/administracion/registrarAdministrador`, user, {
     headers: {

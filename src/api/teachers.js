@@ -10,6 +10,8 @@ const config = (token) => (
 
 export const getTeachersRequest = (token) => axios.get(`docentes`, config(token));
 
+export const getTeacherRequest = (token, id) => axios.get(`docentes/${id}`, config(token));
+
 export const createTeacherRequest = (token, teacher) => axios.post(
     `docente/registrarDocente`, teacher, config(token));
 

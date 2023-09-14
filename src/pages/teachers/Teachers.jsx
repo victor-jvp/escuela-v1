@@ -11,6 +11,7 @@ import HourglassDisabledOutlinedIcon from '@mui/icons-material/HourglassDisabled
 import HourglassEmptyOutlinedIcon from '@mui/icons-material/HourglassEmptyOutlined';
 import { Tooltip } from "@mui/material";
 import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom'
 
 const Teachers = () => {
 
@@ -18,7 +19,12 @@ const Teachers = () => {
 
   const tableCols = [
     // { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'name', headerName: 'Nombre y Apellido', width: 200 },
+    {
+      field: 'name', headerName: 'Nombre y Apellido', width: 200,
+      renderCell: (params) => {
+        return (<Link to={`/teachers/${params.row._id}`}>{ params.row.name }</Link>)
+      }
+    },
     { field: 'email', headerName: 'Email', width: 200 },
     { field: 'section', headerName: 'Sección', width: 100 },
     {
