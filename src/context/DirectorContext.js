@@ -36,6 +36,7 @@ export function DirectorsProvider({ children }) {
       if(res.status === 200)
       {
         setPeriod(res.data)
+        return res.data;
       }
     } catch (error) {
       console.log(error);

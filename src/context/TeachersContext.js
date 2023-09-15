@@ -5,10 +5,11 @@ import {
   activeTeacherRequest,
   inactiveTeacherRequest,
   deleteTeacherRequest,
-  removeSectionRequest,
-  assignSectionRequest,
+  removeClassRequest,
+  assignClassRequest,
   proyectoEscolarRequest,
-  getTeacherRequest,
+  informeDescriptivoRequest,
+  getTeacherRequest
 } from "../api/teachers";
 import { useAuth } from "./AuthProvider";
 import { HttpStatusCode } from "axios";
@@ -92,22 +93,20 @@ export function TeacherProvider({ children }) {
   };
 
   //Asignar sección
-  const assignSection = async (id, data) => {
+  const assignClass = async (id, data) => {
     try {
-      const res = await assignSectionRequest(user.token, id, {
-        section: data,
-      });
-      if (res.status === 200) getTeachers();
+      const res = await assignClassRequest(user.token, id, data);
+      if (res.status === 200) return res.data;
     } catch (error) {
       console.log(error);
     }
   };
 
   //Retirar sección
-  const removeSection = async (id) => {
+  const removeClass = async (id) => {
     try {
-      const res = await removeSectionRequest(user.token, id);
-      if (res.status === 200) getTeachers();
+      const res = await removeClassRequest(user.token, id);
+      if (res.status === 200) return res.data;
     } catch (error) {
       console.log(error);
     }
@@ -118,6 +117,15 @@ export function TeacherProvider({ children }) {
     try {
       const res = await getTeacherRequest(user.token, id);
       setTeacherInfo(res.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const informeDescriptivo = async (id_student, data) => {
+    try {
+      const res = await informeDescriptivoRequest(user.token, id_student, data);
+      if (res.status === 200) return res.data;
     } catch (error) {
       console.log(error)
     }
@@ -141,8 +149,8 @@ export function TeacherProvider({ children }) {
         activateTeacher,
         deactivateTeacher,
         deleteTeacher,
-        assignSection,
-        removeSection,
+        assignClass,
+        removeClass,
         proyectoEscolar,
         teacherInfo,
         getTeacherById,

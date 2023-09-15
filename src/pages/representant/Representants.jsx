@@ -17,6 +17,16 @@ const Representant = () => {
     // { field: 'id', headerName: 'ID', width: 70 },
     { field: 'name', headerName: 'Nombre y Apellido', width: 200 },
     { field: 'email', headerName: 'Email', width: 220 },
+    {
+      field: 'hijos_estudiantes', headerName: 'Estudiantes', width: 220,
+      renderCell: (params) => {
+        if (params.value.length > 0) {
+          return <ul style={{ listStyle: "none", padding: 0, }}>{params.value.map((e) => (<li key={e._id}><b>{e.hijo_estudiante.nombres} {e.hijo_estudiante.apellidos}</b></li>))}</ul>
+        } else {
+          return <b>-Sin registros-</b>
+        }
+      }
+    }
   ];
 
   const actionColumn = [

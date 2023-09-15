@@ -36,7 +36,6 @@ export const AuthProvider = ({ children }) => {
   const signup = async (user) => {
     try {
       const res = await registerRequest(user)
-      // console.log(res.data);
       if (res.status === HttpStatusCode.Created) {
         // setUser(res.data)
         return true
@@ -51,7 +50,6 @@ export const AuthProvider = ({ children }) => {
   const signin = async (user) => {
     try {
       const res = await loginRequest(user)
-      console.log(res);
       if (res.status === 200) {
         if (res.data.error) {
           handleError(res);
@@ -74,7 +72,6 @@ export const AuthProvider = ({ children }) => {
     const res = await logoutRequest(user)
     if (res.status === 200) {
       sessionStorage.removeItem("session")
-      console.log("removing")
       setIsAuthenticated(false)
       setUser(null)
     }

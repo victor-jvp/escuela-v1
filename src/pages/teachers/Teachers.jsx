@@ -15,7 +15,15 @@ import { Link } from 'react-router-dom'
 
 const Teachers = () => {
 
-  const { getTeachers, teachers, activateTeacher, deactivateTeacher, deleteTeacher, assignSection, removeSection } = useTeachers()
+  const {
+    getTeachers,
+    teachers,
+    activateTeacher,
+    deactivateTeacher,
+    deleteTeacher,
+    assignClass,
+    removeClass
+  } = useTeachers()
 
   const tableCols = [
     // { field: 'id', headerName: 'ID', width: 70 },
@@ -26,7 +34,18 @@ const Teachers = () => {
       }
     },
     { field: 'email', headerName: 'Email', width: 200 },
-    { field: 'section', headerName: 'Sección', width: 100 },
+    {
+      field: 'clases_asignadas',
+      headerName: 'Clases Asignadas',
+      width: 200,
+      renderCell: (params) => {
+        if (params.value.length > 0) {
+          return <ul>{params.value.forEach((e) => (<li>{e.nombres} {e.apellidos}</li>))}</ul>
+        } else {
+          return <b>-Sin clases asignadas-</b>
+        }
+      }
+    },
     {
       field: 'habilitado', headerName: 'Estado', width: 100,
       valueGetter: (params) => `${params.row.habilitado ? 'Activo' : 'Inactivo'}`
@@ -53,13 +72,13 @@ const Teachers = () => {
                   </Tooltip>
                 </div>)
             }
-            <div className="viewButton" onClick={() => _assignSection(params.row._id, params.row.section)}>
-              <Tooltip title="Cambiar Sección">
+            <div className="viewButton" onClick={() => _assignClass(params.row._id)}>
+              <Tooltip title="Asignar Clase">
                 <HourglassEmptyOutlinedIcon />
               </Tooltip>
             </div>
-            {params.row.section && (<div className="viewButton" onClick={() => _removeSection(params.row._id)}>
-              <Tooltip title="Remover Sección">
+            {params.row.section && (<div className="viewButton" onClick={() => _removeClass(params.row._id)}>
+              <Tooltip title="Ritirar Clase">
                 <HourglassDisabledOutlinedIcon />
               </Tooltip>
             </div>)}
@@ -91,33 +110,32 @@ const Teachers = () => {
     })
   }
 
-  const _assignSection = (id, current) => {
-    Swal.fire({
-      title: 'Ingrese la sección',
-      input: 'text',
-      inputValue: current,
-      inputAttributes: {
-        autocapitalize: 'off'
-      },
+  const _assignClass = async (id) => {
+    const { value: data } = await Swal.fire({
+      title: 'Asignar clase',
+      html: `<label>Grado: </label><input type="number" id="grado" class="swal2-input" step="1" required><br>
+      <label>Sección: </label><input type="text" id="seccion" class="swal2-input" required>`,
+      focusConfirm: false,
       showCancelButton: true,
-      confirmButtonText: 'Actualizar',
+      confirmButtonText: "Procesar",
       showLoaderOnConfirm: true,
-      preConfirm: async (data) => {
-        return await assignSection(id, data)
+      preConfirm: async () => {
+        return {
+          grado: document.getElementById("grado").value,
+          seccion: document.getElementById("seccion").value,
+        };
       },
-      allowOutsideClick: () => !Swal.isLoading()
-    }).then((result) => {
-      if (result === true) {
-        // Swal.fire({
-        //   title: `${result.value.login}'s avatar`,
-        //   imageUrl: result.value.avatar_url
-        // })
-        Swal.close()
-      }
-    })
+      allowOutsideClick: () => !Swal.isLoading(),
+    });
+
+    if (data && id) {
+      const resp = await assignClass(id, data);
+      if(resp.error) Swal.fire("Error", resp.error, 'error');
+      console.log(resp)
+    }
   }
 
-  const _removeSection = (id) => {
+  const _removeClass = (id) => {
     Swal.fire({
       title: 'Confirmar acción',
       text: "Confirme remover la sección del registro seleccionado",
@@ -128,7 +146,7 @@ const Teachers = () => {
       confirmButtonText: 'Confirmar',
     }).then(async (result) => {
       if (result.isConfirmed) {
-        removeSection(id)
+        removeClass(id)
       }
     })
   }
