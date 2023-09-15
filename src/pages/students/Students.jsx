@@ -20,8 +20,8 @@ const Students = () => {
     { field: 'cedula_escolar', headerName: 'Cédula Escolar', width: 130 },
     { field: 'nombres', headerName: 'Nombres', width: 150 },
     { field: 'apellidos', headerName: 'Apellidos', width: 150 },
+    { field: 'edad', headerName: 'Edad', width: 100 },
     { field: 'seccion', headerName: 'Sección', width: 100 },
-    { field: 'docente', headerName: 'Docente', width: 200 },
     { field: 'año_escolar', headerName: 'Año Escolar', width: 100 }
   ];
 

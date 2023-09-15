@@ -12,6 +12,7 @@ const DataTable = ({ title, createUrl, tableCols, tableRows, actionColumn }) => 
         {createUrl && (<Link to={createUrl} className="link"> Agregar </Link>)}
       </div>
       <DataGrid
+        getRowHeight={() => 'auto'}
         className="datagrid"
         localeText={esES.components.MuiDataGrid.defaultProps.localeText}
         rows={tableRows}

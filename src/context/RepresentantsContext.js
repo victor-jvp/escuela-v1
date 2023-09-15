@@ -24,6 +24,7 @@ export function RepresentantProvider({ children }) {
       setRepresentants(res.data)
     } catch (error) {
       console.log(error)
+      return error.response.data
     }
   }
 
@@ -37,10 +38,7 @@ export function RepresentantProvider({ children }) {
       }
     } catch (error) {
       console.log(error)
-      if (error.response.data.code === 11000) {
-        return "El email ya se encuentra registrado";
-      }
-      return error.response.data.message
+      return error.response.data
     }
   }
 
@@ -50,15 +48,17 @@ export function RepresentantProvider({ children }) {
       if (res.status === 200) getRepresentants()
     } catch (error) {
       console.log(error)
+      return error.response.data
     }
   }
 
   const getRepresentant = async (id) => {
     try {
-      const res = await getRepresentantRequest(user.token, id)
-      console.log(res);
+      const resp = await getRepresentantRequest(user.token, id)
+      if (resp.status === 200) return resp.data
     } catch (error) {
       console.log(error)
+      return error.response.data
     }
   }
 

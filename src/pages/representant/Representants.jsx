@@ -21,7 +21,7 @@ const Representant = () => {
       field: 'hijos_estudiantes', headerName: 'Estudiantes', width: 220,
       renderCell: (params) => {
         if (params.value.length > 0) {
-          return <ul style={{ listStyle: "none", padding: 0, }}>{params.value.map((e) => (<li key={e._id}><b>{e.hijo_estudiante.nombres} {e.hijo_estudiante.apellidos}</b></li>))}</ul>
+          return <ol style={{ padding: 0, }}>{params.value.map((e) => (<li key={e._id}><b>{e.hijo_estudiante.nombres} {e.hijo_estudiante.apellidos}</b></li>))}</ol>
         } else {
           return <b>-Sin registros-</b>
         }
@@ -42,11 +42,11 @@ const Representant = () => {
                 <AddReactionOutlinedIcon />
               </Tooltip>
             </Link>
-            {/* <Link to={`edit/${params.row._id}`} className="viewButton">
+            <Link to={`edit/${params.row._id}`} className="viewButton">
               <Tooltip title="Modificar">
                 <EditOutlinedIcon />
               </Tooltip>
-            </Link> */}
+            </Link>
             <div className="deleteButton" onClick={() => deleteRow(params.row._id)}>
               <Tooltip title="Eliminar">
                 <DeleteOutlineOutlinedIcon />

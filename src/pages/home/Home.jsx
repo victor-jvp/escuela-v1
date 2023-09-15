@@ -8,12 +8,14 @@ import { useStudents } from "../../context/StudentsContext";
 import { useUsers } from "../../context/UsersContext";
 import Swal from "sweetalert2";
 import { useDirectors } from "../../context/DirectorContext";
+import { useAuth } from "../../context/AuthProvider";
 
 const Home = () => {
   const { teachers, getTeachers } = useTeachers();
   const { students, getStudents } = useStudents();
   const { users, getUsers } = useUsers();
   const { addPeriod, period, addLapse } = useDirectors();
+  const { userType } = useAuth();
 
   let new_period = null;
 
@@ -83,17 +85,20 @@ const Home = () => {
           <Widget type="teacher" amount={teachers.length ?? 0} />
           <Widget type="student" amount={students.length ?? 0} />
         </div>
-        <div className="listContainer">
-          <div className="listTitle">Controles</div>
-          <div className="widgets">
-          <Widget type="period" amount="" onclick={_addPeriod}/>
-          <Widget type="lapse" amount="" onclick={_addLapse}/>
-          <Widget type="grade" amount=""/>
-          <Widget type="section" amount=""/>
-          <Widget type="students" amount=""/>
-        </div>
-        </div>
-        
+        {
+          (userType == "profesor") && (
+            <div className="listContainer">
+              <div className="listTitle">Controles</div>
+              <div className="widgets">
+                <Widget type="period" amount="" onclick={_addPeriod} />
+                <Widget type="lapse" amount="" onclick={_addLapse} />
+                <Widget type="grade" amount="" />
+                <Widget type="section" amount="" />
+                <Widget type="students" amount="" />
+              </div>
+            </div>
+          )
+        }
       </div>
     </div>
   );

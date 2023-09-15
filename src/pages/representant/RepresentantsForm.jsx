@@ -19,8 +19,10 @@ const CreateRepresentant = ({ title }) => {
     }
   }, [])
 
-  const _getRepresentant = (id) => {
-    getRepresentant(params.id)
+  const _getRepresentant = async (id) => {
+    const resp = await getRepresentant(params.id)
+    console.log(resp)
+    if (resp.error) Swal.fire('Error', resp.error, 'error').then(() => { window.history.back(); })
   }
 
   const onSubmit = handleSubmit(async (data) => {

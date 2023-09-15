@@ -26,7 +26,6 @@ const CreateStudent = () => {
     setValue("apellidos", student.apellidos);
     setValue("fecha_de_nacimiento", student.fecha_de_nacimiento);
     setValue("edad", student.edad);
-    setValue("grado", student.grado);
     setValue("seccion", student.seccion);
     setValue("direccion", student.direccion);
     setValue("docente", student.docente);
@@ -83,10 +82,6 @@ const CreateStudent = () => {
               <div className="formInput">
                 <label htmlFor="edad">Edad</label>
                 <input type="text" required {...register('edad')} placeholder="..." />
-              </div>
-              <div className="formInput">
-                <label htmlFor="grado">Grado</label>
-                <input type="text" required {...register('grado')} placeholder="..." />
               </div>
               <div className="formInput">
                 <label htmlFor="seccion">Sección</label>
