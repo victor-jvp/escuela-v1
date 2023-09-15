@@ -91,8 +91,13 @@ const Users = () => {
     getUsers()
   }
 
+  const _getUsers = async () => {
+    const resp = await getUsers()
+    if (resp.error) Swal.fire('Error', resp.error, 'error').then(() => { window.history.back(); })
+  }
+
   useEffect(() => {
-    getUsers()
+    _getUsers();
   }, [])
 
   return (

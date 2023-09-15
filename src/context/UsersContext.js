@@ -39,9 +39,11 @@ export function UserProvider({ children }) {
   const getUsers = async () => {
     try {
       const res = await getUsersRequest(user.token)
-      setUsers(res.data)
+      if(res.status === 200 && !res.data.error) setUsers(res.data)
+      else return res.data
     } catch (error) {
       console.log(error)
+      return error.response.data
     }
   }
 
