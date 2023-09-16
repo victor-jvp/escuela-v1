@@ -14,10 +14,8 @@ const Home = () => {
   const { teachers, getTeachers } = useTeachers();
   const { students, getStudents } = useStudents();
   const { users, getUsers } = useUsers();
-  const { addPeriod, period, addLapse } = useDirectors();
+  const { addPeriod, addLapse, addGrade } = useDirectors();
   const { userType } = useAuth();
-
-  let new_period = null;
 
   useEffect(() => {
     getTeachers();
@@ -47,7 +45,8 @@ const Home = () => {
     });
 
     if (data) {
-      await addPeriod(data);
+      const resp = await addPeriod(data);
+      Swal.fire(resp.title, resp.text, resp.type);
     }
   };
 
@@ -71,7 +70,32 @@ const Home = () => {
     });
 
     if (data) {
-      await addLapse(data);
+      const resp = await addLapse(data);
+      Swal.fire(resp.title, resp.text, resp.type);
+    }
+  }
+
+  const _addGrade = async () => {
+    const { value: data } = await Swal.fire({
+      title: 'Ingrese los datos solicitados:',
+      html:
+        `<label>Lapso: </label><input type="number" id="lapse" step="1" min="1" class="swal2-input" required/>
+        <label>Grado: </label><input type="number" id="grade" step="1" min="1" class="swal2-input" required/>`,
+      showCancelButton: true,
+      confirmButtonText: 'Procesar',
+      showLoaderOnConfirm: true,
+      preConfirm: async () => {
+        return {
+          lapse: document.getElementById("lapse").value,
+          grados: document.getElementById("grade").value,
+        };
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    })
+    
+    if (data) {
+      const resp = await addGrade(data.lapse, data.grados);
+      Swal.fire(resp.title, resp.text, resp.type);
     }
   }
 
@@ -86,13 +110,13 @@ const Home = () => {
           <Widget type="student" amount={students.length ?? 0} />
         </div>
         {
-          (userType == "profesor") && (
+          (userType == "director") && (
             <div className="listContainer">
-              <div className="listTitle">Controles</div>
+              <div className="listTitle">Panel de Control.</div>
               <div className="widgets">
                 <Widget type="period" amount="" onclick={_addPeriod} />
                 <Widget type="lapse" amount="" onclick={_addLapse} />
-                <Widget type="grade" amount="" />
+                <Widget type="grade" amount="" onclick={_addGrade} />
                 <Widget type="section" amount="" />
                 <Widget type="students" amount="" />
               </div>

@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./AuthProvider";
-import { createLapseRequest, createPeriodRequest } from "../api/director";
+import { addGradeRequest, createLapseRequest, createPeriodRequest } from "../api/director";
 
 const DirectorContext = createContext();
 
@@ -16,39 +16,91 @@ export const useDirectors = () => {
 export function DirectorsProvider({ children }) {
   const [directors] = useState([]);
   const { user } = useAuth()
-  const [period, setPeriod] = useState([]);
 
   const addPeriod = async (data) => {
     try {
       const res = await createPeriodRequest(user.token, data);
-      if(res.status === 200)
+      if(res.status === 200 && !res.data.error)
       {
-        setPeriod(res.data)
+        return {
+          title: 'Procesado',
+          text: "Periodo escolar procesado exitosamente.",
+          type: 'success'
+        }
+      } else {
+        return {
+          title: 'Error!',
+          text: res.data.error,
+          type: 'error'
+        }
       }
     } catch (error) {
-      console.log(error);
+      return {
+        title: 'Error!',
+        text: error.response.data.error,
+        type: 'error'
+      }
     }
   };
 
   const addLapse = async (data) => {
     try {
       const res = await createLapseRequest(user.token, data);
-      if(res.status === 200)
+      if(res.status === 200 && !res.data.error)
       {
-        setPeriod(res.data)
-        return res.data;
+        return {
+          title: 'Procesado',
+          text: "Lapso procesado exitosamente.",
+          type: 'success'
+        }
+      } else {
+        return {
+          title: 'Error!',
+          text: res.data.error,
+          type: 'error'
+        }
       }
     } catch (error) {
-      console.log(error);
+      return {
+        title: 'Error!',
+        text: error.response.data.error,
+        type: 'error'
+      }
     }
   };
+
+  const addGrade = async (id_period, data) => {
+    try {
+      const res = await addGradeRequest(user.token, id_period, data);
+      if(res.status === 200 && !res.data.error)
+      {
+        return {
+          title: 'Procesado',
+          text: "Grado procesado exitosamente.",
+          type: 'success'
+        }
+      } else {
+        return {
+          title: 'Error!',
+          text: res.data.error,
+          type: 'error'
+        }
+      }
+    } catch (error) {
+      return {
+        title: 'Error!',
+        text: error.response.data.error,
+        type: 'error'
+      }
+    }
+  }
 
   return (
     <DirectorContext.Provider value={{
       directors,
       addPeriod,
       addLapse,
-      period
+      addGrade,
     }}>
       {children}
     </DirectorContext.Provider>
