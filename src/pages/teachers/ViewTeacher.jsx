@@ -41,7 +41,7 @@ const ViewTeacher = () => {
             </div>
           </div>
           <div className="right">
-            <Link to="/users" className="link">Volver</Link>
+            <Link to="/teachers" className="link">Volver</Link>
           </div>
         </div>
         <div className="bottom"></div>

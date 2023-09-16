@@ -16,6 +16,7 @@ export const useRepresentants = () => {
 export function RepresentantProvider({ children }) {
 
   const [representants, setRepresentants] = useState([])
+  const [representantInfo, setRepresentantInfo] = useState([])
   const { user } = useAuth()
 
   const getRepresentants = async () => {
@@ -23,7 +24,7 @@ export function RepresentantProvider({ children }) {
       const res = await getRepresentantsRequest(user.token)
       setRepresentants(res.data)
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       return error.response.data
     }
   }
@@ -37,7 +38,7 @@ export function RepresentantProvider({ children }) {
         return res.data.message
       }
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       return error.response.data
     }
   }
@@ -47,7 +48,7 @@ export function RepresentantProvider({ children }) {
       const res = await deleteRepresentantRequest(user.token, id)
       if (res.status === 200) getRepresentants()
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       return error.response.data
     }
   }
@@ -57,7 +58,7 @@ export function RepresentantProvider({ children }) {
       const resp = await getRepresentantRequest(user.token, id)
       if (resp.status === 200) return resp.data
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       return error.response.data
     }
   }
@@ -66,6 +67,7 @@ export function RepresentantProvider({ children }) {
     <RepresentantContext.Provider
       value={{
         representants,
+        representantInfo,
         getRepresentant,
         getRepresentants,
         deleteRepresentant,

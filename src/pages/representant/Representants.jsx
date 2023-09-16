@@ -15,7 +15,10 @@ const Representant = () => {
   const { getRepresentants, representants, deleteRepresentant } = useRepresentants()
   const tableCols = [
     // { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'name', headerName: 'Nombre y Apellido', width: 200 },
+    {
+      field: 'name', headerName: 'Nombre y Apellido', width: 200,
+      renderCell: (params) => (<Link to={params.row._id}>{ params.value }</Link>)
+    },
     { field: 'email', headerName: 'Email', width: 220 },
     {
       field: 'hijos_estudiantes', headerName: 'Estudiantes', width: 220,

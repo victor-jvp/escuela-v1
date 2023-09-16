@@ -8,10 +8,12 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import AddReactionOutlinedIcon from '@mui/icons-material/AddReactionOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { useStudents } from '../../context/StudentsContext'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
+import { useRepresentants } from '../../context/RepresentantsContext';
 
 const ShowRepresentant = () => {
   const { students, getStudentsByRepresentant } = useStudents()
+  const { representantInfo, getRepresentant } = useRepresentants()
   const params = useParams()
 
   const tableCols = [
@@ -74,16 +76,48 @@ const ShowRepresentant = () => {
     })
   }
 
+  const loadData = async (id_representant) => {
+    // const resp = await getStudentsByRepresentant(id_representant)
+    const resp = await getRepresentant(id_representant);
+    if(resp.error) Swal.fire("Error!", resp.error, 'error').then(() => window.history.back());
+  }
+
   useEffect(() => {
-    getStudentsByRepresentant(params.id)
-    console.log(students)
+    loadData(params.id)
   }, [])
 
   return (
-    <div className='list'>
+    <div className='single'>
       <Sidebar />
-      <div className="listContainer">
+      <div className="singleContainer">
         <Navbar />
+        <div className="top">
+          <div className="left">
+            {/* <div className="editButton">Edit</div> */}
+            <h1 className="title">Información del Profesor</h1>
+            <div className="item">
+              <div className="details">
+                <h1 className="itemTitle">{ representantInfo.name ?? '' }</h1>
+                <div className="detailItem">
+                  <span className="itemKey">Email:</span>
+                  <span className="itemValue">{ representantInfo.email ?? '' }</span>
+                </div>
+                <div className="detailItem">
+                  <span className="itemKey">Estado:</span>
+                  <span className="itemValue">
+                    {
+                      (representantInfo.habilitado) ? "Habilitado" : "Inactivo"
+                    }
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="right">
+            <Link to="/users" className="link">Volver</Link>
+          </div>
+        </div>
+        <div className="bottom">
         <DataTable
           title="Estudiantes de Representante"
           tableCols={tableCols}
@@ -91,6 +125,7 @@ const ShowRepresentant = () => {
           createUrl={`/representants/${params.id}/create`}
           actionColumn={actionColumn}
         />
+        </div>
       </div>
     </div>
   )
