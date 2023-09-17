@@ -109,6 +109,7 @@ export function TeacherProvider({ children }) {
       if (res.status === 200) return res.data;
     } catch (error) {
       console.log(error);
+      return error.response.data;
     }
   };
 

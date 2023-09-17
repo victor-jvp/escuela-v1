@@ -35,10 +35,16 @@ export const getStudentDescriptiveReportRequest = (token, id) => axios.get(`estu
 export const getStudentsByTeacherRequest = (token) => axios.get(`profesor/estudiantes`, config(token));
 
 // Cargar informe descriptivo: patch /estudiante/:estudiante/cargarInforme 
-export const setInformStudentRequest = (token, id, data) => axios.patch(`estudiante/${id}/cargarInforme`, data, config(token))
+export const setInformStudentRequest = (token, id, data) => axios.post(
+  `docentes/estudiantes/${id}/informeDescriptivo/cargarInforme`,
+  data,
+  config(token))
 
 // Establecer rasgos personales: patch /estudiante/:estudiante/cargarRasgosPersonales
-export const setPersonalRisksStudentRequest = (token, id, data) => axios.patch(`estudiante/${id}/cargarRasgosPersonales`, data, config(token))
+export const setStudentPersonalTraitsRequest = (token, id, data) => axios.patch(
+  `estudiante/cargarRasgosPersonales`,
+  data,
+  config(token))
 
 // Registrar calificativo final: patch /estudiante/:estudiante/registrarCalificativoFinal
 export const setFinalQualifierStudentRequest = (token, id, data) => axios.patch(`estudiante/${id}/registrarCalificativoFinal`, data, config(token))

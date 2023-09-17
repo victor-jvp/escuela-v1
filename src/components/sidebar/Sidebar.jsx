@@ -54,10 +54,10 @@ const Sidebar = () => {
           {
             (userType === "profesor") && (
               <>
-                <Link to={`/students/evaluate`} style={{ textDecoration: "none" }}>
+                <Link to={`/students`} style={{ textDecoration: "none" }}>
                   <li>
                     <SpeedOutlinedIcon className="icon" />
-                    <span>Evaluar Desempeño</span>
+                    <span>Estudiantes</span>
                   </li>
                 </Link>
               </>

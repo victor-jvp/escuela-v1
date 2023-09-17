@@ -10,7 +10,7 @@ import {
   removeSectionRequest,
   setFinalQualifierStudentRequest,
   setInformStudentRequest,
-  setPersonalRisksStudentRequest,
+  setStudentPersonalTraitsRequest,
 } from "../api/students";
 import { useAuth } from "./AuthProvider";
 import { HttpStatusCode } from "axios";
@@ -119,8 +119,25 @@ export function StudentProvider({ children }) {
   const informeDescriptivo = async (id, data) => {
     try {
       const res = await setInformStudentRequest(user.token, id, data);
-      return res.status === HttpStatusCode.Created;
+      if (res.status === 200 && !res.data.error) {
+        return {
+          title: 'Procesado.',
+          text: 'Proceso realizado exitosamente',
+          type: 'success'
+        }
+      } else {
+        return {
+          title: 'Error!',
+          text: res.data.error,
+          type: 'error'
+        }
+      }
     } catch (error) {
+      return {
+        title: 'Error!',
+        text: error.data.error,
+        type: 'error'
+      }
       console.log(error);
     }
   };
@@ -128,9 +145,26 @@ export function StudentProvider({ children }) {
   // Cargar rasgos personales a estudiante por profesor
   const rasgosPersonales = async (id, data) => {
     try {
-      const res = await setPersonalRisksStudentRequest(user.token, id, data);
-      return res.status === HttpStatusCode.Created;
+      const res = await setStudentPersonalTraitsRequest(user.token, id, data);
+      if (res.status === 200 && !res.data.error) {
+        return {
+          title: 'Procesado.',
+          text: 'Proceso realizado exitosamente',
+          type: 'success'
+        }
+      } else {
+        return {
+          title: 'Error!',
+          text: res.data.error,
+          type: 'error'
+        }
+      }
     } catch (error) {
+      return {
+        title: 'Error!',
+        text: error.data.error,
+        type: 'error'
+      }
       console.log(error);
     }
   };

@@ -12,9 +12,11 @@ import HourglassEmptyOutlinedIcon from '@mui/icons-material/HourglassEmptyOutlin
 import { Tooltip } from "@mui/material";
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom'
+import { useAuth } from '../../context/AuthProvider'
 
 const Teachers = () => {
 
+  const { user, userType } = useAuth()
   const {
     getTeachers,
     teachers,
@@ -78,7 +80,7 @@ const Teachers = () => {
               </Tooltip>
             </div>
             {params.row.section && (<div className="viewButton" onClick={() => _removeClass(params.row._id)}>
-              <Tooltip title="Ritirar Clase">
+              <Tooltip title="Retirar Clase">
                 <HourglassDisabledOutlinedIcon />
               </Tooltip>
             </div>)}
@@ -131,7 +133,6 @@ const Teachers = () => {
     if (data && id) {
       const resp = await assignClass(id, data);
       if(resp.error) Swal.fire("Error", resp.error, 'error');
-      console.log(resp)
     }
   }
 
@@ -146,7 +147,8 @@ const Teachers = () => {
       confirmButtonText: 'Confirmar',
     }).then(async (result) => {
       if (result.isConfirmed) {
-        removeClass(id)
+        const resp = await removeClass(id)
+        if(resp.error) Swal.fire("Error", resp.error, 'error');
       }
     })
   }
