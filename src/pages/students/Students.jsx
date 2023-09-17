@@ -85,34 +85,65 @@ const Students = () => {
               </>
             )}
 
-            <div
-              className="viewButton"
-              onClick={() => _informeDescriptivo(params.row)}
-            >
-              <Tooltip title="Informe Descriptivo">
-                <BookOutlinedIcon />
-              </Tooltip>
-            </div>
+            {userType === "profesor" && (
+              <>
+                <div
+                  className="viewButton"
+                  onClick={() => _informeDescriptivo(params.row)}
+                >
+                  <Tooltip title="Informe Descriptivo">
+                    <BookOutlinedIcon />
+                  </Tooltip>
+                </div>
 
-            <div
-              className="viewButton"
-              onClick={() => _rasgosPersonales(params.row)}
-            >
-              <Tooltip title="Rasgos Personales">
-                <LocalLibraryOutlinedIcon />
-              </Tooltip>
-            </div>
+                <div
+                  className="viewButton"
+                  onClick={() => _rasgosPersonales(params.row)}
+                >
+                  <Tooltip title="Rasgos Personales">
+                    <LocalLibraryOutlinedIcon />
+                  </Tooltip>
+                </div>
 
-            {/* <div className="viewButton" onClick={() => _calificativoFinal(params.row._id, params.row.section)}>
-              <Tooltip title="Registro Estudiantil">
-                <BookOutlinedIcon />
-              </Tooltip>
-            </div> */}
+                <div
+                  className="viewButton"
+                  onClick={() =>
+                    _calificativoFinal(params.row)
+                  }
+                >
+                  <Tooltip title="Registro Estudiantil">
+                    <BookOutlinedIcon />
+                  </Tooltip>
+                </div>
+              </>
+            )}
           </div>
         );
       },
     },
   ];
+
+  const _calificativoFinal = async (student) => {
+    const { value: data } = await Swal.fire({
+      title: "Cargar Informe Descriptivo",
+      html: `<label class="bold">Estudiante: </label><span>${student.nombres} ${student.apellidos}</span><hr>
+      <textarea id="description" class="swal2-textarea" placeholder="Descripcion..." cols="27">`,
+      showCancelButton: true,
+      confirmButtonText: "Procesar",
+      showLoaderOnConfirm: true,
+      preConfirm: async () => {
+        return {
+          literal_calificativo_final: document.getElementById("description").value,
+        };
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    });
+
+    if (data) {
+      const resp = await informeDescriptivo(student.id_representante, student._id, data);
+      Swal.fire(resp.title, resp.text, resp.type);
+    }
+  }
 
   const _informeDescriptivo = async (student) => {
     const { value: data } = await Swal.fire({

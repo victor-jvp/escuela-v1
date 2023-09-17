@@ -47,7 +47,10 @@ export const setStudentPersonalTraitsRequest = (token, id, data) => axios.patch(
   config(token))
 
 // Registrar calificativo final: patch /estudiante/:estudiante/registrarCalificativoFinal
-export const setFinalQualifierStudentRequest = (token, id, data) => axios.patch(`estudiante/${id}/registrarCalificativoFinal`, data, config(token))
+export const setFinalQualifierStudentRequest = (token, id_representant, id_student, data) => axios.patch(
+  `representante/${id_representant}/estudiante/${id_student}/registrarLiteralFinal`,
+  data,
+  config(token))
 
 // (Registrar nombre del proyecto escolar: patch /estudiante/:estudiante/registrarCalificativoFinal)
 // export const setStudentRequest = (token, data) => axios.patch(`proyectoEscolar/registrarProyecto`, data, config(token))

@@ -170,11 +170,28 @@ export function StudentProvider({ children }) {
   };
 
   // Cargar calificativo final a estudiante por profesor
-  const calificativoFinal = async (id, data) => {
+  const calificativoFinal = async (id_representant, id_student, data) => {
     try {
-      const res = await setFinalQualifierStudentRequest(user.token, id, data);
-      return res.status === HttpStatusCode.Created;
+      const res = await setFinalQualifierStudentRequest(user.token, id_representant, id_student, data);
+      if (res.status === 200 && !res.data.error) {
+        return {
+          title: 'Procesado.',
+          text: 'Proceso realizado exitosamente',
+          type: 'success'
+        }
+      } else {
+        return {
+          title: 'Error!',
+          text: res.data.error,
+          type: 'error'
+        }
+      }
     } catch (error) {
+      return {
+        title: 'Error!',
+        text: error.data.error,
+        type: 'error'
+      }
       console.log(error);
     }
   };
