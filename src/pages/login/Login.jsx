@@ -32,10 +32,10 @@ const Login = () => {
   }, [isAuthenticated])
 
   const usersTypeList = [
-    { value: 'docente', label: 'Docente' },
-    { value: 'representante', label: 'Representante' },
-    { value: 'direccion', label: 'Director' },
-    { value: 'administracion', label: 'Administrador' }
+    { key: 0, value: 'docente', label: 'Docente' },
+    { key: 1, value: 'representante', label: 'Representante' },
+    { key: 2, value: 'direccion', label: 'Director' },
+    { key: 3, value: 'administracion', label: 'Administrador' }
   ]
 
   return (

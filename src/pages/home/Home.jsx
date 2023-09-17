@@ -131,17 +131,24 @@ const Home = () => {
       <div className="homeContainer">
         <Navbar />
         <div className="widgets">
+          
+          {
+            (userType === "director") && (
+              <>
+                <Widget type="user" amount={users.length ?? 0} />
+              </>
+            )
+          }
           {
             (userType === "director" || userType === "administrador") && (
               <>
-                <Widget type="user" amount={users.length ?? 0} />
                 <Widget type="teacher" amount={teachers.length ?? 0} />
               </>)
           }
           <Widget type="student" amount={students.length ?? 0} />
         </div>
         {
-          (userType == "director") && (
+          (userType === "director") && (
             <div className="listContainer">
               <div className="listTitle">Panel de Control.</div>
               <div className="widgets">
