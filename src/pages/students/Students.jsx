@@ -10,6 +10,7 @@ import HourglassEmptyOutlinedIcon from "@mui/icons-material/HourglassEmptyOutlin
 import BookOutlinedIcon from "@mui/icons-material/BookOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import LocalLibraryOutlinedIcon from "@mui/icons-material/LocalLibraryOutlined";
+import SummarizeOutlinedIcon from '@mui/icons-material/SummarizeOutlined';
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthProvider";
@@ -117,11 +118,24 @@ const Students = () => {
                 </div>
               </>
             )}
+
+            <div
+                  className="viewButton"
+                  onClick={() => verReportes(params.row)}
+                >
+                  <Tooltip title="Reportes del Alumno">
+                    <SummarizeOutlinedIcon />
+                  </Tooltip>
+                </div>
           </div>
         );
       },
     },
   ];
+
+  const verReportes = async (student) => {
+    console.log(student);
+  }
 
   const _calificativoFinal = async (student) => {
     const { value: data } = await Swal.fire({
