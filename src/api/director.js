@@ -17,13 +17,15 @@ export const createLapseRequest = (token, data) => axios.post(
     `direccion/periodoActual/nuevoLapso`, data, config(token));
 
 // Agregar Grados a lapto actual
-export const addGradeRequest = (token, id_period, data) => axios.post(
-    `direccion/periodoActual/lapsos/${id_period}/crearGrados`, data, config(token));
+export const addGradeRequest = (token, lapse, grade) => axios.post(
+    `direccion/periodoActual/lapsos/${lapse}/crearGrados`, {
+        grados: grade
+    }, config(token));
 
 // Agregar Secciones al grado del periodo actual
-export const addSectionsRequest = (token, id_period, id_grade, data) => axios.post(
-    `direccion/periodoActual/lapsos/${id_period}/grados/${id_grade}/crearSecciones`, {
-        grados: data
+export const addSectionsRequest = (token, lapse, grade, section) => axios.post(
+    `direccion/periodoActual/lapsos/${lapse}/grados/${grade}/crearSecciones`, {
+        secciones: section
     }, config(token));
 
 // Agregar estudiantes a una seccion del period y lapso actual + id grado + id seccion

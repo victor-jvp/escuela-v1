@@ -14,7 +14,7 @@ const Home = () => {
   const { teachers, getTeachers } = useTeachers();
   const { students, getStudents } = useStudents();
   const { users, getUsers } = useUsers();
-  const { addPeriod, addLapse, addGrade } = useDirectors();
+  const { addPeriod, addLapse, addGrade, addSection } = useDirectors();
   const { userType } = useAuth();
 
   useEffect(() => {
@@ -54,7 +54,7 @@ const Home = () => {
     const { value: data } = await Swal.fire({
       title: "Ingrese los datos solicitados:",
       html:
-        '<label>Lapso: </label><input type="text" id="lapso" class="swal2-input"><br>' +
+        '<label>Lapso: </label><input type="number" step="1" min="1" id="lapso" class="swal2-input"><br>' +
         '<label>Proyecto: </label><textarea id="proyecto_escolar" class="swal2-textarea"></textarea>',
       focusConfirm: false,
       showCancelButton: true,
@@ -87,14 +87,40 @@ const Home = () => {
       preConfirm: async () => {
         return {
           lapse: document.getElementById("lapse").value,
-          grados: document.getElementById("grade").value,
+          grade: document.getElementById("grade").value,
         };
       },
       allowOutsideClick: () => !Swal.isLoading()
     })
     
     if (data) {
-      const resp = await addGrade(data.lapse, data.grados);
+      const resp = await addGrade(data.lapse, data.grade);
+      Swal.fire(resp.title, resp.text, resp.type);
+    }
+  }
+
+  const _addSection = async () => {
+    const { value: data } = await Swal.fire({
+      title: 'Ingrese los datos solicitados:',
+      html:
+        `<label>Lapso: </label><input type="number" id="lapse" step="1" min="1" class="swal2-input" required/>
+        <label>Grado: </label><input type="number" id="grade" step="1" min="1" class="swal2-input" required/>
+        <label>Sección: </label><input type="text" id="section" class="swal2-input" required/>`,
+      showCancelButton: true,
+      confirmButtonText: 'Procesar',
+      showLoaderOnConfirm: true,
+      preConfirm: async () => {
+        return {
+          lapse: document.getElementById("lapse").value,
+          grade: document.getElementById("grade").value,
+          section: document.getElementById("section").value,
+        };
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    })
+    
+    if (data) {
+      const resp = await addSection(data.lapse, data.grade, data.section);
       Swal.fire(resp.title, resp.text, resp.type);
     }
   }
@@ -117,7 +143,7 @@ const Home = () => {
                 <Widget type="period" amount="" onclick={_addPeriod} />
                 <Widget type="lapse" amount="" onclick={_addLapse} />
                 <Widget type="grade" amount="" onclick={_addGrade} />
-                <Widget type="section" amount="" />
+                <Widget type="section" amount="" onclick={_addSection}/>
                 <Widget type="students" amount="" />
               </div>
             </div>

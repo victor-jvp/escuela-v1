@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./AuthProvider";
-import { addGradeRequest, createLapseRequest, createPeriodRequest } from "../api/director";
+import { addGradeRequest, addSectionsRequest, createLapseRequest, createPeriodRequest } from "../api/director";
 
 const DirectorContext = createContext();
 
@@ -69,14 +69,40 @@ export function DirectorsProvider({ children }) {
     }
   };
 
-  const addGrade = async (id_period, data) => {
+  const addGrade = async (lapse, grade) => {
     try {
-      const res = await addGradeRequest(user.token, id_period, data);
+      const res = await addGradeRequest(user.token, lapse, grade);
       if(res.status === 200 && !res.data.error)
       {
         return {
           title: 'Procesado',
           text: "Grado procesado exitosamente.",
+          type: 'success'
+        }
+      } else {
+        return {
+          title: 'Error!',
+          text: res.data.error,
+          type: 'error'
+        }
+      }
+    } catch (error) {
+      return {
+        title: 'Error!',
+        text: error.response.data.error,
+        type: 'error'
+      }
+    }
+  }
+
+  const addSection = async (lapse, grade, section) => {
+    try {
+      const res = await addSectionsRequest(user.token, lapse, grade, section);
+      if(res.status === 200 && !res.data.error)
+      {
+        return {
+          title: 'Procesado',
+          text: "Sección procesado exitosamente.",
           type: 'success'
         }
       } else {
@@ -101,6 +127,7 @@ export function DirectorsProvider({ children }) {
       addPeriod,
       addLapse,
       addGrade,
+      addSection,
     }}>
       {children}
     </DirectorContext.Provider>
