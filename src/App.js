@@ -38,6 +38,7 @@ import ViewUser from "./pages/users/ViewUser";
 import ViewTeacher from "./pages/teachers/ViewTeacher";
 import { RegisterGrades } from "./pages/home/RegisterGrades";
 import { RegisterSections } from './pages/home/RegisterSections'
+import {RegisterStudents} from './pages/home/RegisterStudents'
 
 function App() {
 
@@ -57,7 +58,7 @@ function App() {
                       <Route path="/register" element={<Register />} />
                       <Route path="/grades/register" element={<RegisterGrades />} />
                       <Route path="/sections/register" element={<RegisterSections />} />
-                      <Route path="/students/register" element={<RegisterSections />} />
+                      <Route path="/students/register" element={<RegisterStudents />} />
                       <Route path="/" element={<ProtectedRoute />}>
                         <Route index element={<Home />} />
                         <Route path="personal">
