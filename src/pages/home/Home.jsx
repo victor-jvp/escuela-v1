@@ -9,13 +9,15 @@ import { useUsers } from "../../context/UsersContext";
 import Swal from "sweetalert2";
 import { useDirectors } from "../../context/DirectorContext";
 import { useAuth } from "../../context/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const { teachers, getTeachers } = useTeachers();
   const { students, getStudents } = useStudents();
   const { users, getUsers } = useUsers();
-  const { addPeriod, addLapse, addGrade, addSection } = useDirectors();
+  const { addPeriod, addLapse, addGrades, addSection } = useDirectors();
   const { userType } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getTeachers();
@@ -94,7 +96,7 @@ const Home = () => {
     })
     
     if (data) {
-      const resp = await addGrade(data.lapse, [{grado: data.grade}]);
+      const resp = await addGrades(data.lapse, [{grado: data.grade}]);
       Swal.fire(resp.title, resp.text, resp.type);
     }
   }
@@ -156,9 +158,9 @@ const Home = () => {
               <div className="widgets">
                 <Widget type="period" amount="" onclick={_addPeriod} />
                 <Widget type="lapse" amount="" onclick={_addLapse} />
-                <Widget type="grade" amount="" onclick={_addGrade} />
-                <Widget type="section" amount="" onclick={_addSection}/>
-                <Widget type="students" amount="" />
+                <Widget type="grade" amount="" onclick={() => navigate("/grades/register")} />
+                <Widget type="section" amount="" onclick={() => navigate("/sections/register")}/>
+                <Widget type="students" amount="" onclick={() => navigate("/students/register")}/>
               </div>
             </div>
           )

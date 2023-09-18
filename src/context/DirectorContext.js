@@ -69,9 +69,9 @@ export function DirectorsProvider({ children }) {
     }
   };
 
-  const addGrade = async (lapse, grade) => {
+  const addGrades = async (lapse, grades) => {
     try {
-      const res = await addGradeRequest(user.token, lapse, grade);
+      const res = await addGradeRequest(user.token, lapse, grades);
       if(res.status === 200 && !res.data.error)
       {
         return {
@@ -126,7 +126,7 @@ export function DirectorsProvider({ children }) {
       directors,
       addPeriod,
       addLapse,
-      addGrade,
+      addGrades,
       addSection,
     }}>
       {children}
