@@ -92,7 +92,7 @@ export const RegisterGrades = () => {
         if (result.isConfirmed) {
           const resp = await addGrades(lapse.value, grados);
           Swal.fire(resp.title, resp.text, resp.type).then((res) => {
-            if(res.isConfirmed && res.value) navigate("/")
+            if(res.isConfirmed && resp.type === "success") navigate("/")
           });
         }
       })

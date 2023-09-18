@@ -95,7 +95,7 @@ export function DirectorsProvider({ children }) {
     }
   }
 
-  const addSection = async (lapse, grade, section) => {
+  const addSections = async (lapse, grade, section) => {
     try {
       const res = await addSectionsRequest(user.token, lapse, grade, section);
       if(res.status === 200 && !res.data.error)
@@ -127,7 +127,7 @@ export function DirectorsProvider({ children }) {
       addPeriod,
       addLapse,
       addGrades,
-      addSection,
+      addSections,
     }}>
       {children}
     </DirectorContext.Provider>
