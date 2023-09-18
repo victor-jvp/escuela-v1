@@ -94,7 +94,7 @@ const Home = () => {
     })
     
     if (data) {
-      const resp = await addGrade(data.lapse, data.grade);
+      const resp = await addGrade(data.lapse, [{grado: data.grade}]);
       Swal.fire(resp.title, resp.text, resp.type);
     }
   }
@@ -113,7 +113,9 @@ const Home = () => {
         return {
           lapse: document.getElementById("lapse").value,
           grade: document.getElementById("grade").value,
-          section: document.getElementById("section").value,
+          section: [
+            { seccion: document.getElementById("section").value }
+          ],
         };
       },
       allowOutsideClick: () => !Swal.isLoading()
