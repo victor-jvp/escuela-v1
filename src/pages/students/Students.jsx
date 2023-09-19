@@ -40,7 +40,7 @@ const Students = () => {
     {
       field: "action",
       headerName: "Opciones",
-      width: 200,
+      width: 300,
       renderCell: (params) => {
         return (
           <div className="cellActions">
@@ -119,23 +119,37 @@ const Students = () => {
               </>
             )}
 
-            <div
-                  className="viewButton"
-                  onClick={() => verReportes(params.row)}
-                >
-                  <Tooltip title="Reportes del Alumno">
-                    <SummarizeOutlinedIcon />
-                  </Tooltip>
-                </div>
+            <Link
+              to={`${params.row._id}/boletin`}
+              className="viewButton"
+            >
+              <Tooltip title="Boletín">
+                <SummarizeOutlinedIcon />
+              </Tooltip>
+            </Link>
+
+            <Link
+              to={`${params.row._id}/informe`}
+              className="viewButton"
+            >
+              <Tooltip title="Informe Descriptivo">
+                <SummarizeOutlinedIcon />
+              </Tooltip>
+            </Link>
+
+            <Link
+              to={`${params.row._id}/constancia`}
+              className="viewButton"
+            >
+              <Tooltip title="Constancia">
+                <SummarizeOutlinedIcon />
+              </Tooltip>
+            </Link>
           </div>
         );
       },
     },
   ];
-
-  const verReportes = async (student) => {
-    console.log(student);
-  }
 
   const _calificativoFinal = async (student) => {
     const { value: data } = await Swal.fire({
