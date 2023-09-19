@@ -34,8 +34,28 @@ export function StudentProvider({ children }) {
     try {
       const res = await getStudentsRequest(user.token);
       setStudents(res.data);
+      if (res.status === 200 && !res.data.error) return res.data;
+      else throw new Error(res.data.error);
     } catch (error) {
       console.log(error);
+      return error.response.data;
+    }
+  };
+
+  const getStudentsList = async () => {
+    try {
+      const res = await getStudentsRequest(user.token);
+      if (res.status === 200 && !res.data.error) {
+        setStudents(res.data.map(e => ({
+          label: e.nombres + ' ' + e.apellidos,
+          id: e._id,
+          cedula_escolar: e.cedula_escolar,
+        })));
+      }
+      else throw new Error(res.data.error);
+    } catch (error) {
+      console.log(error);
+      return error.response.data;
     }
   };
 
@@ -212,6 +232,7 @@ export function StudentProvider({ children }) {
         students,
         getStudent,
         getStudents,
+        getStudentsList,
         getStudentsByRepresentant,
         getStudentsByTeacher,
         createStudent,

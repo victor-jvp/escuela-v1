@@ -9,18 +9,20 @@ import Swal from "sweetalert2";
 import { v4 as uuidv4 } from 'uuid';
 import { useDirectors } from "../../context/DirectorContext";
 import { useNavigate } from "react-router-dom";
-import {useStudents} from '../../context/StudentsContext'
+import { useStudents } from '../../context/StudentsContext'
 import { useEffect } from "react";
 
 export const RegisterStudents = () => {
 
   const navigate = useNavigate();
   const [tableRows, setTableRows] = useState([])
-  const { addSections } = useDirectors();
-  const { students, getStudents } = useStudents();
+  const [selected, setSelected] = useState(null);
+  const { addStudents } = useDirectors();
+  const { students, getStudentsList } = useStudents();
   const tableCols = [
     { field: "id", headerName: "ID", width: 70 },
     { field: "student", headerName: "Estudiante", width: 250 },
+    { field: "cedula_escolar", headerName: "Cédula Escolar", width: 200 },
   ];
 
   const actionColumn = [
@@ -43,24 +45,23 @@ export const RegisterStudents = () => {
   ];
 
   const addRow = () => {
-    const input = document.getElementById("student")
-    const found = tableRows.find((e) => e.student === input.value);
+    const input = document.getElementById('student')
+    const found = tableRows.find((e) => e.id === selected.id);
+
     if (found) {
       Swal.fire("Atención", "El valor ya se encuentra registrado", "warning")
         .then(() => {
           input.focus();
-          return;
         })
+      return;
     }
-
     const row = {
-      id: uuidv4(),
-      student: input.value
+      id: selected.id,
+      student: selected.label,
+      cedula_escolar: selected.cedula_escolar,
     }
     const newTable = tableRows.concat(row);
-    setTableRows(newTable)
-    input.value = "";
-    input.focus();
+    setTableRows(newTable);
   };
 
   const deleteRow = (id) => {
@@ -71,32 +72,26 @@ export const RegisterStudents = () => {
   }
 
   const saveGrades = async () => {
-    const data = tableRows.map((row) => ({ student: row.student }))
-    const lapse = document.getElementById("lapse")
+    const data = tableRows
     const grade = document.getElementById("grade")
     const section = document.getElementById("section")
-    if (lapse.value == "") {
-      Swal.fire("Atención", "Indique el lapso a registrar", "warning")
-        .then(() => {
-          lapse.focus();
-        })
-    } else if (grade.value == "") {
+    if (!grade.value) {
       Swal.fire("Atención", "Indique el grado a registrar", "warning")
         .then(() => {
           grade.focus();
         })
-    } else if (section.value == "") {
+    } else if (!section.value) {
       Swal.fire("Atención", "Indique la sección a registrar", "warning")
         .then(() => {
           section.focus();
         })
     } else if (data.length <= 0) {
-      Swal.fire("Atención", "Ingrese al menos 1 seccion a procesasr", "warning")
+      Swal.fire("Atención", "Ingrese al menos 1 estudiante a procesasr", "warning")
         .then(() => {
           document.getElementById("student").focus()
         })
     } else {
-      console.log(lapse.value, grade.value, section.value, data)
+      console.log(grade.value, section.value, data)
       Swal.fire({
         title: 'Confirmar.',
         text: "Confirme realizar el proceso.",
@@ -105,23 +100,19 @@ export const RegisterStudents = () => {
         confirmButtonText: 'Procesar'
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const resp = await addSections(lapse.value, grade.value, section.value, data);
+          const resp = await addStudents(grade.value, section.value, data);
           Swal.fire(resp.title, resp.text, resp.type).then((res) => {
             if (res.isConfirmed && resp.type === "success") navigate("/")
           });
         }
       })
-
     }
   }
 
-  let studentsData = []
-  
   useEffect(() => {
-    getStudents();
-    studentsData = students.map((e) => ({ label: `${e.nombres} ${e.apellidos}`, id: e._id }))
-  },[])
-  
+    getStudentsList();
+  }, [])
+
   return (
     <div className="list">
       <Sidebar />
@@ -136,30 +127,16 @@ export const RegisterStudents = () => {
                 <Autocomplete
                   disablePortal
                   id="student"
-                  options={studentsData}
+                  options={students}
+                  onChange={(e, value) => setSelected(value)}
                   sx={{ width: 300 }}
-                  renderInput={(params) => <TextField {...params} label="Estudiante" />}
+                  renderInput={(params) => (<TextField {...params} label="Estudiante" />)}
                 />
                 <span className="link" onClick={addRow}>
                   Agregar.
                 </span>
               </div>
               <div className="right">
-              </div>
-            </div>
-            <div className="widget">
-              <div className="left">
-                <span className="title">INDIQUE EL LAPSO</span>
-                <TextField
-                  type="number"
-                  step="1"
-                  min="1"
-                  id="lapse"
-                  label="Ingrese el lapso"
-                  variant="filled"
-                  required
-                  size="small"
-                />
               </div>
             </div>
             <div className="widget">
@@ -176,8 +153,6 @@ export const RegisterStudents = () => {
                   size="small"
                 />
               </div>
-            </div>
-            <div className="widget">
               <div className="right">
                 <span className="title">INDIQUE LA SECCION</span>
                 <TextField

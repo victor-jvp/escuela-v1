@@ -46,8 +46,8 @@ export const RegisterGrades = () => {
       Swal.fire("Atención", "El valor ya se encuentra registrado", "warning")
         .then(() => {
           input.focus();
-          return;
         })
+        return;
     }
 
     const row = {

@@ -30,4 +30,7 @@ export const addSectionsRequest = (token, lapse, grade, section) => axios.post(
 
 // Agregar estudiantes a una seccion del period y lapso actual + id grado + id seccion
 export const addStudentsRequest = (token, id_grade, id_section, data) => axios.post(
-    `direccion/periodoActual/lapsoActual/grados/${id_grade}/secciones/${id_section}/registrarEstudiantes`, data, config(token));
+    `direccion/periodoActual/lapsoActual/grados/${id_grade}/secciones/${id_section}/registrarEstudiantes`,
+    {
+        estudiantes: data
+    }, config(token));
