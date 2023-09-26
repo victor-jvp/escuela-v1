@@ -42,9 +42,10 @@ const Constancia = () => {
 
   const getStudent = async () => {
     try {
-      const id = window.location.pathname.split("/")[2];
+      const id_student = window.location.pathname.split("/")[2];
+      const id_representant = window.location.pathname.split("/")[4];
       const token = JSON.parse(sessionStorage.getItem("session")).token;
-      return await getStudentProofRequest(token, id);
+      return await getStudentProofRequest(token, id_student, id_representant);
     } catch (error) {
       Swal.fire(
         'Error al cargar los datos.',
@@ -71,21 +72,15 @@ const Constancia = () => {
               textDecoration: "underline",
             }}
           >
-            BOLETIN INFORMATIVO
+            CONSTANCIA DE ESTUDIOS
           </Text>
           <Image src={logo} style={styles.logo} />
         </View>
 
         <View style={styles.body}>
-          <Text style={styles.bodyText}>Apellidos: </Text>
-          <Text style={styles.bodyText}>Nombres: </Text>
-          <Text style={styles.bodyText}>Fecha de Nacimiento: </Text>
-          <Text style={styles.bodyText}>Edad: </Text>
-          <Text style={styles.bodyText}>Grado y Sección: </Text>
-          <Text style={styles.bodyText}>Representante: </Text>
-          <Text style={styles.bodyText}>Dirección: </Text>
-          <Text style={styles.bodyText}>Cédula Escolar: </Text>
-          <Text style={styles.bodyText}>Año Escolar: </Text>
+          <Text style={styles.bodyText}>
+            Por medio de la presente se hace constar que el estudiante: {student.nombres+' '+student.apellidos}
+          </Text>
         </View>
       </Page>
       <Page size="Letter" style={styles.page}>

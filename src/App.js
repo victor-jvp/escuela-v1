@@ -90,7 +90,7 @@ function App() {
                               </PDFViewer>}
                           />
                           <Route
-                            path=":id/constancia"
+                            path=":id_student/representant/:id_representant/constancia"
                             element={
                               <PDFViewer style={{ width: '99%', height: '98vh' }}>
                                 <Constancia />
