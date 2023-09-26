@@ -20,9 +20,13 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getTeachers();
-    getStudents();
-    getUsers();
+    if(userType === 'profesor') {
+      getStudents();
+    } else {
+      getTeachers();
+      getStudents();
+      getUsers();
+    }
   }, []);
 
   const _addPeriod = async () => {

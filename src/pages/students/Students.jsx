@@ -168,7 +168,7 @@ const Students = () => {
     });
 
     if (data) {
-      const resp = await informeDescriptivo(student.id_representante, student._id, data);
+      const resp = await informeDescriptivo(student._id, data);
       Swal.fire(resp.title, resp.text, resp.type);
     }
   }
@@ -177,14 +177,13 @@ const Students = () => {
     const { value: data } = await Swal.fire({
       title: "Cargar Informe Descriptivo",
       html: `<label class="bold">Estudiante: </label><span>${student.nombres} ${student.apellidos}</span>
-      <hr><input type="number" step="1" min="1" id="lapse" class="swal2-input" placeholder="Ingrese el lapso...">
+      <hr>
       <textarea id="description" class="swal2-textarea" placeholder="Descripcion..." cols="27">`,
       showCancelButton: true,
       confirmButtonText: "Procesar",
       showLoaderOnConfirm: true,
       preConfirm: async () => {
         return {
-          lapso: document.getElementById("lapse").value,
           descripcion: document.getElementById("description").value,
         };
       },
@@ -201,7 +200,7 @@ const Students = () => {
     const { value: data } = await Swal.fire({
       title: "Cargar Rasgos Personales",
       html: `<label class="bold">Estudiante: </label><span>${student.nombres} ${student.apellidos}</span>
-      <hr><input type="number" step="1" min="1" id="lapse" class="swal2-input" placeholder="Ingrese el lapso...">
+      <hr>
       <textarea id="description" class="swal2-textarea" placeholder="Descripcion..." cols="27">`,
       showCancelButton: true,
       confirmButtonText: "Procesar",

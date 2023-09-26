@@ -28,11 +28,17 @@ export const useStudents = () => {
 
 export function StudentProvider({ children }) {
   const [students, setStudents] = useState([]);
-  const { user } = useAuth();
+  const { user, userType } = useAuth();
 
   const getStudents = async () => {
     try {
-      const res = await getStudentsRequest(user.token);
+      let res = null;
+      if (userType === 'profesor') {
+        res = await getStudentsByTeacherRequest(user.token);
+      } else {
+        res = await getStudentsRequest(user.token);
+      }
+      
       setStudents(res.data);
       if (res.status === 200 && !res.data.error) return res.data;
       else throw new Error(res.data.error);
@@ -190,9 +196,9 @@ export function StudentProvider({ children }) {
   };
 
   // Cargar calificativo final a estudiante por profesor
-  const calificativoFinal = async (id_representant, id_student, data) => {
+  const calificativoFinal = async (id_student, data) => {
     try {
-      const res = await setFinalQualifierStudentRequest(user.token, id_representant, id_student, data);
+      const res = await setFinalQualifierStudentRequest(user.token, id_student, data);
       if (res.status === 200 && !res.data.error) {
         return {
           title: 'Procesado.',
