@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Image,
 } from "@react-pdf/renderer";
-import { getStudentProofRequest } from "../../api/students";
+import { getStudentsByTeacherRequest, getStudentsRequest } from "../../api/students";
 import Swal from 'sweetalert2';
 
 const styles = StyleSheet.create({
@@ -35,17 +35,27 @@ const styles = StyleSheet.create({
   },
   bodyText: {
     padding: "5px",
+    marginTop: "50px"
   },
+  expide: {
+    marginTop: "50px",
+    padding: "5px",
+    textAlign: "justify",
+  }
 });
 
 const Constancia = () => {
 
   const getStudent = async () => {
     try {
-      const id_student = window.location.pathname.split("/")[2];
-      const id_representant = window.location.pathname.split("/")[4];
+      const id = window.location.pathname.split("/")[2];
       const token = JSON.parse(sessionStorage.getItem("session")).token;
-      return await getStudentProofRequest(token, id_student, id_representant);
+      const userType = JSON.parse(sessionStorage.getItem("session"));
+      if (userType.profesor) {
+        return await getStudentsByTeacherRequest(token);
+      } else {
+        return await getStudentsRequest(token);
+      }
     } catch (error) {
       Swal.fire(
         'Error al cargar los datos.',
@@ -56,7 +66,10 @@ const Constancia = () => {
     }
   };
 
-  const student = getStudent()
+  const students = getStudent()
+  const dia = new Intl.DateTimeFormat("es-ES", {day: "numeric"}).format(new Date());
+  const mes = new Intl.DateTimeFormat("es-ES", {month: "long"}).format(new Date());
+  const anio = new Intl.DateTimeFormat("es-ES", {year: "numeric"}).format(new Date());
 
   return (
     <Document>
@@ -79,19 +92,13 @@ const Constancia = () => {
 
         <View style={styles.body}>
           <Text style={styles.bodyText}>
-            Por medio de la presente se hace constar que el estudiante: {student.nombres+' '+student.apellidos}
+            Por medio de la presente se hace constar que el estudiante: {student.nombres + ' ' + student.apellidos},
+            cédula escolar o de identidad: V{student.cedula}, cursa en esta institución el {student.grado} grado,
+            sección: {student.seccion}, de educación primaria durante el año escolar: [anio_escolar]
           </Text>
-        </View>
-      </Page>
-      <Page size="Letter" style={styles.page}>
-        <View style={styles.body}>
-          <Text style={styles.bodyText}>
-            El Alumno [alumno] Natural de [direccion] de [edad] años de edad, cursante de [grado] de educación básica
-            ha sido promovido al [grado+1] / reprobado en el [grado] grado con el literal de [literal (definir variable)]
-          </Text>
-          <Text style={styles.bodyText}>
-            Docente de Grado: ___________,
-            Director: ___________
+          
+          <Text style={styles.expide}>
+            Constancia que se expide en Maturín, a los {dia} días del mes de {mes} del año {anio}
           </Text>
         </View>
       </Page>

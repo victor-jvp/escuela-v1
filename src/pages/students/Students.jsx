@@ -138,7 +138,7 @@ const Students = () => {
             </Link>
 
             <Link
-              to={`${params.row._id}/representant/${params.row.id_representante}/constancia`}
+              to={`${params.row._id}/constancia`}
               className="viewButton"
             >
               <Tooltip title="Constancia">
